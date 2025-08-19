@@ -1,0 +1,62 @@
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+
+import LandingPage from "./pages/LandingPage/LandingPage";
+import Login from "./pages/Auth/Login";
+import SignUp from "./pages/Auth/SignUp";
+
+import JobSeekerDashboard from "./pages/JobSeeker/JobSeekerDashboard";
+import JobDetails from "./pages/JobSeeker/JobDetails";
+import SavedJobs from "./pages/JobSeeker/SavedJobs";
+import UserProfile from "./pages/JobSeeker/UserProfile";
+
+import ProtectedRoute from "./routes/ProtectedRoute";
+import ManageJobs from "./pages/Employer/ManageJobs";
+import EmployerDashboard from "./pages/Employer/EmployerDashboard";
+import JobPostingForm from "./pages/Employer/JobPostingForm";
+import ApplicationViewer from "./pages/Employer/ApplicationViewer";
+import EmployerProfilePage from "./pages/Employer/EmployerProfilePage";
+
+export default function App() {
+  return (
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+
+          <Route path="/find-jobs" element={<JobSeekerDashboard />} />
+          <Route path="/job/:jobId" element={<JobDetails />} />
+          <Route path="/saved-jobs" element={<SavedJobs />} />
+          <Route path="/profile" element={<UserProfile />} />
+
+          <Route element={<ProtectedRoute requiredRole="employer" />}>
+            <Route path="/manage-jobs" element={<ManageJobs />} />
+            <Route path="/employer-dashboard" element={<EmployerDashboard />} />
+            <Route path="/post-job" element={<JobPostingForm />} />
+            <Route path="/applicants" element={<ApplicationViewer />} />
+            <Route path="/company-profile" element={<EmployerProfilePage />} />
+          </Route>
+
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
+
+      <Toaster
+        toastOptions={{
+          className: "",
+          style: {
+            fontSize: "13px",
+          },
+        }}
+      />
+    </div>
+  );
+}
