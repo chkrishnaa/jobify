@@ -1,17 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { Briefcase, Users, CheckCircle2, TrendingUp } from "lucide-react";
+import { Briefcase, Users, CheckCircle2, TrendingUp, Plus, Building2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import JobDashboardCard from "../../components/Cards/JobDashboardCard";
+import ApplicantDashboardCard from "../../components/Cards/ApplicantDashboardCard";
 
-const Card = ({ className, children }) => {
+const Card = ({ title, headerAction, subtitle, className, children }) => {
   return (
     <div
       className={`bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300 ${className}`}
     >
-      <div className="p-6">{children}</div>
+      {(title || headerAction) && (
+        <div className="flex items-center justify-between p-6 pb-4">
+          <div className="">
+            {title && (
+              <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+            )}
+            {subtitle && (
+              <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
+            )}
+          </div>
+          {headerAction}
+        </div>
+      )}
+      <div className={title ? "px-6 pb-6" : "p-6"}>{children}</div>
     </div>
   );
 };
@@ -27,7 +43,7 @@ const StatCard = ({ title, value, icon: Icon, trend, trendValue, color }) => {
     red: "from-red-400 to-rose-600",
     indigo: "from-indigo-400 to-indigo-600",
     yellow: "from-amber-400 to-orange-600",
-    gray: "from-gray-400 to-gray-600",
+    gray: "from-slate-400 to-gray-600",
   };
 
   return (
@@ -140,6 +156,96 @@ const EmployerDashboard = () => {
               color={statColors[2]}
             />
           </div>
+
+          {/* Recent Activity */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <Card
+              title="Recent Job Posts"
+              subtitle="Your Latest Job Postings"
+              headerAction={
+                <button
+                  className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+                  onClick={() => navigate("/manage-jobs")}
+                >
+                  View all
+                </button>
+              }
+            >
+              <div className="space-y-3">
+                {dashboardData?.data?.recentJobs
+                  ?.slice(0, 3)
+                  ?.map((job, index) => (
+                    <JobDashboardCard key={index} job={job} />
+                  ))}
+              </div>
+            </Card>
+
+            <Card
+              title="Recent Applicants"
+              subtitle="Latest Candidates Applied"
+              headerAction={
+                <button
+                  className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+                  onClick={() => navigate("/manage-jobs")}
+                >
+                  View all
+                </button>
+              }
+            >
+              <div className="space-y-3">
+                {dashboardData?.data?.recentApplications
+                  ?.slice(0, 3)
+                  ?.map((data, index) => (
+                    <ApplicantDashboardCard
+                      key={index}
+                      applicant={data?.applicant || ""}
+                      position={data?.job?.title || ""}
+                      time={moment(data?.updatedAt).fromNow()}
+                    />
+                  ))}
+              </div>
+            </Card>
+          </div>
+
+          {/* Quick Actions */}
+          <Card
+            title="Quick Actions"
+            subtitle="Common tasks to get you started"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                {
+                  title: "Post New Job",
+                  icon: Plus,
+                  color: "bg-blue-50 text-blue-700",
+                  path: "/post-job",
+                },
+                {
+                  title: "Review Applications",
+                  icon: Users,
+                  color: "bg-green-50 text-green-700",
+                  path: "/manage-jobs",
+                },
+                {
+                  title: "Company Settings",
+                  icon: Building2,
+                  color: "bg-orange-50 text-orange-700",
+                  path: "/company-profile",
+                },
+              ].map((action, index) => (
+                <button
+                  key={index}
+                  className="flex items-center space-x-3 p-4 rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all duration-200 text-left"
+                  onClick={() => navigate(action.path)}
+                >
+                  <div className={`p-2 rounded-lg ${action.color}`}>
+                    <action.icon className="h-5 w-5" />
+                  </div>
+                  <span className="font-medium text-gray-900">{action.title}</span>
+                </button>
+              ))}
+            </div>
+          </Card>
         </div>
       )}
     </DashboardLayout>
