@@ -19,7 +19,14 @@ import {
   validateAvatar,
 } from "../../utils/helper";
 
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import uploadImage from "../../utils/uploadImage";
+
 const SignUp = () => {
+const {login} = useAuth();
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -29,7 +36,7 @@ const SignUp = () => {
   });
 
   const [formState, setFormState] = useState({
-    Loading: false,
+    loading: false,
     errors: {},
     showPassword: false,
     avatarPreview: null,
@@ -140,8 +147,38 @@ const SignUp = () => {
       loading: true,
     }));
 
-    try{
+    try {
+      let avatarUrl = "";
 
+      if (formData.avatar) {
+        const imgUploadRes = await uploadImage(formData.avatar);
+        avatarUrl = imgUploadRes.imageUrl || imgUploadRes.imgUrl || "";
+      }
+
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        name: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+        avatar: avatarUrl,
+      });
+
+      setFormState((prev) => ({
+        ...prev,
+        loading: false,
+        success: true,
+        errors: {},
+      }));
+
+      const { token } = response.data;
+      if (token) {
+        login(response.data, token);
+
+        setTimeout(() => {
+          window.location.href =
+            formData.role === "employer" ? "/employer-dashboard" : "/find-jobs";
+        }, 2000);
+      }
     } catch (error) {
       setFormState((prev) => ({
         ...prev,
@@ -370,7 +407,7 @@ const SignUp = () => {
                 onClick={() => handleRoleChange("employer")}
                 className={`p-4 rounded-lg border-2 transition-all ${
                   formData.role === "employer"
-                    ? "border-blue-500 bg-blue-50 text-blue-700"
+                    ? "border-purple-500 bg-purple-100 text-purple-700"
                     : "border-gray-200 hover:border-gray-300"
                 }`}
               >
@@ -414,7 +451,7 @@ const SignUp = () => {
 
           <div className="text-center">
             <p className="text-gray-600">
-              Already have an account?{" "}
+              Already have an account? {""}
               <a
                 href="/login"
                 className="text-blue-600 hover:text-blue-700 font-medium"

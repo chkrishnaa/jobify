@@ -98,15 +98,15 @@ exports.getEmployerAnalytics = async (req, res) => {
           totalHired,
           trends: {
             activeJobs: activeJobTrend,
-            totalApplications: applicantTrend,
-            totalHired: hiredTrend
-          }
+            totalApplicants: applicantTrend,
+            totalHired: hiredTrend,
+          },
         },
         data: {
           recentJobs,
           recentApplications,
-        }
-      })
+        },
+      });
   } catch (error) {
     res
       .status(500)

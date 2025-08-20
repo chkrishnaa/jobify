@@ -22,10 +22,11 @@ import EmployerDashboard from "./pages/Employer/EmployerDashboard";
 import JobPostingForm from "./pages/Employer/JobPostingForm";
 import ApplicationViewer from "./pages/Employer/ApplicationViewer";
 import EmployerProfilePage from "./pages/Employer/EmployerProfilePage";
+import { AuthProvider } from "./context/AuthContext";
 
 export default function App() {
   return (
-    <div>
+    <AuthProvider>
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -57,6 +58,6 @@ export default function App() {
           },
         }}
       />
-    </div>
+    </AuthProvider>
   );
 }

@@ -11,8 +11,13 @@ import {
 } from "lucide-react";
 
 import { validateEmail } from "../../utils/helper";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
 
 const Login = () => {
+  const { login } = useAuth();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -81,13 +86,45 @@ const Login = () => {
     }));
 
     try {
+      //Login API integration
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email: formData.email,
+        password: formData.password,
+        rememberMe: formData.rememberMe,
+      });
+
+      setFormState((prev) => ({
+        ...prev,
+        loading: false,
+        success: true,
+        errors: {},
+      }));
+
+      const { token, role } = response.data;
+
+      if (token) {
+        login(response.data, token);
+
+        setTimeout(() => {
+          window.location.href =
+            role === "employer" ? "/employer-dashboard" : "/find-jobs";
+        }, 2000);
+      }
+      //Redirect based on user role
+
+      setTimeout(() => {
+        const redirectPath =
+          user.role === "employer" ? "/employer-dashboard" : "/find-jobs";
+        window.location.href = redirectPath;
+      }, 1500);
+      
     } catch (error) {
       setFormState((prev) => ({
         ...prev,
         loading: false,
         errors: {
           submit:
-            error.response?.dat?.message ||
+            error.response?.data?.message ||
             "Login failed. Please, check your credentials.",
         },
       }));
@@ -104,10 +141,16 @@ const Login = () => {
           className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center"
         >
           <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4"></CheckCircle>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back!</h2>
-          <p className="text-gray-600 mb-4">You have been successfully logged in.</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Welcome Back!
+          </h2>
+          <p className="text-gray-600 mb-4">
+            You have been successfully logged in.
+          </p>
           <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full mx-auto" />
-          <p className="text-sm text-gray-500 mt-2">Redirecting to your dashboard ...</p>
+          <p className="text-sm text-gray-500 mt-2">
+            Redirecting to your dashboard ...
+          </p>
         </motion.div>
       </div>
     );
@@ -205,7 +248,7 @@ const Login = () => {
             <div className="bg-red-50 border border-red-200 rounded-lg p-3">
               <p className="text-red-700 text-sm flex items-center">
                 <AlertCircle className="w-4 h-4 mr-2" />
-                  {formState.errors.submit}
+                {formState.errors.submit}
               </p>
             </div>
           )}
