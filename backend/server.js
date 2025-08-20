@@ -21,12 +21,12 @@ app.use(
     credentials: true,
   })
 );
-
+s
 connectDB();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Backend is running 🚀");
+  res.send("Backend is still running 🚀");
 });
 
 
