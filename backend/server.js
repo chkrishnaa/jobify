@@ -21,7 +21,7 @@ app.use(
     credentials: true,
   })
 );
-s
+
 connectDB();
 app.use(express.json());
 
