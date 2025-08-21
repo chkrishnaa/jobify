@@ -50,7 +50,7 @@ export default function Header() {
           <div className="flex items-center space-x-3">
             {isAuthenticated ? (
               <div className="flex items-center space-x-3">
-                <span className="">Welcome, {user?.fullName}</span>
+                <span className="">Continue to {user?.fullName}</span>
                 <a
                   href={
                     user?.role === "employer"
