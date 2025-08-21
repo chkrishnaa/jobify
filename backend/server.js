@@ -15,12 +15,16 @@ const port = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "http://localhost:5173", // for local Vite development
+      "https://jobify-one.vercel.app", // replace with your actual deployed frontend domain
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
+
 
 connectDB();
 app.use(express.json());
