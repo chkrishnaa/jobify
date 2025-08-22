@@ -39,7 +39,7 @@ const StatCard = ({ title, value, icon: Icon, trend, trendValue, color }) => {
     purple: "from-violet-400 to-violet-600",
     orange: "from-orange-400 to-orange-600",
     pink: "from-pink-400 to-rose-600",
-    teal: "from-teal-500 to-cyan-600",
+    teal: "from-teal-400 to-cyan-600",
     red: "from-red-400 to-rose-600",
     indigo: "from-indigo-400 to-indigo-600",
     yellow: "from-amber-400 to-orange-600",

@@ -133,7 +133,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
 
       {/* Main Content  */}
       <div
-        className={`flex-1 flex flex-col transition-all duration-300 ${
+        className={`flex-1 flex flex-col transition-all duration-300 min-w-0 ${
           isMobile ? "ml-0" : sidebarCollapsed ? "ml-16" : "ml-64"
         }`}
       >
@@ -179,7 +179,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-auto p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto overflow-x-hidden p-6">{children}</main>
       </div>
     </div>
   );
