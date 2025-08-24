@@ -282,7 +282,7 @@ export default function JobPostingForm() {
                       onChange={(e) =>
                         handleInputChange("salaryMin", e.target.value)
                       }
-                      className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg teaxt-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:ring-opacity-20 transition-colors duration-300"
+                      className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg teaxt-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-20 transition-colors duration-300"
                     />
                   </div>
                   <div className="relative">
@@ -296,7 +296,7 @@ export default function JobPostingForm() {
                       onChange={(e) =>
                         handleInputChange("salaryMax", e.target.value)
                       }
-                      className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg teaxt-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:ring-opacity-20 transition-colors duration-300"
+                      className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-purple-500  focus:ring-opacity-20 transition-colors duration-300"
                     />
                   </div>
                 </div>
