@@ -194,9 +194,9 @@ export default function ManageJobs() {
 
   return (
     <DashboardLayout activeMenu="manage-jobs">
-      <div className="min-h-screen p-4 sm:p-6 lg:p-8">
+      <div className="min-h-screen ">
         <div className="w-full max-w-full mx-auto">
-          <div className="mb-8">
+          <div className="mb-4">
             <div className="flex flex-row items-center justify-between gap-x-5">
               <div className="mb-4 sm:mb-8">
                 <h1 className="text-xl md:text-2xl font-semibold text-gray-900">
@@ -278,7 +278,7 @@ export default function ManageJobs() {
                   ref={tableContainerRef}
                 >
                   <table className="w-full divide-y divide-gray-200">
-                    <thead className="bg-gradient-to-r from-gray-50 to-gray-100/50">
+                    <thead className="bg-gray-100">
                       <tr>
                         <th
                           className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100/60 transition-all duration-300"
@@ -455,7 +455,9 @@ export default function ManageJobs() {
                   <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
                     <button
                       className="relative inline-flex items-center p-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                      onClick={()=>setCurrentPage(Math.max(1, currentPage - 1))}
+                      onClick={() =>
+                        setCurrentPage(Math.max(1, currentPage - 1))
+                      }
                       disabled={currentPage === 1}
                     >
                       Previous
@@ -477,9 +479,9 @@ export default function ManageJobs() {
                       </button>
                     ))}
                     <button
-                      onClick={()=>setCurrentPage(
-                        Math.min(totalPages, currentPage + 1)
-                      )}
+                      onClick={() =>
+                        setCurrentPage(Math.min(totalPages, currentPage + 1))
+                      }
                       disabled={currentPage === totalPages}
                       className="relative inline-flex items-center p-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
