@@ -1,7 +1,7 @@
 const Job = require("../models/Job");
 const User = require("../models/User");
 const Application = require("../models/Application");
-const savedJob = require("../models/SavedJobs");
+const SavedJob = require("../models/SavedJobs");
 
 exports.createJob = async (req, res) => {
   try {
@@ -53,7 +53,7 @@ exports.getJobs = async (req, res) => {
       const savedJobs = await SavedJob.find({ jobseeker: userId }).select(
         "job"
       );
-      savedJobIds = savedJobs.map((job) => job.job);
+      savedJobIds = savedJobs.map((job) => String(job.job));
       const applications = await Application.find({ applicant: userId }).select(
         "job status"
       );
@@ -67,7 +67,7 @@ exports.getJobs = async (req, res) => {
       return {
         ...job.toObject(),
         isSaved: savedJobIds.includes(jobIdStr),
-        applicantionStatus: appliedJobStatusMap[jobIdStr] || null,
+        applicationStatus: appliedJobStatusMap[jobIdStr] || null,
       };
     });
     res.json(jobsWithExtras);

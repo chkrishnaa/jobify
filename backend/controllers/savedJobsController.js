@@ -7,7 +7,7 @@ exports.saveJob = async (req, res) => {
       jobseeker: req.user._id,
     });
     if (exists) {
-      res.status(400).json({ message: "Job already saved" });
+      return res.status(400).json({ message: "Job already saved" });
     }
 
     const savedJob = await SavedJobs.create({
