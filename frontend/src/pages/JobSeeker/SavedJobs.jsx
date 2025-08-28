@@ -92,7 +92,7 @@ const SavedJobs = () => {
                   <p className="text-gray-600 mb-6">
                     Start saving jobs that interest you to view them later
                   </p>
-                  <button className="text-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors" onClick={() => navigate("/find-jobs")}>
+                  <button className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors" onClick={() => navigate("/find-jobs")}>
                     Browse Jobs
                   </button>
                 </div>
@@ -101,7 +101,7 @@ const SavedJobs = () => {
                   <div
                     className={
                       viewMode === "grid"
-                        ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4 lg:gap-6"
+                        ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6"
                         : "hidden"
                     }
                   >

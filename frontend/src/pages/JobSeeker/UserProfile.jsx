@@ -155,24 +155,65 @@ const UserProfile = () => {
                   </div>
                 </div>
                 <div className="">
-                  <label className="">Full Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Full Name
+                  </label>
                   <input
                     type="text"
-                    className=""
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                     placeholder="Enter your name"
                   />
                 </div>{" "}
                 <div className="">
-                  <label className="">Email Address</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address
+                  </label>
                   <input
                     type="email"
-                    className=""
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
                     value={formData.email}
                     disabled
                   />
                 </div>
+                {user?.resume ? (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Resume
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm text-gray-600">
+                        Link:{" "}
+                        <a
+                          href={user?.resume}
+                          target="_blank"
+                          className="text-blue-500 underline cursor-pointer"
+                        >
+                          {user?.resume}
+                        </a>
+                      </p>
+
+                      <button
+                        className="cursor-pointer"
+                        onClick={DeleteResume}
+                      >
+                        <Trash2 className="w-5 h-5 text-red-500"/>
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <label className="block">
+                      <span className="sr-only">Choose File</span>
+                      <input
+                        type="file"
+                        onChange={(e) => handleImageChange(e, "resume")}
+                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors"
+                      />
+                    </label>
+                  </div>
+                )}
               </div>
 
               <div className="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-300">

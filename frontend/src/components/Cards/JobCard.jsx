@@ -16,8 +16,10 @@ return `${formatNumber(min)}/m`
 }
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-xl hover:shadow-gray-200 transition-all duration-300 group relative overflow-hidden cursor-pointer"
-    onClick={onClick}>
+    <div
+      className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-xl hover:shadow-gray-200 transition-all duration-300 group relative overflow-hidden cursor-pointer"
+      onClick={onClick}
+    >
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-start gap-4">
           {job?.company?.companyLogo ? (
@@ -33,7 +35,9 @@ return `${formatNumber(min)}/m`
           )}
 
           <div className="flex-1">
-            <h3 className="font-semibold text-gray-900 text-base group-hover:text-blue-600 transition-colors leading-snug">{job?.title}</h3>
+            <h3 className="font-semibold text-gray-900 text-base group-hover:text-blue-600 transition-colors leading-snug">
+              {job?.title}
+            </h3>
             <p className="text-gray-600 text-sm flex items-center gap-2 mt-1">
               <Building className="h-3.5 w-3.5" />
               {job?.company?.companyName}
@@ -51,7 +55,9 @@ return `${formatNumber(min)}/m`
           >
             <Bookmark
               className={`w-5 h-5 ${
-                job?.isSaved || saved ? "text-blue-600" : "text-blue-600 hover:text-blue-700"
+                job?.isSaved || saved
+                  ? "text-blue-600"
+                  : "text-blue-600 hover:text-blue-700"
               }`}
               fill={job?.isSaved || saved ? "currentColor" : "none"}
             />
@@ -61,10 +67,6 @@ return `${formatNumber(min)}/m`
 
       <div className="mb-5">
         <div className="flex items-center gap-2 text-xs">
-          <span className="flex items-center gap-1.5 bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium">
-            <MapPin className="h-4 w-4" />
-            {job?.location}
-          </span>
           <span
             className={`px-3 py-1 rounded-full font-medium ${
               job?.type === "Full-Time"
@@ -78,11 +80,13 @@ return `${formatNumber(min)}/m`
           >
             {job?.type}
           </span>
-          <span className="flex items-center gap-1.5 bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium">{job?.category}</span>
+          <span className="flex items-center gap-1.5 bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium">
+            {job?.category}
+          </span>
         </div>
       </div>
 
-      <div className="flex items-center justify-between text-sm font-medium text-gray-500 mb-5 pb-4 border-b border-gray-100">
+      <div className="flex items-center justify-between text-sm font-medium text-gray-500">
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1.5">
             <Calendar className="w-3.5 h-3.5" />
@@ -93,8 +97,17 @@ return `${formatNumber(min)}/m`
         </div>
       </div>
 
+      <div className="flex items-center justify-end my-3 pb-4 border-b border-gray-100 text-xs">
+        <span className="flex items-center gap-1.5 bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium">
+          <MapPin className="h-4 w-4" />
+          {job?.location}
+        </span>
+      </div>
+
       <div className="flex items-center justify-between">
-        <div className="text-blue-600 fomt-semibold text-lg">{formatSalary(job?.salaryMin, job?.salaryMax)}</div>
+        <div className="text-blue-600 fomt-semibold text-lg">
+          {formatSalary(job?.salaryMin, job?.salaryMax)}
+        </div>
         {!saved && (
           <>
             {job?.applicationStatus ? (
