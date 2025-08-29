@@ -1,5 +1,3 @@
-const fs = require("fs");
-const path = require("path");
 const User = require("../models/User");
 
 exports.updateProfile = async (req, res) => {
@@ -55,7 +53,6 @@ exports.updateProfile = async (req, res) => {
 exports.deleteResume = async (req, res) => {
   try {
     const { resumeUrl } = req.body;
-    const fileName = resumeUrl?.split("/")?.pop();
 
     const user = await User.findById(req.user._id);
 
@@ -69,13 +66,8 @@ exports.deleteResume = async (req, res) => {
         .json({ message: "only jobseeker can delete resume" });
     }
 
-    // Construct the full filepath
-    const filePath = path.join(__dirname, "../uploads", fileName);
-
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
-
+    // For Cloudinary, we don't need to delete the file locally
+    // The file will remain in Cloudinary storage
     user.resume = "";
     await user.save();
 

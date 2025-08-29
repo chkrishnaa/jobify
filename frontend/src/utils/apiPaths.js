@@ -37,5 +37,6 @@ export const API_PATHS = {
 
   IMAGE: {
     UPLOAD_IMAGE: "/api/auth/upload-image",
+    UPLOAD_IMAGE_BASE64: "/api/auth/upload-image-base64",
   },
 };

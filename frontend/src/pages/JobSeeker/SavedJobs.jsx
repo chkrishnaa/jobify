@@ -49,7 +49,7 @@ const SavedJobs = () => {
           <div className="bg-white p-6 rounded-lg">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-4">
-                <button className="group flex items-center space-x-2 px-3.5 py-2.5 text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-300 hover:border-transparent rounded-xl transition-all duration-300 shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y-0.5" onClick={() => navigate(-1)}>
+                <button className="group flex items-center space-x-2 px-3.5 py-2.5 text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:border-transparent rounded-xl transition-all duration-300 shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y-0.5" onClick={() => navigate(-1)}>
                   <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
                 </button>
 
@@ -57,7 +57,7 @@ const SavedJobs = () => {
               </div>
 
               <div className="flex items-center gap-3 lg:gap-4">
-                <div className="flex items-center border border-gray-300 rounded-xl p-1 bg-white">
+                <div className="flex items-center border border-gray-200 rounded-xl p-1 bg-white">
                   <button
                     onClick={() => setViewMode("grid")}
                     className={`p-2 rounded-lg transition-colors ${
@@ -85,7 +85,7 @@ const SavedJobs = () => {
             <div className="px-0 pb-8 space-y-8">
               {savedJobList.length === 0 ? (
                 <div className="text-center py-16 lg:py-20 bg-white/60 backdrop-blur-xl rounded-2xl border border-white/20">
-                  <div className="text-gary-300 mb-6">
+                  <div className="text-gray-300 mb-6">
                     <Bookmark className="h-16 w-16 mx-auto" />
                   </div>
                   <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">You haven't saved any jobs yet</h3>

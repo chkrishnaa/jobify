@@ -1,7 +1,6 @@
 const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
-const path = require("path");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
@@ -22,14 +21,15 @@ app.use(
   })
 );
 
-
 connectDB();
-app.use(express.json());
+
+// Set body parser limits for 5MB images (base64 encoding increases size by ~33%)
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.get("/", (req, res) => {
   res.send("Backend is still running 🚀");
 });
-
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
@@ -37,10 +37,6 @@ app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/saved-jobs", savedJobsRoutes);
 app.use("/api/analytics", analyticsRoutes);
-
-
-
-app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
