@@ -1,18 +1,26 @@
 import { Clock } from "lucide-react";
 import React from "react";
+import { getInitials } from "../../utils/helper";
 
 const ApplicantDashboardCard = ({ applicant, position, time }) => {
   return (
     <div className="flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
       <div className="flex items-center space-x-4">
-        <div className="h-10 w-10 bg-gradient-to-br from-purple-300 to-purple-500 rounded-xl flex items-center justify-center">
-          <span className="text-white font-medium text-sm">
-            {applicant.name
-              .split(" ")
-              .map((n) => n[0])
-              .join("")}
-          </span>
-        </div>
+        {applicant.avatar ? (
+          <img
+            src={applicant.avatar}
+            alt="Avatar"
+            className="h-10 w-10 object-cover rounded-xl"
+          />
+        ) : (
+          <div className="h-10 w-10 bg-gradient-to-br from-purple-300 to-purple-500 rounded-xl flex items-center justify-center">
+            <span className="text-white font-medium text-sm">
+              <span className="text-white font-medium text-sm">
+                {getInitials(applicant.name)}
+              </span>
+            </span>
+          </div>
+        )}
         <div className="">
           <h4 className="text-[15px] font-medium text-gray-900">
             {applicant.name}

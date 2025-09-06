@@ -8,6 +8,7 @@ import DashboardLayout from "../../components/layout/DashboardLayout";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import JobDashboardCard from "../../components/Cards/JobDashboardCard";
 import ApplicantDashboardCard from "../../components/Cards/ApplicantDashboardCard";
+import { useAuth } from "../../context/AuthContext";
 
 const Card = ({ title, headerAction, subtitle, className, children }) => {
   return (
@@ -61,7 +62,7 @@ const StatCard = ({ title, value, icon: Icon, trend, trendValue, color }) => {
             </div>
           )}
         </div>
-        <div className="bg-white/10 p-3 rounded-xl">
+        <div className="bg-white/20 p-3 rounded-xl">
           <Icon className="h-6 w-6" />
         </div>
       </div>
@@ -92,6 +93,7 @@ const getUniqueColors = () => {
 };
 
 const EmployerDashboard = () => {
+  const user= useAuth();
   const navigate = useNavigate();
   const [dashboardData, setDashboardData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -173,9 +175,13 @@ const EmployerDashboard = () => {
             >
               <div className="space-y-3">
                 {dashboardData?.data?.recentJobs
-                  ?.slice(0, 3)
+                  ?.slice(0, 5)
                   ?.map((job, index) => (
-                    <JobDashboardCard key={index} job={job} />
+                    <JobDashboardCard
+                      key={index}
+                      job={job}
+                      avatar={user?.avatar || ""}
+                    />
                   ))}
               </div>
             </Card>
@@ -194,7 +200,7 @@ const EmployerDashboard = () => {
             >
               <div className="space-y-3">
                 {dashboardData?.data?.recentApplications
-                  ?.slice(0, 3)
+                  ?.slice(0, 5)
                   ?.map((data, index) => (
                     <ApplicantDashboardCard
                       key={index}
@@ -241,7 +247,9 @@ const EmployerDashboard = () => {
                   <div className={`p-2 rounded-lg ${action.color}`}>
                     <action.icon className="h-5 w-5" />
                   </div>
-                  <span className="font-medium text-gray-900">{action.title}</span>
+                  <span className="font-medium text-gray-900">
+                    {action.title}
+                  </span>
                 </button>
               ))}
             </div>

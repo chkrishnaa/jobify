@@ -18,6 +18,7 @@ import {
   validatePassword,
   validateAvatar,
 } from "../../utils/helper";
+import { Link } from "react-router-dom";
 
 import { useAuth } from "../../context/AuthContext";
 import axiosInstance from "../../utils/axiosInstance";
@@ -485,7 +486,7 @@ const {login} = useAuth();
             </span>
           </div>
 
-          <div className="text-center">
+          <div className="text-center font-semibold">
             <p className="text-gray-600">
               Already have an account? {""}
               <a
