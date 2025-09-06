@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Briefcase, Users, CheckCircle2, TrendingUp, Plus, Building2 } from "lucide-react";
+import { Briefcase, Users, CheckCircle2, TrendingUp, Plus, Building2, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import axiosInstance from "../../utils/axiosInstance";
@@ -165,24 +165,40 @@ const EmployerDashboard = () => {
               title="Recent Job Posts"
               subtitle="Your Latest Job Postings"
               headerAction={
-                <button
-                  className="text-sm text-purple-600 hover:text-purple-700 font-medium"
-                  onClick={() => navigate("/manage-jobs")}
-                >
-                  View all
-                </button>
+                dashboardData?.data?.recentJobs?.length > 4 && (
+                  <button
+                    className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+                    onClick={() => navigate("/manage-jobs")}
+                  >
+                    View all
+                  </button>
+                )
               }
             >
               <div className="space-y-3">
-                {dashboardData?.data?.recentJobs
-                  ?.slice(0, 5)
-                  ?.map((job, index) => (
-                    <JobDashboardCard
-                      key={index}
-                      job={job}
-                      avatar={user?.avatar || ""}
-                    />
-                  ))}
+                {dashboardData?.data?.recentJobs?.length > 0 ? (
+                  dashboardData?.data?.recentJobs
+                    ?.slice(0, 5)
+                    ?.map((job, index) => (
+                      <JobDashboardCard
+                        key={index}
+                        job={job}
+                        avatar={user?.avatar || ""}
+                      />
+                    ))
+                ) : (
+                  <div className="text-center py-12">
+                    <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <Building2 className="w-10 h-10 text-gray-400" />
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                      No jobs found
+                    </h3>
+                    <p className="text-gray-500">
+                      Try adjusting your search or filter criteria
+                    </p>
+                  </div>
+                )}
               </div>
             </Card>
 
@@ -190,25 +206,41 @@ const EmployerDashboard = () => {
               title="Recent Applicants"
               subtitle="Latest Candidates Applied"
               headerAction={
-                <button
-                  className="text-sm text-purple-600 hover:text-purple-700 font-medium"
-                  onClick={() => navigate("/manage-jobs")}
-                >
-                  View all
-                </button>
+                dashboardData?.data?.recentApplications?.length > 4 && (
+                  <button
+                    className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+                    onClick={() => navigate("/manage-jobs")}
+                  >
+                    View all
+                  </button>
+                )
               }
             >
               <div className="space-y-3">
-                {dashboardData?.data?.recentApplications
-                  ?.slice(0, 5)
-                  ?.map((data, index) => (
-                    <ApplicantDashboardCard
-                      key={index}
-                      applicant={data?.applicant || ""}
-                      position={data?.job?.title || ""}
-                      time={moment(data?.updatedAt).fromNow()}
-                    />
-                  ))}
+                {dashboardData?.data?.recentApplications?.length > 0 ? (
+                  dashboardData?.data?.recentApplications
+                    ?.slice(0, 5)
+                    ?.map((data, index) => (
+                      <ApplicantDashboardCard
+                        key={index}
+                        applicant={data?.applicant || ""}
+                        position={data?.job?.title || ""}
+                        time={moment(data?.updatedAt).fromNow()}
+                      />
+                    ))
+                ) : (
+                  <div className="text-center py-12">
+                    <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <User className="w-10 h-10 text-gray-400" />
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                      No applicants found
+                    </h3>
+                    <p className="text-gray-500">
+                      Try adjusting your search or filter criteria
+                    </p>
+                  </div>
+                )}
               </div>
             </Card>
           </div>
