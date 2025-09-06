@@ -39,4 +39,8 @@ export const API_PATHS = {
     UPLOAD_IMAGE: "/api/auth/upload-image",
     UPLOAD_IMAGE_BASE64: "/api/auth/upload-image-base64",
   },
+  
+  RESUME: {
+    UPLOAD: "/api/auth/upload-image-base64", // Reusing the same endpoint with fileType parameter
+  },
 };

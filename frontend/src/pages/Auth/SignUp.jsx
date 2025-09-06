@@ -235,7 +235,7 @@ const {login} = useAuth();
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Full Name *
@@ -448,6 +448,42 @@ const {login} = useAuth();
               <span>Create Account</span>
             )}
           </button>
+
+          <div className="flex items-center space-x-3">
+            <div className="flex-1 h-px bg-gray-300"></div>
+            <span className="text-gray-600 whitespace-nowrap">
+              or Create with
+            </span>
+            <div className="flex-1 h-px bg-gray-300"></div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <button className="bg-white text-gray-600 w-full h-full rounded-lg py-2 hover:bg-blue-200 hover:text-gray-800 transition-all duration-300 space-x-5 border-2 border-blue-600">
+              <i className="fa-brands fa-google text-blue-600"></i>
+              <span className="font-semibold text-blue-600">Google</span>
+            </button>
+
+            <button className="bg-white text-gray-600 w-full h-full rounded-lg py-2 hover:bg-purple-200 hover:text-gray-800 transition-all duration-300 space-x-5 border-2 border-purple-600">
+              <i className="fa-brands fa-facebook-f text-purple-600 hover:text-blue-700 duration-300 transition-colors"></i>{" "}
+              <span className="font-semibold text-purple-600 hover:text-purple-700 duration-300 transition-colors">
+                Facebook
+              </span>
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input type="checkbox" className="h-4 w-4" />
+            <span className="text-sm text-gray-600 font-semibold">
+              I agree to the{" "}
+              <Link to="/terms-of-service" className="text-blue-600 hover:underline">
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link to="/privacy-policy" className="text-purple-600 hover:underline">
+                Privacy Policy
+              </Link>
+            </span>
+          </div>
 
           <div className="text-center">
             <p className="text-gray-600">

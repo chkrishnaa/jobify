@@ -61,28 +61,50 @@ const uploadToCloudinary = async (file) => {
 };
 
 // Upload base64 string to Cloudinary
-const uploadBase64ToCloudinary = async (base64String) => {
+const uploadBase64ToCloudinary = async (base64String, options = {}) => {
   try {
     if (!base64String) {
       throw new Error("No base64 string provided");
     }
 
-    console.log("Uploading base64 image to Cloudinary");
+    const { fileType, fileName } = options;
     
-    const result = await cloudinary.uploader.upload(base64String, {
-      folder: "jobfinder",
-      resource_type: "auto",
-      transformation: [{ width: 1000, height: 1000, crop: "limit" }],
-    });
-    
-    console.log("Base64 upload successful:", result.secure_url);
-    
-    return {
-      url: result.secure_url,
-      public_id: result.public_id,
-      format: result.format,
-      size: result.bytes
-    };
+    if (fileType === 'resume') {
+      console.log("Uploading resume PDF to Cloudinary");
+      
+      const result = await cloudinary.uploader.upload(base64String, {
+        folder: "jobfinder/resumes",
+        resource_type: "auto",
+        public_id: fileName ? fileName.replace('.pdf', '') : undefined,
+        format: 'pdf'
+      });
+      
+      console.log("Resume upload successful:", result.secure_url);
+      
+      return {
+        url: result.secure_url,
+        public_id: result.public_id,
+        format: result.format,
+        size: result.bytes
+      };
+    } else {
+      console.log("Uploading base64 image to Cloudinary");
+      
+      const result = await cloudinary.uploader.upload(base64String, {
+        folder: "jobfinder",
+        resource_type: "auto",
+        transformation: [{ width: 1000, height: 1000, crop: "limit" }],
+      });
+      
+      console.log("Base64 upload successful:", result.secure_url);
+      
+      return {
+        url: result.secure_url,
+        public_id: result.public_id,
+        format: result.format,
+        size: result.bytes
+      };
+    }
   } catch (error) {
     console.error("Cloudinary base64 upload error:", error);
     throw new Error(`Upload failed: ${error.message}`);

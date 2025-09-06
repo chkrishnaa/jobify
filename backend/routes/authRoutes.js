@@ -47,14 +47,14 @@ router.post("/upload-image-base64", async (req, res) => {
     console.log("Base64 upload request received");
     console.log("Body:", req.body);
     
-    const { image } = req.body;
+    const { image, fileType, fileName } = req.body;
     
     if (!image) {
-      return res.status(400).json({ message: "No base64 image provided" });
+      return res.status(400).json({ message: "No base64 file provided" });
     }
     
-    // Upload base64 to Cloudinary
-    const result = await uploadBase64ToCloudinary(image);
+    // Upload base64 to Cloudinary with options
+    const result = await uploadBase64ToCloudinary(image, { fileType, fileName });
     
     res.status(200).json({ imageUrl: result.url });
   } catch (error) {

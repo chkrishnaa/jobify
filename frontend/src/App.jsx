@@ -23,6 +23,9 @@ import JobPostingForm from "./pages/Employer/JobPostingForm";
 import ApplicationViewer from "./pages/Employer/ApplicationViewer";
 import EmployerProfilePage from "./pages/Employer/EmployerProfilePage";
 import { AuthProvider } from "./context/AuthContext";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
+import TermsOfService from "./pages/LandingPage/components/TermsOfservice";
+import PrivacyPolicy from "./pages/LandingPage/components/PrivacyPolicy";
 
 export default function App() {
   return (
@@ -32,6 +35,10 @@ export default function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
 
           <Route path="/find-jobs" element={<JobSeekerDashboard />} />
           <Route path="/job/:jobId" element={<JobDetails />} />
