@@ -1,10 +1,18 @@
 import React from "react";
 import { Briefcase } from "lucide-react";
 import moment from "moment";
+import { useTheme } from "../../context/ThemeContext";
 
 const JobDashboardCard = ({ job, avatar }) => {
+  const { darkMode } = useTheme();
   return (
-    <div className="flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+    <div
+      className={`flex items-center justify-between p-4 rounded-xl border ${
+        darkMode
+          ? "border-gray-700 hover:border-gray-600 shadow-[0_2px_6px_rgba(255,255,255,0.08)] hover:shadow-[0_4px_8px_rgba(255,255,255,0.12)]"
+          : "border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md"
+      } transition-colors`}
+    >
       <div className="flex items-center space-x-4">
         {avatar ? (
           <img
@@ -13,13 +21,31 @@ const JobDashboardCard = ({ job, avatar }) => {
             className="h-10 w-10 object-cover rounded-xl"
           />
         ) : (
-          <div className="h-10 w-10 bg-purple-100 rounded-xl flex items-center justify-center overflow-hidden">
-            <Briefcase className="h-5 w-5 text-purple-600" />
+          <div
+            className={`h-10 w-10 ${
+              darkMode ? "bg-purple-300" : "bg-purple-100"
+            } rounded-xl flex items-center justify-center overflow-hidden`}
+          >
+            <Briefcase
+              className={`h-5 w-5 ${
+                darkMode ? "text-purple-800" : "text-purple-600"
+              }`}
+            />
           </div>
         )}
         <div>
-          <h4 className="text-[15px] font-medium text-gray-900">{job.title}</h4>
-          <p className="text-xs text-gray-500">
+          <h4
+            className={`text-[15px] font-medium ${
+              darkMode ? "text-gray-300" : "text-gray-900"
+            }`}
+          >
+            {job.title}
+          </h4>
+          <p
+            className={`text-xs ${
+              darkMode ? "text-gray-400" : "text-gray-500"
+            }`}
+          >
             {job.location} · {moment(job.createdAt)?.format("Do MMM, YYYY")}
           </p>
         </div>
@@ -28,8 +54,16 @@ const JobDashboardCard = ({ job, avatar }) => {
         <span
           className={`px-3 py-1 text-xs font-medium rounded-full ${
             !job.isClosed
-              ? "bg-green-100 text-green-700"
-              : "bg-gray-100 text-gray-600"
+              ? `${
+                  darkMode
+                    ? "bg-green-300 text-green-900"
+                    : "bg-green-100 text-green-700"
+                }`
+              : `${
+                  darkMode
+                    ? "bg-gray-800 text-gray-400"
+                    : "bg-gray-300 text-gray-700"
+                }`
           }`}
         >
           {job.isClosed ? "Closed" : "Active"}

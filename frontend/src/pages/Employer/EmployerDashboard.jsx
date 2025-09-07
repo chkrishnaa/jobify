@@ -9,20 +9,39 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import JobDashboardCard from "../../components/Cards/JobDashboardCard";
 import ApplicantDashboardCard from "../../components/Cards/ApplicantDashboardCard";
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
 
 const Card = ({ title, headerAction, subtitle, className, children }) => {
+  const { darkMode } = useTheme();
+
   return (
     <div
-      className={`bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300 ${className}`}
+      className={`border ${
+        darkMode
+          ? "bg-gray-900 border-gray-800 shadow-[0_4px_6px_rgba(255,255,255,0.1)] hover:shadow-[0_6px_10px_rgba(255,255,255,0.15)]"
+          : "bg-white border-gray-100 shadow-sm hover:shadow-md"
+      } rounded-xl transition-shadow duration-300 ${className}`}
     >
       {(title || headerAction) && (
         <div className="flex items-center justify-between p-6 pb-4">
           <div className="">
             {title && (
-              <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+              <h3
+                className={`text-lg font-semibold ${
+                  darkMode ? "text-gray-200" : "text-gray-800"
+                }`}
+              >
+                {title}
+              </h3>
             )}
             {subtitle && (
-              <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
+              <p
+                className={`text-sm ${
+                  darkMode ? "text-gray-400" : "text-gray-500"
+                } mt-1`}
+              >
+                {subtitle}
+              </p>
             )}
           </div>
           {headerAction}
@@ -34,6 +53,8 @@ const Card = ({ title, headerAction, subtitle, className, children }) => {
 };
 
 const StatCard = ({ title, value, icon: Icon, trend, trendValue, color }) => {
+  const { darkMode } = useTheme();
+
   const colorClasses = {
     blue: "from-blue-400 to-blue-600",
     green: "from-emerald-400 to-emerald-600",
@@ -47,9 +68,24 @@ const StatCard = ({ title, value, icon: Icon, trend, trendValue, color }) => {
     gray: "from-slate-400 to-gray-600",
   };
 
+  const darkColorClasses = {
+    blue: "from-blue-600 to-blue-800",
+    green: "from-emerald-600 to-emerald-800",
+    purple: "from-violet-600 to-violet-800",
+    orange: "from-orange-600 to-orange-800",
+    pink: "from-pink-600 to-rose-800",
+    teal: "from-teal-600 to-cyan-800",
+    red: "from-red-600 to-rose-800",
+    indigo: "from-indigo-600 to-indigo-800",
+    yellow: "from-amber-600 to-orange-800",
+    gray: "from-slate-600 to-gray-800",
+  };
+
   return (
     <Card
-      className={`bg-gradient-to-br ${colorClasses[color]} text-white border-0`}
+      className={`bg-gradient-to-br ${
+        darkMode ? darkColorClasses[color] : colorClasses[color]
+      } text-white border-0`}
     >
       <div className="flex items-center justify-between">
         <div>
@@ -93,7 +129,8 @@ const getUniqueColors = () => {
 };
 
 const EmployerDashboard = () => {
-  const user= useAuth();
+  const user = useAuth();
+  const { darkMode } = useTheme();
   const navigate = useNavigate();
   const [dashboardData, setDashboardData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -167,7 +204,11 @@ const EmployerDashboard = () => {
               headerAction={
                 dashboardData?.data?.recentJobs?.length > 4 && (
                   <button
-                    className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+                    className={`text-sm ${
+                      darkMode
+                        ? "text-purple-500 hover:text-purple-400"
+                        : "text-purple-600 hover:text-purple-700"
+                    } font-medium`}
                     onClick={() => navigate("/manage-jobs")}
                   >
                     View all
@@ -188,13 +229,29 @@ const EmployerDashboard = () => {
                     ))
                 ) : (
                   <div className="text-center py-12">
-                    <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                      <Building2 className="w-10 h-10 text-gray-400" />
+                    <div
+                      className={`w-24 h-24 mx-auto ${
+                        darkMode ? "bg-gray-800" : "bg-gray-100"
+                      } rounded-full flex items-center justify-center mb-4`}
+                    >
+                      <Building2
+                        className={`w-10 h-10 ${
+                          darkMode ? "text-gray-500" : "text-gray-400"
+                        }`}
+                      />
                     </div>
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                    <h3
+                      className={`text-lg font-medium ${
+                        darkMode ? "text-gray-200" : "text-gray-900"
+                      } mb-2`}
+                    >
                       No jobs found
                     </h3>
-                    <p className="text-gray-500">
+                    <p
+                      className={`${
+                        darkMode ? "text-gray-400" : "text-gray-500"
+                      }`}
+                    >
                       Try adjusting your search or filter criteria
                     </p>
                   </div>
@@ -208,7 +265,11 @@ const EmployerDashboard = () => {
               headerAction={
                 dashboardData?.data?.recentApplications?.length > 4 && (
                   <button
-                    className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+                    className={`text-sm ${
+                      darkMode
+                        ? "text-purple-500 hover:text-purple-400"
+                        : "text-purple-600 hover:text-purple-700"
+                    } font-medium`}
                     onClick={() => navigate("/manage-jobs")}
                   >
                     View all
@@ -230,13 +291,29 @@ const EmployerDashboard = () => {
                     ))
                 ) : (
                   <div className="text-center py-12">
-                    <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                      <User className="w-10 h-10 text-gray-400" />
+                    <div
+                      className={`w-24 h-24 mx-auto ${
+                        darkMode ? "bg-gray-800" : "bg-gray-100"
+                      } rounded-full flex items-center justify-center mb-4`}
+                    >
+                      <User
+                        className={`w-10 h-10 ${
+                          darkMode ? "text-gray-500" : "text-gray-400"
+                        }`}
+                      />
                     </div>
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                    <h3
+                      className={`text-lg font-medium ${
+                        darkMode ? "text-gray-200" : "text-gray-900"
+                      } mb-2`}
+                    >
                       No applicants found
                     </h3>
-                    <p className="text-gray-500">
+                    <p
+                      className={`${
+                        darkMode ? "text-gray-400" : "text-gray-500"
+                      }`}
+                    >
                       Try adjusting your search or filter criteria
                     </p>
                   </div>
@@ -273,13 +350,21 @@ const EmployerDashboard = () => {
               ].map((action, index) => (
                 <button
                   key={index}
-                  className="flex items-center space-x-3 p-4 rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all duration-200 text-left"
+                  className={`flex items-center space-x-3 p-4 rounded-xl border ${
+                    darkMode
+                      ? "border-gray-700 hover:border-gray-600 shadow-[0_2px_6px_rgba(255,255,255,0.08)] hover:shadow-[0_4px_8px_rgba(255,255,255,0.12)]"
+                      : "border-gray-200 hover:border-gray-300 hover:shadow-sm"
+                  } transition-all duration-200 text-left`}
                   onClick={() => navigate(action.path)}
                 >
                   <div className={`p-2 rounded-lg ${action.color}`}>
                     <action.icon className="h-5 w-5" />
                   </div>
-                  <span className="font-medium text-gray-900">
+                  <span
+                    className={`font-medium ${
+                      darkMode ? "text-gray-300" : "text-gray-900"
+                    }`}
+                  >
                     {action.title}
                   </span>
                 </button>

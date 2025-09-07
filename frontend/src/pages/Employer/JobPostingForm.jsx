@@ -158,7 +158,7 @@ export default function JobPostingForm() {
   }
   return (
     <DashboardLayout activeMenu="post-job">
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 ">
+      <div className="min-h-screen py-[50px]">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white shadow-xl rounded-2xl p-6">
             <div className="flex items-center justify-between mb-8">

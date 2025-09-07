@@ -4,29 +4,50 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { NAVIGATION_MENU } from "../../utils/data";
 import ProfileDropdown from "./ProfileDropdown";
+import { useTheme } from "../../context/ThemeContext";
 
 const NavigationItem = ({ item, isActive, onClick, isCollapsed }) => {
+  const { darkMode } = useTheme();
   const Icon = item.icon;
   return (
     <button
       onClick={() => onClick(item.id)}
       className={`w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-300 group ${
         isActive
-          ? "bg-purple-100 text-purple-700 shadow-sm shadow-purple-50"
+          ? darkMode
+            ? "bg-purple-800 text-purple-400 shadow-sm shadow-gray-700 backdrop-opacity-75"
+            : "bg-purple-100 text-purple-700 shadow-sm shadow-purple-50"
+          : darkMode
+          ? "text-gray-300 hover:bg-gray-800 hover:text-white"
           : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
       }`}
     >
       <Icon
         className={`w-6 h-6 flex-shrink-0 ${
-          isActive ? "text-purple-600" : "text-gray-500"
+          isActive
+            ? darkMode
+              ? "text-purple-500"
+              : "text-purple-600"
+            : darkMode
+            ? "text-gray-400"
+            : "text-gray-500"
         }`}
       />
-      {!isCollapsed && <span className="ml-3 truncate">{item.name}</span>}
+      {!isCollapsed && (
+        <span
+          className={`ml-3 truncate ${
+            darkMode ? "text-gray-200" : "text-gray-800"
+          }`}
+        >
+          {item.name}
+        </span>
+      )}
     </button>
   );
 };
 
 const DashboardLayout = ({ activeMenu, children }) => {
+  const { darkMode } = useTheme();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -72,7 +93,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
   const sidebarCollapsed = false; // ✅ keeps full width sidebar on desktop
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className={`flex h-screen ${darkMode ? "bg-gray-950" : "bg-gray-50"}`}>
       {/* Side Bar */}
       <div
         className={`fixed inset-y-0 left-0 z-50 transition-transform duration-300 transform ${
@@ -81,22 +102,69 @@ const DashboardLayout = ({ activeMenu, children }) => {
               ? "translate-x-0"
               : "-translate-x-full"
             : "translate-x-0"
-        } ${
-          sidebarCollapsed ? "w-16" : "w-64"
-        } bg-white border-r border-gray-200`}
+        } ${sidebarCollapsed ? "w-16" : "w-64"} border-r ${
+          darkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"
+        }`}
       >
-        <div className="flex items-center h-16 border-b border-gray-200 pl-6">
+        {/* Sidebar Header (inside sidebar div) */}
+        <div
+          className={`flex items-center justify-between h-16 border-b px-6 ${
+            darkMode ? "border-gray-700" : "border-gray-200"
+          }`}
+        >
           {!sidebarCollapsed ? (
             <Link className="flex items-center space-x-3" to="/">
-              <div className="h-8 w-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <Briefcase className="h-5 w-5 text-white" />
+              <div
+                className={`h-8 w-8 bg-gradient-to-br ${
+                  darkMode
+                    ? "from-blue-700 to-purple-700"
+                    : "from-blue-600 to-purple-600"
+                } rounded-lg flex items-center justify-center`}
+              >
+                <Briefcase
+                  className={`h-5 w-5 ${
+                    darkMode ? "text-gray-300" : "text-white"
+                  }`}
+                />
               </div>
-              <span className="text-gray-900 font-bold text-xl">JobFinder</span>
+              <span
+                className={`${
+                  darkMode ? "text-white" : "text-gray-900"
+                } font-bold text-xl`}
+              >
+                JobFinder
+              </span>
             </Link>
           ) : (
-            <div className="h-8 w-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-              <Building2 className="h-5 w-5 text-white" />
+            <div
+              className={`h-8 w-8 bg-gradient-to-br ${
+                darkMode
+                  ? "from-blue-700 to-purple-700"
+                  : "from-blue-600 to-purple-600"
+              } rounded-xl flex items-center justify-center`}
+            >
+              <Building2
+                className={`h-5 w-5 ${
+                  darkMode ? "text-gray-300" : "text-white"
+                }`}
+              />
             </div>
+          )}
+
+          {/* Mobile Close Button */}
+          {isMobile && sideBarOpen && (
+            <button
+              className={`p-2 rounded-xl transition-colors duration-300 ${
+                darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"
+              }`}
+              onClick={toggleSidebar}
+            >
+              <X
+                className={`h-5 w-5 ${
+                  darkMode ? "text-gray-200" : "text-gray-600"
+                }`}
+              />
+            </button>
           )}
         </div>
 
@@ -114,10 +182,18 @@ const DashboardLayout = ({ activeMenu, children }) => {
 
         <div className="absolute bottom-4 left-4 right-4">
           <button
-            className="w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-300"
+            className={`w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-lg ${
+              darkMode
+                ? "text-gray-300 hover:bg-gray-800 hover:text-gray-100"
+                : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+            } transition-all duration-300`}
             onClick={logout}
           >
-            <LogOut className="h-5 w-5 flex-shrink-0 text-gray-500" />
+            <LogOut
+              className={`h-5 w-5 flex-shrink-0 ${
+                darkMode ? "text-gray-300" : "text-gray-500"
+              }`}
+            />
             {!sidebarCollapsed && <span className="ml-3">Logout</span>}
           </button>
         </div>
@@ -126,7 +202,9 @@ const DashboardLayout = ({ activeMenu, children }) => {
       {/* Mobile Overlay */}
       {isMobile && sideBarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-25 z-40 backdrop-blur-sm"
+          className={`fixed inset-0 ${
+            darkMode ? "bg-white" : "bg-gray-900"
+          } bg-opacity-25 z-40 backdrop-blur-sm`}
           onClick={() => setSideBarOpen(false)}
         />
       )}
@@ -138,25 +216,49 @@ const DashboardLayout = ({ activeMenu, children }) => {
         }`}
       >
         {/* Top Navbar */}
-        <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 h-16 flex items-center justify-between px-6 sticky top-0 z-30">
+        <header
+          className={`border-b ${
+            darkMode
+              ? "bg-gray-900 border-gray-700"
+              : "bg-white/80 border-gray-200"
+          } backdrop-blur-sm h-16 flex items-center justify-between px-6 sticky top-0 z-30`}
+        >
           <div className="flex items-center space-x-4">
             {isMobile && (
               <button
-                className="p-2 rounded-xl hover:bg-gray-100 transition-colors duration-300"
+                className={`p-2 rounded-xl ${
+                  darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"
+                } transition-colors duration-300`}
                 onClick={toggleSidebar}
               >
                 {sideBarOpen ? (
-                  <X className="h-5 w-5 text-gray-600" />
+                  <X
+                    className={`h-5 w-5 ${
+                      darkMode ? "text-gray-200" : "text-gray-600"
+                    }`}
+                  />
                 ) : (
-                  <Menu className="h-5 w-5 text-gray-600" />
+                  <Menu
+                    className={`h-5 w-5 ${
+                      darkMode ? "text-gray-200" : "text-gray-600"
+                    }`}
+                  />
                 )}
               </button>
             )}
             <div>
-              <h1 className="text-base font-semibold text-gray-900">
+              <h1
+                className={`text-base font-semibold ${
+                  darkMode ? "text-gray-200" : "text-gray-900"
+                }`}
+              >
                 Welcome Back!
               </h1>
-              <p className="text-sm text-gray-500 hidden sm:block">
+              <p
+                className={`text-sm ${
+                  darkMode ? "text-gray-300" : "text-gray-500"
+                } hidden sm:block`}
+              >
                 Here's what's happening with your job today.
               </p>
             </div>
@@ -179,7 +281,9 @@ const DashboardLayout = ({ activeMenu, children }) => {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto overflow-x-hidden p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto overflow-x-hidden p-6">
+          {children}
+        </main>
       </div>
     </div>
   );
