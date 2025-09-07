@@ -40,7 +40,7 @@ export default function Header() {
             <span
               className={`text-xl font-semibold ${
                 darkMode ? "text-white" : "text-gray-900"
-              }`}
+              } hidden sm:inline`}
             >
               JobFinder
             </span>
@@ -79,9 +79,11 @@ export default function Header() {
             {isAuthenticated ? (
               <div className="flex items-center space-x-3">
                 <span
-                  className={`${darkMode ? "text-gray-300" : "text-gray-600"}`}
+                  className={`${
+                    darkMode ? "text-gray-300" : "text-gray-600"
+                  } hidden sm:inline`}
                 >
-                  Continue to {user?.fullName}
+                  Continue to
                 </span>
                 <a
                   href={
@@ -89,7 +91,7 @@ export default function Header() {
                       ? "/employer-dashboard"
                       : "/find-jobs"
                   }
-                  className={` px-4 py-2 rounded-md bg-gradient-to-r ${
+                  className={`px-4 py-2 rounded-md bg-gradient-to-r ${
                     darkMode
                       ? "from-blue-700 to-purple-700 text-white hover:bg-gradient-to-r hover:from-blue-800 hover:to-purple-800"
                       : "from-blue-600 to-purple-600 text-white hover:bg-gradient-to-r hover:from-blue-700 hover:to-purple-700"
@@ -116,7 +118,7 @@ export default function Header() {
                     darkMode
                       ? "from-blue-700 to-purple-700 hover:from-blue-800 hover:to-purple-800 text-gray-100"
                       : "from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
-                  } px-6 py-2 rounded-lg font-medium transition-all duration-300 shadow-sm hover:shadow-md`}
+                  } px-4 py-2 rounded-lg font-medium transition-all duration-300 shadow-sm hover:shadow-md mr-3 whitespace-nowrap`}
                 >
                   Sign Up
                 </a>
