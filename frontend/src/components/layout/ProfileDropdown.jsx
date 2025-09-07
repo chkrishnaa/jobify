@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
+import ToggleMode from "../../pages/LandingPage/components/Toggle/ToggleMode";
+import { useTheme } from "../../context/ThemeContext";
 
 const ProfileDropdown = ({
   isOpen,
@@ -11,6 +13,7 @@ const ProfileDropdown = ({
   onLogout,
   userRole,
 }) => {
+  const { darkMode } = useTheme();
   const navigate = useNavigate();
 
   return (
@@ -57,9 +60,24 @@ const ProfileDropdown = ({
             View Profile
           </a>
           <div className="border-t border-gray-100 mt-2 pt-2">
-            <a href="#" className="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors" onClick={onLogout}>
+            <a
+              href="#"
+              className="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+              onClick={onLogout}
+            >
               Sign Out
             </a>
+
+            <div className="flex items-center justify-between px-4 py-2">
+              <p className="text-sm font-medium text-gray-900">
+                {darkMode ? "Dark Mode" : "Light Mode"}
+              </p>
+              <div
+                onClick={(e) => e.stopPropagation()} 
+              >
+                <ToggleMode />
+              </div>
+            </div>
           </div>
         </div>
       )}

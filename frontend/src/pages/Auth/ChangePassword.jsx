@@ -3,8 +3,11 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { Lock, Eye, EyeOff, AlertCircle } from "lucide-react";
+import { useTheme } from "../../context/ThemeContext";
 
 const ChangePassword = ({ email }) => {
+    const { darkMode } = useTheme();
+
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [formState, setFormState] = useState({
@@ -63,13 +66,21 @@ const ChangePassword = ({ email }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md"
+        className={`${
+          darkMode
+            ? "bg-gray-900 shadow-[0_4px_12px_rgba(255,255,255,0.3)]"
+            : "bg-white shadow-lg"
+        } p-8 rounded-xl w-full max-w-md`}
       >
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2
+            className={`text-2xl font-bold ${
+              darkMode ? "text-gray-300" : "text-gray-900"
+            } mb-2`}
+          >
             Change Password
           </h2>
-          <p className="text-gray-600">
+          <p className={`${darkMode ? "text-gray-400" : "text-gray-600"} mb-4`}>
             Create a new password for your account
           </p>
         </div>
@@ -77,7 +88,11 @@ const ChangePassword = ({ email }) => {
         <form className="space-y-4" onSubmit={changePassword}>
           {/* New Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              className={`block text-sm font-medium ${
+                darkMode ? "text-gray-200" : "text-gray-700"
+              } mb-2`}
+            >
               Password
             </label>
             <div className="relative">
@@ -86,11 +101,17 @@ const ChangePassword = ({ email }) => {
                 type={formState.showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`w-full pl-10 pr-10 py-3 rounded-lg border ${
-                  formState.errors.password
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } focus:ring-blue-500 focus:border-transparent transition-colors`}
+                className={`w-full pl-10 pr-4 py-3 rounded-lg border appearance-none 
+  ${
+    formState.errors.password
+      ? darkMode
+        ? "border-red-400 bg-gray-800 text-gray-300 placeholder-gray-500"
+        : "border-red-500 bg-white text-gray-900 placeholder-gray-400"
+      : darkMode
+      ? "border-gray-600 bg-gray-800 text-gray-300 placeholder-gray-500"
+      : "border-gray-300 bg-white text-gray-900 placeholder-gray-400"
+  }
+  focus:ring-blue-500 focus:border-transparent transition-colors`}
                 placeholder="Enter new password"
               />
               <button
@@ -111,7 +132,11 @@ const ChangePassword = ({ email }) => {
               </button>
             </div>
             {formState.errors.password && (
-              <p className="text-red-500 text-sm mt-1 flex items-center">
+              <p
+                className={`${
+                  darkMode ? "text-red-400" : "text-red-500"
+                } text-sm mt-1 flex items-center`}
+              >
                 <AlertCircle className="h-4 w-4 mr-1" />
                 {formState.errors.password}
               </p>
@@ -120,7 +145,11 @@ const ChangePassword = ({ email }) => {
 
           {/* Confirm Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              className={`block text-sm font-medium ${
+                darkMode ? "text-gray-200" : "text-gray-700"
+              } mb-2`}
+            >
               Confirm Password
             </label>
             <div className="relative">
@@ -129,11 +158,17 @@ const ChangePassword = ({ email }) => {
                 type={formState.showPassword ? "text" : "password"}
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
-                className={`w-full pl-10 pr-10 py-3 rounded-lg border ${
-                  formState.errors.confirm
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } focus:ring-blue-500 focus:border-transparent transition-colors`}
+                className={`w-full pl-10 pr-4 py-3 rounded-lg border appearance-none 
+  ${
+    formState.errors.password
+      ? darkMode
+        ? "border-red-400 bg-gray-800 text-gray-300 placeholder-gray-500"
+        : "border-red-500 bg-white text-gray-900 placeholder-gray-400"
+      : darkMode
+      ? "border-gray-600 bg-gray-800 text-gray-300 placeholder-gray-500"
+      : "border-gray-300 bg-white text-gray-900 placeholder-gray-400"
+  }
+  focus:ring-blue-500 focus:border-transparent transition-colors`}
                 placeholder="Confirm password"
               />
               <button
@@ -154,7 +189,11 @@ const ChangePassword = ({ email }) => {
               </button>
             </div>
             {formState.errors.confirm && (
-              <p className="text-red-500 text-sm mt-1 flex items-center">
+              <p
+                className={`${
+                  darkMode ? "text-red-400" : "text-red-500"
+                } text-sm mt-1 flex items-center`}
+              >
                 <AlertCircle className="h-4 w-4 mr-1" />
                 {formState.errors.confirm}
               </p>
@@ -163,7 +202,11 @@ const ChangePassword = ({ email }) => {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+            className={`w-full bg-gradient-to-r ${
+              darkMode
+                ? "from-blue-700 to-purple-700 text-gray-300 hover:from-blue-800 hover:to-purple-800"
+                : "from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+            } py-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
           >
             Change Password
           </button>

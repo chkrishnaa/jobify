@@ -15,10 +15,12 @@ import { validateEmail } from "../../utils/helper";
 import { useAuth } from "../../context/AuthContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
+import { useTheme } from "../../context/ThemeContext";
 
 const Login = () => {
   const { login } = useAuth();
-
+  const { darkMode } = useTheme();
+  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -118,7 +120,6 @@ const Login = () => {
           user.role === "employer" ? "/employer-dashboard" : "/find-jobs";
         window.location.href = redirectPath;
       }, 1500);
-      
     } catch (error) {
       setFormState((prev) => ({
         ...prev,
@@ -132,49 +133,90 @@ const Login = () => {
     }
   };
 
-  if (formState.success) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center"
-        >
-          <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4"></CheckCircle>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Welcome Back!
-          </h2>
-          <p className="text-gray-600 mb-4">
-            You have been successfully logged in.
-          </p>
-          <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full mx-auto" />
-          <p className="text-sm text-gray-500 mt-2">
-            Redirecting to your dashboard ...
-          </p>
-        </motion.div>
-      </div>
-    );
-  }
+   if (formState.success) {
+     return (
+       <div
+         className={`min-h-screen flex items-center justify-center ${
+           darkMode ? "bg-gray-950" : "bg-gray-50"
+         } px-4`}
+       >
+         <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.6 }}
+           className={`${
+             darkMode
+               ? "bg-gray-900 shadow-[0_4px_12px_rgba(255,255,255,0.3)]"
+               : "bg-white shadow-lg"
+           } p-8 rounded-xl w-full max-w-md text-center`}
+         >
+           <CheckCircle
+             className={`w-16 h-16 ${
+               darkMode ? "text-green-600" : "text-green-500"
+             } mx-auto mb-4`}
+           ></CheckCircle>
+           <h2
+             className={`text-2xl font-bold ${
+               darkMode ? "text-gray-300" : "text-gray-900"
+             } mb-2`}
+           >
+             Welcome Back!
+           </h2>
+           <p
+             className={`${darkMode ? "text-gray-400" : "text-gray-600"} mb-4`}
+           >
+             You have been successfully logged in.
+           </p>
+           <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full mx-auto" />
+           <p
+             className={`text-sm ${
+               darkMode ? "text-gray-400" : "text-gray-500"
+             } mt-2`}
+           >
+             Redirecting to your dashboard ...
+           </p>
+         </motion.div>
+       </div>
+     );
+   }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div
+      className={`min-h-screen flex items-center justify-center ${
+        darkMode ? "bg-gray-950" : "bg-gray-50"
+      } px-4`}
+    >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md"
+        className={`${
+          darkMode
+            ? "bg-gray-900 shadow-[0_4px_12px_rgba(255,255,255,0.3)]"
+            : "bg-white shadow-lg"
+        } p-8 rounded-xl w-full max-w-md`}
       >
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-garay-900 mb-2">
+          <h2
+            className={`text-2xl font-bold ${
+              darkMode ? "text-gray-300" : "text-gray-900"
+            } mb-2`}
+          >
             Welcome back
           </h2>
-          <p className="text-gray-600">Sign in to your JobFinder account.</p>
+          <p className={`${darkMode ? "text-gray-400" : "text-gray-600"}`}>
+            Sign in to your JobFinder account.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email Address */}
           <div className="">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              className={`block text-sm font-medium ${
+                darkMode ? "text-gray-200" : "text-gray-700"
+              } mb-2`}
+            >
               Email Address
             </label>
             <div className="relative">
@@ -184,15 +226,27 @@ const Login = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                  formState.errors.email ? "border-red-500" : "border-gray-300"
-                } focus:ring-blue-500 focus:border-transparent transition-colors`}
+                className={`w-full pl-10 pr-4 py-3 rounded-lg border appearance-none 
+  ${
+    formState.errors.email
+      ? darkMode
+        ? "border-red-400 bg-gray-800 text-gray-300 placeholder-gray-500"
+        : "border-red-500 bg-white text-gray-900 placeholder-gray-400"
+      : darkMode
+      ? "border-gray-600 bg-gray-800 text-gray-300 placeholder-gray-500"
+      : "border-gray-300 bg-white text-gray-900 placeholder-gray-400"
+  }
+  focus:ring-blue-500 focus:border-transparent transition-colors`}
                 placeholder="Enter your email"
-              ></input>
+              />
             </div>
 
             {formState.errors.email && (
-              <p className="text-red-500 text-sm mt-1 flex items-center">
+              <p
+                className={`${
+                  darkMode ? "text-red-400" : "text-red-500"
+                } text-sm mt-1 flex items-center`}
+              >
                 <AlertCircle className="w-4 h-4 mr-1"></AlertCircle>
                 {formState.errors.email}
               </p>
@@ -201,7 +255,11 @@ const Login = () => {
 
           {/* Password */}
           <div className="">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              className={`block text-sm font-medium ${
+                darkMode ? "text-gray-200" : "text-gray-700"
+              } mb-2`}
+            >
               Password
             </label>
             <div className="relative">
@@ -211,11 +269,17 @@ const Login = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
-                  formState.errors.password
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } focus:ring-blue-500 focus:border-transparent transition-colors`}
+                className={`w-full pl-10 pr-4 py-3 rounded-lg border appearance-none 
+  ${
+    formState.errors.password
+      ? darkMode
+        ? "border-red-400 bg-gray-800 text-gray-300 placeholder-gray-500"
+        : "border-red-500 bg-white text-gray-900 placeholder-gray-400"
+      : darkMode
+      ? "border-gray-600 bg-gray-800 text-gray-300 placeholder-gray-500"
+      : "border-gray-300 bg-white text-gray-900 placeholder-gray-400"
+  }
+  focus:ring-blue-500 focus:border-transparent transition-colors`}
                 placeholder="Enter your password"
               ></input>
 
@@ -238,7 +302,11 @@ const Login = () => {
             </div>
 
             {formState.errors.password && (
-              <p className="text-red-500 text-sm mt-1 flex items-center">
+              <p
+                className={`${
+                  darkMode ? "text-red-400" : "text-red-500"
+                } text-sm mt-1 flex items-center`}
+              >
                 <AlertCircle className="h-4 w-4 mr-1"></AlertCircle>{" "}
                 {formState.errors.password}
               </p>
@@ -247,8 +315,18 @@ const Login = () => {
 
           {formState.errors.submit && (
             <>
-              <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-                <p className="text-red-700 text-sm flex items-center">
+              <div
+                className={`${
+                  darkMode
+                    ? "border border-red-500 bg-red-100"
+                    : "border border-red-200 bg-red-50"
+                } rounded-lg p-3`}
+              >
+                <p
+                  className={`${
+                    darkMode ? "text-red-400" : "text-red-500"
+                  } text-sm flex items-center`}
+                >
                   <AlertCircle className="w-4 h-4 mr-2" />
                   {formState.errors.submit}
                 </p>
@@ -268,7 +346,11 @@ const Login = () => {
           <button
             type="submit"
             disabled={formState.loading}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            className={`w-full bg-gradient-to-r ${
+              darkMode
+                ? "from-blue-700 to-purple-700 text-gray-300 hover:from-blue-800 hover:to-purple-800"
+                : "from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+            } py-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
           >
             {formState.loading ? (
               <>
@@ -281,47 +363,84 @@ const Login = () => {
           </button>
 
           <div className="flex items-center space-x-3">
-            <div className="flex-1 h-px bg-gray-300"></div>
-            <span className="text-gray-600 whitespace-nowrap">
+            <div
+              className={`flex-1 h-px ${
+                darkMode ? "bg-gray-600" : "bg-gray-300"
+              }`}
+            ></div>
+            <span
+              className={`${
+                darkMode ? "text-gray-400" : "text-gray-600"
+              } text-sm whitespace-nowrap`}
+            >
               or Sign In with
             </span>
-            <div className="flex-1 h-px bg-gray-300"></div>
+            <div
+              className={`flex-1 h-px ${
+                darkMode ? "bg-gray-600" : "bg-gray-300"
+              }`}
+            ></div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <button className="bg-white text-gray-600 w-full h-full rounded-lg py-2 hover:bg-blue-200 hover:text-gray-800 transition-all duration-300 space-x-5 border-2 border-blue-600">
+            <button
+              className={`border-2 border-blue-600 ${
+                darkMode ? "hover:bg-blue-300" : "bg-white hover:bg-blue-200"
+              } w-full h-full rounded-lg py-2 transition-all duration-300 space-x-2 sm:space-x-5`}
+            >
               <i className="fa-brands fa-google text-blue-600"></i>
               <span className="font-semibold text-blue-600">Google</span>
             </button>
 
-            <button className="bg-white text-gray-600 w-full h-full rounded-lg py-2 hover:bg-purple-200 hover:text-gray-800 transition-all duration-300 space-x-5 border-2 border-purple-600">
-              <i className="fa-brands fa-facebook-f text-purple-600 hover:text-blue-700 duration-300 transition-colors"></i>{" "}
-              <span className="font-semibold text-purple-600 hover:text-purple-700 duration-300 transition-colors">
-                Facebook
-              </span>
+            <button
+              className={`border-2 border-purple-600 ${
+                darkMode
+                  ? "hover:bg-purple-300"
+                  : "bg-white hover:bg-purple-200"
+              } w-full h-full rounded-lg py-2 transition-all duration-300 space-x-2 sm:space-x-5`}
+            >
+              <i className="fa-brands fa-facebook-f text-purple-600"></i>{" "}
+              <span className="font-semibold text-purple-600 ">Facebook</span>
             </button>
           </div>
 
           <div className="flex items-center gap-2">
-            <input type="checkbox" className="h-4 w-4" />
-            <span className="text-sm text-gray-600 font-semibold">
+            <input
+              type="checkbox"
+              className="h-4 w-4 rounded-full border border-gray-400 bg-transparent 
+             checked:bg-blue-500 checked:border-blue-500 
+             focus:ring-2 focus:ring-blue-400 transition-colors"
+            />
+            <span
+              className={`text-sm ${
+                darkMode ? "text-gray-400" : "text-gray-600"
+              } font-semibold`}
+            >
               I agree to the{" "}
-              <Link to="/terms-of-service" className="text-blue-600 hover:underline">
+              <Link
+                to="/terms-of-service"
+                className="text-blue-600 hover:underline"
+              >
                 Terms of Service
               </Link>{" "}
               and{" "}
-              <Link to="/privacy-policy" className="text-purple-600 hover:underline">
+              <Link
+                to="/privacy-policy"
+                className="text-purple-600 hover:underline"
+              >
                 Privacy Policy
               </Link>
             </span>
           </div>
 
           <div className="text-center font-semibold">
-            <p className="text-gray-600">
+            <p className={`${darkMode ? "text-gray-400" : "text-gray-600"}`}>
               Don't have an account?{" "}
               <a
                 href="/signup"
-                className="text-blue-600 hover:text-blue-700 font-medium"
+                className={`text-blue-600 ${
+                  darkMode ? "hover:text-blue-500" : "hover:text-blue-700"
+                } font-medium`}
               >
                 Create an account
               </a>

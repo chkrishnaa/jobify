@@ -26,45 +26,55 @@ import { AuthProvider } from "./context/AuthContext";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import TermsOfService from "./pages/LandingPage/components/TermsOfservice";
 import PrivacyPolicy from "./pages/LandingPage/components/PrivacyPolicy";
+import { ThemeProvider } from "./context/ThemeContext";
 
 export default function App() {
+
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+      <ThemeProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
 
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
 
-          <Route path="/find-jobs" element={<JobSeekerDashboard />} />
-          <Route path="/job/:jobId" element={<JobDetails />} />
-          <Route path="/saved-jobs" element={<SavedJobs />} />
-          <Route path="/profile" element={<UserProfile />} />
+            <Route path="/find-jobs" element={<JobSeekerDashboard />} />
+            <Route path="/job/:jobId" element={<JobDetails />} />
+            <Route path="/saved-jobs" element={<SavedJobs />} />
+            <Route path="/profile" element={<UserProfile />} />
 
-          <Route element={<ProtectedRoute requiredRole="employer" />}>
-            <Route path="/manage-jobs" element={<ManageJobs />} />
-            <Route path="/employer-dashboard" element={<EmployerDashboard />} />
-            <Route path="/post-job" element={<JobPostingForm />} />
-            <Route path="/applicants" element={<ApplicationViewer />} />
-            <Route path="/company-profile" element={<EmployerProfilePage />} />
-          </Route>
+            <Route element={<ProtectedRoute requiredRole="employer" />}>
+              <Route path="/manage-jobs" element={<ManageJobs />} />
+              <Route
+                path="/employer-dashboard"
+                element={<EmployerDashboard />}
+              />
+              <Route path="/post-job" element={<JobPostingForm />} />
+              <Route path="/applicants" element={<ApplicationViewer />} />
+              <Route
+                path="/company-profile"
+                element={<EmployerProfilePage />}
+              />
+            </Route>
 
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Router>
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Router>
 
-      <Toaster
-        toastOptions={{
-          className: "",
-          style: {
-            fontSize: "13px",
-          },
-        }}
-      />
+        <Toaster
+          toastOptions={{
+            className: "",
+            style: {
+              fontSize: "13px",
+            },
+          }}
+        />
+      </ThemeProvider>
     </AuthProvider>
   );
 }

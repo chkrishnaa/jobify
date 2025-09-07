@@ -3,9 +3,11 @@ import { motion } from "framer-motion";
 import { Search, ArrowRight, Users, Building2, TrendingUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
+import {useTheme} from "../../../context/ThemeContext"
 
 const Hero = () => {
   const { user, isAuthenticated } = useAuth();
+  const { darkMode } = useTheme();
   const navigate = useNavigate();
 
   const stats = [
@@ -16,17 +18,29 @@ const Hero = () => {
   ];
 
   return (
-    <section className="pt-24 pb-16 bg-white min-h-screen flex items-center">
+    <section
+      className={`pt-24 pb-16 ${
+        darkMode ? "bg-gray-950" : "bg-white"
+      } min-h-screen flex items-center`}
+    >
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight pt-10"
+            className={`text-4xl md:text-5xl lg:text-6xl font-bold ${
+              darkMode ? "text-white" : "text-gray-900"
+            } mb-6 leading-tight pt-10`}
           >
             Find your Dream Job or
-            <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mt-2">
+            <span
+              className={`block bg-gradient-to-r ${
+                darkMode
+                  ? "from-blue-700 to-purple-700"
+                  : "from-blue-600 to-purple-600"
+              } bg-clip-text text-transparent mt-2`}
+            >
               Perfect Hire
             </span>
           </motion.h1>
@@ -35,7 +49,9 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-xl md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed"
+            className={`text-xl md:text-xl ${
+              darkMode ? "text-gray-200" : "text-gray-600"
+            } mb-12 max-w-2xl mx-auto leading-relaxed`}
           >
             Connect talentend professionals with innovative companies. Your next
             career move or perfect candidate is just one click away.
@@ -50,18 +66,26 @@ const Hero = () => {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="group bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-8 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center space-x-2"
+              className={`group bg-gradient-to-r ${
+                darkMode
+                  ? "from-blue-700 to-purple-700 text-gray-200 hover:from-blue-800 hover:to-purple-800"
+                  : "from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+              } py-4 px-8 rounded-xl font-semibold text-lg  transition-all duration-300 shadow-lg hover:shadow-xl flex items-center space-x-2`}
               onClick={() => navigate("/find-jobs")}
             >
               <Search className="w-5 h-5" />
-              <span>Find Jobs</span>
+              <span className={`text-white`}>Find Jobs</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </motion.button>
 
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="bg-white border-2 border-gray-200 text-gray-700 py-4 px-8 rounded-xl font-semibold text-lg hover:border-gray-300 hover:bg-gray-50 transition-all duration-300 shadow-sm hover:shadow-md"
+              className={`border-2 ${
+                darkMode
+                  ? "border-gray-300 bg-gray-900 text-gray-200 hover:border-gray-500 hover:bg-gray-800"
+                  : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50"
+              } py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-300 shadow-sm hover:shadow-md`}
               onClick={() => {
                 navigate(
                   isAuthenticated && user?.role === "employer"
@@ -86,15 +110,35 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 + index * 0.1, duration: 0.6 }}
-                className="flex flex-col items-center space-y-2 p-4 rounded-xl hover:bg-gray-50 transition-colors"
+                className={`flex flex-col items-center space-y-2 p-4 rounded-xl ${
+                  darkMode ? "hover:bg-gray-800" : "hover:bg-gray-50"
+                } transition-colors`}
               >
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl flex items-center justify-center mb-2">
-                  <stat.icon className="w-6 h-6 text-blue-600" />
+                <div
+                  className={`w-12 h-12 bg-gradient-to-r ${
+                    darkMode
+                      ? "from-blue-200 to-purple-400"
+                      : "from-blue-100 to-purple-100"
+                  } rounded-xl flex items-center justify-center mb-2`}
+                >
+                  <stat.icon
+                    className={`w-6 h-6 ${
+                      darkMode ? "text-blue-700" : "text-blue-600"
+                    }`}
+                  />
                 </div>
-                <div className="text-2xl font-bold text-gray-900">
+                <div
+                  className={`text-2xl font-bold ${
+                    darkMode ? "text-white" : "text-gray-900"
+                  }`}
+                >
                   {stat.value}
                 </div>
-                <div className="text-sm text-gray-600 font-medium">
+                <div
+                  className={`text-sm ${
+                    darkMode ? "text-gray-200" : "text-gray-600"
+                  } font-medium`}
+                >
                   {stat.label}
                 </div>
               </motion.div>
@@ -104,9 +148,23 @@ const Hero = () => {
       </div>
 
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-blue-300 rounded-full blur-3xl opacity-30"></div>
-        <div className="absolute bottom-20 right-10 w-50 h-50 bg-purple-300 rounded-full blur-3xl opacity-30"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full blur-3xl opacity-30"></div>
+        <div
+          className={`absolute top-20 left-10 w-32 h-32 ${
+            darkMode ? "bg-blue-400" : "bg-blue-300"
+          } rounded-full blur-3xl opacity-30`}
+        ></div>
+        <div
+          className={`absolute bottom-20 right-10 w-50 h-50 ${
+            darkMode ? "bg-purple-400" : "bg-purple-300"
+          } rounded-full blur-3xl opacity-30`}
+        ></div>
+        <div
+          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r ${
+            darkMode
+              ? "from-purple-600 to-blue-600"
+              : "from-purple-400 to-blue-400"
+          } rounded-full blur-3xl opacity-30`}
+        ></div>
       </div>
     </section>
   );

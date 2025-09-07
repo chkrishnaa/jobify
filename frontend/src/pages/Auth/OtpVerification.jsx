@@ -3,8 +3,11 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { AlertCircle, Mail } from "lucide-react";
+import { useTheme } from "../../context/ThemeContext";
 
 const OtpVerification = ({ onSuccess }) => {
+    const { darkMode } = useTheme();
+
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState(new Array(6).fill("")); // 6-digit OTP
   const [sent, setSent] = useState(false);
@@ -86,23 +89,35 @@ const OtpVerification = ({ onSuccess }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md"
+        className={`${
+          darkMode
+            ? "bg-gray-900 shadow-[0_4px_12px_rgba(255,255,255,0.3)]"
+            : "bg-white shadow-lg"
+        } p-8 rounded-xl w-full max-w-md`}
       >
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2
+            className={`text-2xl font-bold ${
+              darkMode ? "text-gray-300" : "text-gray-900"
+            } mb-2`}
+          >
             {!sent ? "Forgot Password" : "Verify OTP"}
           </h2>
-          <p className="text-gray-600">
+          <p className={`${darkMode ? "text-gray-400" : "text-gray-600"} mb-4`}>
             {!sent
               ? "Enter your email to receive OTP."
               : "Enter your OTP for verification"}
           </p>
         </div>
 
-        {!sent ? (
+        {sent ? (
           <form className="space-y-4" onSubmit={sendOtp}>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                className={`block text-sm font-medium ${
+                  darkMode ? "text-gray-200" : "text-gray-700"
+                } mb-2`}
+              >
                 Email Address
               </label>
               <div className="relative">
@@ -112,7 +127,11 @@ const OtpVerification = ({ onSuccess }) => {
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
+                    darkMode
+                      ? "border-gray-700 placeholder-gray-500"
+                      : "border-gray-300 placeholder-gray-400"
+                  } focus:ring-blue-500 focus:border-transparent transition-colors`}
                   placeholder="Enter your email"
                   required
                 />
@@ -120,7 +139,11 @@ const OtpVerification = ({ onSuccess }) => {
             </div>
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+              className={`w-full bg-gradient-to-r ${
+                darkMode
+                  ? "from-blue-700 to-purple-700 text-gray-300 hover:from-blue-800 hover:to-purple-800"
+                  : "from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+              } py-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
             >
               Send OTP
             </button>
@@ -128,7 +151,11 @@ const OtpVerification = ({ onSuccess }) => {
         ) : (
           <form className="space-y-4" onSubmit={verifyOtp}>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                className={`block text-sm font-medium ${
+                  darkMode ? "text-gray-200" : "text-gray-700"
+                } mb-2`}
+              >
                 Enter OTP
               </label>
               <div className="flex justify-between gap-1 sm:gap-2">
@@ -145,8 +172,14 @@ const OtpVerification = ({ onSuccess }) => {
                     className={`w-9 h-9 sm:w-12 sm:h-12 text-center text-lg font-semibold rounded-md sm:rounded-lg border focus:ring-blue-600 focus:border-transparent transition-colors
                       ${
                         digit
-                          ? "border-gray-200"
-                          : "bg-gray-100 border-gray-300"
+                          ? `${
+                              darkMode ? "border-gray-200" : "border-gray-200"
+                            }`
+                          : `${
+                              darkMode
+                                ? "bg-gray-800 border-gray-600"
+                                : "bg-gray-100 border-gray-300"
+                            }`
                       }
                       ${
                         index > 0 && otp[index - 1] === ""
@@ -159,7 +192,11 @@ const OtpVerification = ({ onSuccess }) => {
             </div>
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+              className={`w-full bg-gradient-to-r ${
+                darkMode
+                  ? "from-blue-700 to-purple-700 text-gray-300 hover:from-blue-800 hover:to-purple-800"
+                  : "from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+              } py-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
             >
               Verify OTP
             </button>
