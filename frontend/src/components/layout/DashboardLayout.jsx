@@ -208,9 +208,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
       {/* Mobile Overlay */}
       {isMobile && sideBarOpen && (
         <div
-          className={`fixed inset-0 ${
-            darkMode ? "bg-white" : "bg-gray-900"
-          } bg-opacity-25 z-40 backdrop-blur-sm`}
+          className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
           onClick={() => setSideBarOpen(false)}
         />
       )}
