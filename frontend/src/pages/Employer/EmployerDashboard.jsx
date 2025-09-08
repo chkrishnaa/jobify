@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Briefcase, Users, CheckCircle2, TrendingUp, Plus, Building2, User } from "lucide-react";
+import { Briefcase, Users, CheckCircle2, TrendingUp, Plus, Building2, User, User2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import axiosInstance from "../../utils/axiosInstance";
@@ -10,6 +10,7 @@ import JobDashboardCard from "../../components/Cards/JobDashboardCard";
 import ApplicantDashboardCard from "../../components/Cards/ApplicantDashboardCard";
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
+import NoResults from "../../components/NoResults";
 
 const Card = ({ title, headerAction, subtitle, className, children }) => {
   const { darkMode } = useTheme();
@@ -161,7 +162,7 @@ const EmployerDashboard = () => {
   return (
     <DashboardLayout activeMenu="employer-dashboard">
       {isLoading ? (
-        <LoadingSpinner />
+        <LoadingSpinner text="Finding Amazing Opportunities ..." />
       ) : (
         <div className="max-w-7xl mx-auto space-y-8 ">
           {/* Dashboard Stats */}
@@ -228,33 +229,11 @@ const EmployerDashboard = () => {
                       />
                     ))
                 ) : (
-                  <div className="text-center py-12">
-                    <div
-                      className={`w-24 h-24 mx-auto ${
-                        darkMode ? "bg-gray-800" : "bg-gray-100"
-                      } rounded-full flex items-center justify-center mb-4`}
-                    >
-                      <Building2
-                        className={`w-10 h-10 ${
-                          darkMode ? "text-gray-500" : "text-gray-400"
-                        }`}
-                      />
-                    </div>
-                    <h3
-                      className={`text-lg font-medium ${
-                        darkMode ? "text-gray-200" : "text-gray-900"
-                      } mb-2`}
-                    >
-                      No jobs found
-                    </h3>
-                    <p
-                      className={`${
-                        darkMode ? "text-gray-400" : "text-gray-500"
-                      }`}
-                    >
-                      Try adjusting your search or filter criteria
-                    </p>
-                  </div>
+                  <NoResults
+                    icon={Building2}
+                    title="No Jobs posted"
+                    text="You haven't posted any jobs yet.<br/>Create a job to start receiving applications."
+                  />
                 )}
               </div>
             </Card>
@@ -290,33 +269,11 @@ const EmployerDashboard = () => {
                       />
                     ))
                 ) : (
-                  <div className="text-center py-12">
-                    <div
-                      className={`w-24 h-24 mx-auto ${
-                        darkMode ? "bg-gray-800" : "bg-gray-100"
-                      } rounded-full flex items-center justify-center mb-4`}
-                    >
-                      <User
-                        className={`w-10 h-10 ${
-                          darkMode ? "text-gray-500" : "text-gray-400"
-                        }`}
-                      />
-                    </div>
-                    <h3
-                      className={`text-lg font-medium ${
-                        darkMode ? "text-gray-200" : "text-gray-900"
-                      } mb-2`}
-                    >
-                      No applicants found
-                    </h3>
-                    <p
-                      className={`${
-                        darkMode ? "text-gray-400" : "text-gray-500"
-                      }`}
-                    >
-                      Try adjusting your search or filter criteria
-                    </p>
-                  </div>
+                  <NoResults
+                    icon={User2}
+                    title="No Applicants found"
+                    text="We couldn't find any applicants."
+                  />
                 )}
               </div>
             </Card>

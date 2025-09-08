@@ -8,8 +8,10 @@ import uploadImage from "../../utils/uploadImage";
 
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import EditProfileDetails from "../../pages/Employer/EditProfileDetails";
+import { useTheme } from "../../context/ThemeContext";
 
 const EmployerProfilePage = () => {
+  const { darkMode } = useTheme();
   const { user, updateUser } = useAuth();
 
   const [profileData, setProfileData] = useState({
@@ -105,15 +107,29 @@ const EmployerProfilePage = () => {
 
   return (
     <DashboardLayout activeMenu="company-profile">
-      <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <div className="min-h-screen py-8 px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-6 px-8 flex justify-between items-center">
-              <h1 className="text-xl font-medium text-white">
+          <div
+            className={`bg-gradient-to-br ${
+              darkMode
+                ? "from-gray-800 to-gray-950 shadow-[0_4px_12px_rgba(255,255,255,0.4)]"
+                : "from-white to-gray-200 shadow-lg"
+            } rounded-xl overflow-hidden`}
+          >
+            <div
+              className={`bg-gradient-to-r ${
+                darkMode
+                  ? "from-purple-700 to-purple-800"
+                  : "from-purple-500 to-purple-600"
+              } py-6 px-8 flex justify-between items-center`}
+            >
+              <h1 className={`text-xl font-medium text-white`}>
                 Employer Profile
               </h1>
               <button
-                className="bg-white/20 hover:bg-opacity-10 text-white px-4 py-2 rounded-lg transition-colors flex items-center space-x-2"
+                className={`bg-white/20 ${
+                  darkMode ? "text-gray-200" : "text-white"
+                } hover:bg-opacity-10 px-4 py-2 rounded-lg transition-colors flex items-center space-x-2`}
                 onClick={() => setEditMode(true)}
               >
                 <Edit3 className="w-4 h-4"></Edit3>
@@ -124,20 +140,36 @@ const EmployerProfilePage = () => {
             <div className="p-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="space-y-6">
-                  <h2 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
+                  <h2
+                    className={`text-lg font-semibold border-b ${
+                      darkMode
+                        ? "border-gray-700 text-gray-300"
+                        : "border-gray-200 text-gray-800"
+                    } pb-2`}
+                  >
                     Personal Information
                   </h2>
                   <div className="flex items-center space-x-4">
                     <img
                       src={profileData.avatar}
                       alt="Avatar"
-                      className="w-20 h-20 rounded-full object-cover border-4 border-purple-100"
+                      className={`w-20 h-20 rounded-full object-cover border-4 ${
+                        darkMode ? "border-purple-400" : "border-purple-200"
+                      }`}
                     />
                     <div className="">
-                      <h3 className="text-lg font-semibold text-gray-800">
+                      <h3
+                        className={`text-lg font-semibold ${
+                          darkMode ? "text-gray-300" : "text-gray-800"
+                        }`}
+                      >
                         {profileData.name}
                       </h3>
-                      <div className="flex items-center text-sm text-gray-600 mt-1">
+                      <div
+                        className={`flex items-center text-sm ${
+                          darkMode ? "text-gray-400" : "text-gray-600"
+                        } mt-1`}
+                      >
                         <Mail className="w-4 h-4 mr-2" />
                         <span>{profileData.email}</span>
                       </div>
@@ -146,18 +178,36 @@ const EmployerProfilePage = () => {
                 </div>
 
                 <div className="space-y-6">
-                  <h2 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">Company Information</h2>
+                  <h2
+                    className={`text-lg font-semibold border-b ${
+                      darkMode
+                        ? "border-gray-700 text-gray-300"
+                        : "border-gray-200 text-gray-800"
+                    } pb-2`}
+                  >
+                    Company Information
+                  </h2>
                   <div className="flex items-center space-x-4">
                     <img
                       src={profileData.companyLogo}
                       alt="Company Logo"
-                      className="w-20 h-20 rounded-lg object-cover border-4 border-purple-100"
+                      className={`w-20 h-20 rounded-lg object-cover border-4 ${
+                        darkMode ? "border-purple-400" : "border-purple-200"
+                      }`}
                     />
                     <div className="">
-                      <h3 className="text-lg font-semibold text-gray-800">
+                      <h3
+                        className={`text-lg font-semibold ${
+                          darkMode ? "text-gray-300" : "text-gray-800"
+                        }`}
+                      >
                         {profileData.companyName}
                       </h3>
-                      <div className="flex items-center text-sm text-gray-600 mt-1">
+                      <div
+                        className={`flex items-center text-sm ${
+                          darkMode ? "text-gray-400" : "text-gray-600"
+                        } mt-1`}
+                      >
                         <Building2 className="w-4 h-4 mr-2"></Building2>
                         <span>Company</span>
                       </div>
@@ -167,10 +217,22 @@ const EmployerProfilePage = () => {
               </div>
 
               <div className="mt-8">
-                <h2 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-6">
+                <h2
+                  className={`text-lg font-semibold border-b ${
+                    darkMode
+                      ? "border-gray-700 text-gray-300"
+                      : "border-gray-200 text-gray-800"
+                  } pb-2`}
+                >
                   About Company
                 </h2>
-                <p className="text-sm text-gray-700 leading-relaxed bg-gray-100 p-6 rounded-lg">
+                <p
+                  className={`mt-4 text-sm ${
+                    darkMode
+                      ? "text-gray-300 bg-gray-900"
+                      : "text-gray-600 bg-gray-200"
+                  } leading-relaxed p-2 sm:p-6 rounded-lg text-justify whitespace-pre-line`}
+                >
                   {profileData.companyDescription}
                 </p>
               </div>

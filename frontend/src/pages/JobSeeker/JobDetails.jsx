@@ -107,7 +107,7 @@ const JobDetails = () => {
                     <Clock className="h-4 w-4"></Clock>
                     <span className="">
                       {jobDetails.createdAt
-                        ? moment(jobDetails.createdAt).format("Do MM, YYYY")
+                        ? moment(jobDetails.createdAt).format("Do MMM, YYYY")
                         : "N/A"}
                     </span>
                   </div>

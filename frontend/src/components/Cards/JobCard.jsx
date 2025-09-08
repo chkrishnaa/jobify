@@ -91,7 +91,7 @@ return `${formatNumber(min)}/m`
           <span className="flex items-center gap-1.5">
             <Calendar className="w-3.5 h-3.5" />
             {job?.createdAt
-              ? moment(job.createdAt).format("Do MM, YYYY")
+              ? moment(job.createdAt).format("Do MMM, YYYY")
               : "N/A"}
           </span>
         </div>

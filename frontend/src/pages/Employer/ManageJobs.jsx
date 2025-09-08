@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import { useTheme } from "../../context/ThemeContext";
+import NoResults from "../../components/NoResults";
 
 export default function ManageJobs() {
   const { darkMode } = useTheme();
@@ -177,7 +178,7 @@ export default function ManageJobs() {
           company: job?.company?.name,
           status: job?.isClosed ? "Closed" : "Active",
           applicants: job?.applicationCount || 0,
-          datePosted: moment(job?.createdAt).format("DD MM, YYYY"),
+          datePosted: moment(job?.createdAt).format("Do MMM, YYYY"),
           logo: job?.company?.companyLogo,
         }));
         setJobs(formattedJobs);
@@ -321,40 +322,12 @@ export default function ManageJobs() {
 
             {/* Table */}
             <div
-              className={`border ${
-                darkMode
-                  ? "bg-gray-800/80 border-white/20"
-                  : "bg-gray-200/50 border-gray-300"
+              className={` ${
+                darkMode ? "bg-gray-800/80" : "bg-gray-200/50"
               } backdrop-blur-sm rounded-2xl overflow-hidden w-full`}
             >
               {filteredAndSortedJobs.length === 0 && !isLoading ? (
-                <div className="text-center py-12">
-                  <div
-                    className={`w-24 h-24 mx-auto ${
-                      darkMode ? "bg-gray-700" : "bg-gray-100"
-                    } rounded-full flex items-center justify-center mb-4`}
-                  >
-                    <Search
-                      className={`w-10 h-10 ${
-                        darkMode ? "text-gray-400" : "text-gray-500"
-                      }`}
-                    ></Search>
-                  </div>
-                  <h3
-                    className={`text-lg font-medium ${
-                      darkMode ? "text-gray-200" : "text-gray-900"
-                    } mb-2`}
-                  >
-                    No jobs found
-                  </h3>
-                  <p
-                    className={`${
-                      darkMode ? "text-gray-400" : "text-gray-500"
-                    }`}
-                  >
-                    Try adjusting your search or filter criteria
-                  </p>
-                </div>
+                <NoResults icon={Search} title="No jobs found" text="Try adjusting your search or filter criteria." />
               ) : (
                 <div
                   className="w-full overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
@@ -362,7 +335,7 @@ export default function ManageJobs() {
                 >
                   <table
                     className={`w-full divide-y ${
-                      darkMode ? "divide-gray-800" : "divide-gray-300"
+                      darkMode ? "divide-gray-700" : "divide-gray-200"
                     }`}
                   >
                     <thead
@@ -410,9 +383,7 @@ export default function ManageJobs() {
                         </th>
                         <th
                           className={`px-6 py-4 text-left text-xs font-semibold ${
-                            darkMode
-                              ? "text-gray-300"
-                              : "text-gray-600"
+                            darkMode ? "text-gray-300" : "text-gray-600"
                           } uppercase tracking-wider cursor-pointer transition-all duration-300`}
                         >
                           Actions
@@ -521,10 +492,10 @@ export default function ManageJobs() {
                                   {job.status === "Active" ? (
                                     <button
                                       onClick={() => handleStatusChange(job.id)}
-                                      className={`flex items-center gap-2 text-xs hover:border ${
+                                      className={`flex items-center gap-2 text-xs ${
                                         darkMode
-                                          ? "text-red-400 hover:text-red-200 hover:bg-orange-600 hover:border-red-700"
-                                          : "text-red-500 hover:text-red-700 hover:bg-orange-100 hover:border-red-200"
+                                          ? "text-red-400 hover:text-red-800 hover:bg-orange-300"
+                                          : "text-red-500 hover:text-red-700 hover:bg-orange-100"
                                       } p-2 rounded-lg transition-colors duration-300`}
                                     >
                                       <X className="h-4 w-4" />
@@ -535,10 +506,10 @@ export default function ManageJobs() {
                                   ) : (
                                     <button
                                       onClick={() => handleStatusChange(job.id)}
-                                      className={`flex items-center gap-2 text-xs hover:border ${
+                                      className={`flex items-center gap-2 text-xs ${
                                         darkMode
-                                          ? "text-green-400 hover:text-green-200 hover:bg-green-600 hover:border-green-900"
-                                          : "text-green-500 hover:text-green-700 hover:bg-green-100 hover:border-green-300"
+                                          ? "text-green-400 hover:text-green-800 hover:bg-green-300"
+                                          : "text-green-500 hover:text-green-700 hover:bg-green-100"
                                       } p-2 rounded-lg transition-colors duration-300`}
                                     >
                                       <Plus className="h-4 w-4" />
@@ -552,8 +523,8 @@ export default function ManageJobs() {
                                   <button
                                     className={`${
                                       darkMode
-                                        ? "text-red-400 hover:text-red-300 hover:bg-orange-700"
-                                        : "text-red-500 hover:text-red-700 hover:bg-orange-200"
+                                        ? "text-red-400 hover:text-red-800 hover:bg-orange-300"
+                                        : "text-red-500 hover:text-red-700 hover:bg-orange-100"
                                     } p-2 rounded-lg transition-colors duration-300`}
                                     onClick={() => handleDeleteJob(job.id)}
                                   >
