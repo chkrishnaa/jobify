@@ -6,12 +6,13 @@ import { Lock, Eye, EyeOff, AlertCircle } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 
 const ChangePassword = ({ email }) => {
-    const { darkMode } = useTheme();
+  const { darkMode } = useTheme();
 
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [formState, setFormState] = useState({
     showPassword: false,
+    showConfirmPassword: false, // separate toggle
     errors: {
       password: "",
       confirm: "",
@@ -102,16 +103,16 @@ const ChangePassword = ({ email }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className={`w-full pl-10 pr-4 py-3 rounded-lg border appearance-none 
-  ${
-    formState.errors.password
-      ? darkMode
-        ? "border-red-400 bg-gray-800 text-gray-300 placeholder-gray-500"
-        : "border-red-500 bg-white text-gray-900 placeholder-gray-400"
-      : darkMode
-      ? "border-gray-600 bg-gray-800 text-gray-300 placeholder-gray-500"
-      : "border-gray-300 bg-white text-gray-900 placeholder-gray-400"
-  }
-  focus:ring-blue-500 focus:border-transparent transition-colors`}
+                  ${
+                    formState.errors.password
+                      ? darkMode
+                        ? "border-red-400 bg-gray-800 text-gray-300 placeholder-gray-500"
+                        : "border-red-500 bg-white text-gray-900 placeholder-gray-400"
+                      : darkMode
+                      ? "border-gray-600 bg-gray-800 text-gray-300 placeholder-gray-500"
+                      : "border-gray-300 bg-white text-gray-900 placeholder-gray-400"
+                  }
+                  focus:ring-blue-500 focus:border-transparent transition-colors`}
                 placeholder="Enter new password"
               />
               <button
@@ -122,7 +123,7 @@ const ChangePassword = ({ email }) => {
                     showPassword: !prev.showPassword,
                   }))
                 }
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300"
               >
                 {formState.showPassword ? (
                   <EyeOff className="h-5 w-5" />
@@ -155,20 +156,20 @@ const ChangePassword = ({ email }) => {
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
-                type={formState.showPassword ? "text" : "password"}
+                type={formState.showConfirmPassword ? "text" : "password"}
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
                 className={`w-full pl-10 pr-4 py-3 rounded-lg border appearance-none 
-  ${
-    formState.errors.password
-      ? darkMode
-        ? "border-red-400 bg-gray-800 text-gray-300 placeholder-gray-500"
-        : "border-red-500 bg-white text-gray-900 placeholder-gray-400"
-      : darkMode
-      ? "border-gray-600 bg-gray-800 text-gray-300 placeholder-gray-500"
-      : "border-gray-300 bg-white text-gray-900 placeholder-gray-400"
-  }
-  focus:ring-blue-500 focus:border-transparent transition-colors`}
+                  ${
+                    formState.errors.confirm
+                      ? darkMode
+                        ? "border-red-400 bg-gray-800 text-gray-300 placeholder-gray-500"
+                        : "border-red-500 bg-white text-gray-900 placeholder-gray-400"
+                      : darkMode
+                      ? "border-gray-600 bg-gray-800 text-gray-300 placeholder-gray-500"
+                      : "border-gray-300 bg-white text-gray-900 placeholder-gray-400"
+                  }
+                  focus:ring-blue-500 focus:border-transparent transition-colors`}
                 placeholder="Confirm password"
               />
               <button
@@ -176,12 +177,12 @@ const ChangePassword = ({ email }) => {
                 onClick={() =>
                   setFormState((prev) => ({
                     ...prev,
-                    showPassword: !prev.showPassword,
+                    showConfirmPassword: !prev.showConfirmPassword,
                   }))
                 }
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300"
               >
-                {formState.showPassword ? (
+                {formState.showConfirmPassword ? (
                   <EyeOff className="h-5 w-5" />
                 ) : (
                   <Eye className="h-5 w-5" />
@@ -202,11 +203,17 @@ const ChangePassword = ({ email }) => {
 
           <button
             type="submit"
-            className={`w-full bg-gradient-to-r ${
-              darkMode
-                ? "from-blue-700 to-purple-700 text-gray-300 hover:from-blue-800 hover:to-purple-800"
-                : "from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
-            } py-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
+            disabled={!password.trim() || !confirm.trim()} // disable if empty
+            className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2
+              ${
+                !password.trim() || !confirm.trim()
+                  ? darkMode
+                    ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                    : "bg-gray-500 text-gray-200 cursor-not-allowed"
+                  : darkMode
+                  ? "bg-gradient-to-r from-blue-700 to-purple-700 text-gray-300 hover:from-blue-800 hover:to-purple-800"
+                  : "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+              }`}
           >
             Change Password
           </button>

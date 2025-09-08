@@ -110,7 +110,7 @@ const OtpVerification = ({ onSuccess }) => {
           </p>
         </div>
 
-        {sent ? (
+        {!sent ? (
           <form className="space-y-4" onSubmit={sendOtp}>
             <div>
               <label
@@ -129,8 +129,8 @@ const OtpVerification = ({ onSuccess }) => {
                   onChange={(e) => setEmail(e.target.value)}
                   className={`w-full pl-10 pr-4 py-3 rounded-lg border ${
                     darkMode
-                      ? "border-gray-700 placeholder-gray-500"
-                      : "border-gray-300 placeholder-gray-400"
+                      ? "text-gray-300 border-gray-700 placeholder-gray-500"
+                      : "text-gray-700 border-gray-300 placeholder-gray-400"
                   } focus:ring-blue-500 focus:border-transparent transition-colors`}
                   placeholder="Enter your email"
                   required
@@ -139,11 +139,17 @@ const OtpVerification = ({ onSuccess }) => {
             </div>
             <button
               type="submit"
-              className={`w-full bg-gradient-to-r ${
-                darkMode
-                  ? "from-blue-700 to-purple-700 text-gray-300 hover:from-blue-800 hover:to-purple-800"
-                  : "from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
-              } py-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
+              disabled={!email.trim()} // disable if email input is empty
+              className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2
+    ${
+      !email.trim()
+        ? darkMode
+          ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+          : "bg-gray-500 text-gray-200 cursor-not-allowed"
+        : darkMode
+        ? "bg-gradient-to-r from-blue-700 to-purple-700 text-gray-300 hover:from-blue-800 hover:to-purple-800"
+        : "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+    }`}
             >
               Send OTP
             </button>
@@ -169,7 +175,12 @@ const OtpVerification = ({ onSuccess }) => {
                     onChange={(e) => handleChange(e, index)}
                     onKeyDown={(e) => handleKeyDown(e, index)}
                     onPaste={handlePaste}
-                    className={`w-9 h-9 sm:w-12 sm:h-12 text-center text-lg font-semibold rounded-md sm:rounded-lg border focus:ring-blue-600 focus:border-transparent transition-colors
+                    className={`w-9 h-9 sm:w-12 sm:h-12 text-center text-lg font-semibold rounded-md sm:rounded-lg border                     ${
+                      darkMode
+                        ? "text-gray-300 border-gray-700 focus:ring-blue-700"
+                        : "text-gray-700 border-gray-300 focus:ring-blue-600"
+                    }
+ focus:border-transparent transition-colors
                       ${
                         digit
                           ? `${
@@ -192,11 +203,17 @@ const OtpVerification = ({ onSuccess }) => {
             </div>
             <button
               type="submit"
-              className={`w-full bg-gradient-to-r ${
-                darkMode
-                  ? "from-blue-700 to-purple-700 text-gray-300 hover:from-blue-800 hover:to-purple-800"
-                  : "from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
-              } py-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
+              disabled={otp.some((d) => d === "")} // disable if any OTP field empty
+              className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2
+    ${
+      otp.some((d) => d === "")
+        ? darkMode
+          ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+          : "bg-gray-500 text-gray-200 cursor-not-allowed"
+        : darkMode
+        ? "bg-gradient-to-r from-blue-700 to-purple-700 text-gray-300 hover:from-blue-800 hover:to-purple-800"
+        : "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+    }`}
             >
               Verify OTP
             </button>

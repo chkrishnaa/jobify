@@ -93,7 +93,13 @@ const DashboardLayout = ({ activeMenu, children }) => {
   const sidebarCollapsed = false; // ✅ keeps full width sidebar on desktop
 
   return (
-    <div className={`flex h-screen ${darkMode ? "bg-gray-950" : "bg-gray-50"}`}>
+    <div
+      className={`flex h-screen bg-gradient-to-br ${
+        darkMode
+          ? "bg-gray-950 from-blue-900 via-black to-purple-950"
+          : "from-blue-100 via-white to-purple-200"
+      } `}
+    >
       {/* Side Bar */}
       <div
         className={`fixed inset-y-0 left-0 z-50 transition-transform duration-300 transform ${

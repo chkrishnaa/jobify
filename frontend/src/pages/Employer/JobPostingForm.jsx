@@ -18,8 +18,10 @@ import InputField from "../../components/Input/InputField";
 import SelectField from "../../components/Input/SelectField";
 import TextAreaField from "../../components/Input/TextAreaField";
 import JobPostingPreview from "../../components/Cards/JobPostingPreview";
+import { useTheme } from "../../context/ThemeContext";
 
 export default function JobPostingForm() {
+  const { darkMode } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const jobId = location.state?.jobId || null;
@@ -149,7 +151,7 @@ export default function JobPostingForm() {
     return Object.keys(validationErrors).length === 0;
   };
 
-  if(isPreview){
+  if (isPreview) {
     return (
       <DashboardLayout activeMenu="post-job">
         <JobPostingPreview formData={formData} setIsPreview={setIsPreview} />
@@ -160,24 +162,50 @@ export default function JobPostingForm() {
     <DashboardLayout activeMenu="post-job">
       <div className="min-h-screen py-[50px]">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white shadow-xl rounded-2xl p-6">
+          <div
+            className={` ${
+              darkMode
+                ? "bg-gray-900 shadow-[0_6px_18px_rgba(255,255,255,0.4)]"
+                : "bg-white shadow-xl"
+            } rounded-2xl p-6`}
+          >
             <div className="flex items-center justify-between mb-8">
               <div className="">
-                <h2 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                <h2
+                  className={`text-xl font-bold bg-gradient-to-r ${
+                    darkMode ? "from-white to-gray-400" : "from-gray-900 to-gray-100"
+                  } bg-clip-text text-transparent`}
+                >
                   Post a New Job
                 </h2>
-                <p className="text-sm text-gray-600 mt-1">
+                <p
+                  className={`text-sm ${
+                    darkMode ? "text-gray-400" : "text-gray-600"
+                  } mt-1`}
+                >
                   Fill out the form below to create your job posting.
                 </p>
               </div>
               <div className="flex items-center space-x-2">
                 <button
-                  className="group flex items-center space-x-2 text-sm font-medium px-6 py-3 text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-purple-400 hover:to-purple-600 border border-gray-200 hover:border-transparent rounded-xl transition-all duration-300 shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y-0.5"
                   onClick={() => setIsPreview(true)}
-                  disabled={!isFormValid}
+                  disabled={!isFormValid()}
+                  className={`group flex items-center space-x-2 text-sm font-medium px-6 py-3 rounded-xl transition-all duration-300 shadow-lg ${
+                    !isFormValid()
+                      ? darkMode
+                        ? "bg-gray-700 text-gray-400 border border-gray-700 cursor-not-allowed shadow-gray-800"
+                        : "bg-gray-300 text-gray-600 border border-gray-300 cursor-not-allowed shadow-gray-300"
+                      : darkMode
+                      ? "text-gray-300 bg-gray-800/50 border border-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700 hover:border-transparent transform hover:-translate-y-0.5 shadow-gray-800 hover:shadow-xl"
+                      : "text-gray-600 bg-white/50 border border-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700 hover:border-transparent transform hover:-translate-y-0.5 shadow-gray-300 hover:shadow-xl"
+                  }`}
                 >
-                  <Eye className="h-4 w-4 transition-transform group-hover:-translate-x-1"></Eye>
-                  <span className="">Preview</span>
+                  <Eye
+                    className={`h-4 w-4 transition-transform ${
+                      isFormValid() ? "group-hover:-translate-x-1" : ""
+                    }`}
+                  />
+                  <span>Preview</span>
                 </button>
               </div>
             </div>
@@ -205,6 +233,7 @@ export default function JobPostingForm() {
                         handleInputChange("location", e.target.value)
                       }
                       error={errors.location}
+                      required
                       icon={MapPin}
                     />
                   </div>
@@ -266,8 +295,19 @@ export default function JobPostingForm() {
               />
 
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  Salaray Range <span className="text-red-500">*</span>
+                <label
+                  className={`block text-sm font-medium ${
+                    darkMode ? "text-gray-200" : "text-gray-700"
+                  }`}
+                >
+                  Salary Range{" "}
+                  <span
+                    className={`${
+                      darkMode ? "text-red-400" : "text-red-500"
+                    } ml-1`}
+                  >
+                    *
+                  </span>
                 </label>
 
                 <div className="grid grid-cols-3 gap-3">
@@ -282,7 +322,14 @@ export default function JobPostingForm() {
                       onChange={(e) =>
                         handleInputChange("salaryMin", e.target.value)
                       }
-                      className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg teaxt-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-20 transition-colors duration-300"
+                      className={`w-full pl-10 pr-3 py-2.5 border rounded-lg text-base 
+  focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-20 
+  transition-colors duration-300
+  ${
+    darkMode
+      ? "bg-gray-900 border-gray-700 text-gray-200 placeholder-gray-400"
+      : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
+  }`}
                     />
                   </div>
                   <div className="relative">
@@ -296,12 +343,23 @@ export default function JobPostingForm() {
                       onChange={(e) =>
                         handleInputChange("salaryMax", e.target.value)
                       }
-                      className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-purple-500  focus:ring-opacity-20 transition-colors duration-300"
+                      className={`w-full pl-10 pr-3 py-2.5 border rounded-lg text-base 
+  focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-20 
+  transition-colors duration-300
+  ${
+    darkMode
+      ? "bg-gray-900 border-gray-700 text-gray-200 placeholder-gray-400"
+      : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
+  }`}
                     />
                   </div>
                 </div>
                 {errors.salary && (
-                  <div className="flex items-center space-x-1 text-sm text-red-600">
+                  <div
+                    className={`flex items-center space-x-1 text-sm ${
+                      darkMode ? "text-red-400" : "text-red-600"
+                    }`}
+                  >
                     <AlertCircle className="h-4 w-4" />
                     <span>{errors.salary}</span>
                   </div>
@@ -310,13 +368,27 @@ export default function JobPostingForm() {
 
               <div className="pt-2">
                 <button
-                  className="w-full flex place-items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-offset-2 focus:ring-purple-500 disabled:bg-gray-400 disabled:cursor-not-allowed outline-none transition-colors duration-300"
+                  className={`w-full flex place-items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg
+${
+  darkMode
+    ? "text-gray-300 bg-purple-700 hover:bg-purple-800"
+    : "text-white bg-purple-600 hover:bg-purple-700"
+}                   focus:outline-none focus:ring-offset-2
+                    ${
+                      darkMode
+                        ? "focus:ring-purple-600 disabled:bg-gray-500"
+                        : "focus:ring-purple-500 disabled:bg-gray-400"
+                    } disabled:cursor-not-allowed outline-none transition-colors duration-300`}
                   onClick={handleSubmit}
                   disabled={isSubmitting || !isFormValid()}
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      <div
+                        className={`animate-spin rounded-full h-5 w-5 border-b-2 ${
+                          darkMode ? "border-gray-700" : "border-white"
+                        } mr-2`}
+                      ></div>
                       Publishing Job ...
                     </>
                   ) : (

@@ -277,7 +277,12 @@ const SignUp = () => {
                 darkMode ? "text-gray-200" : "text-gray-700"
               } mb-2`}
             >
-              Full Name *
+              Full Name{" "}
+              <span
+                className={`${darkMode ? "text-red-400" : "text-red-500"} ml-1`}
+              >
+                *
+              </span>
             </label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></User>
@@ -319,7 +324,12 @@ const SignUp = () => {
                 darkMode ? "text-gray-200" : "text-gray-700"
               } mb-2`}
             >
-              Email Address *
+              Email Address{" "}
+              <span
+                className={`${darkMode ? "text-red-400" : "text-red-500"} ml-1`}
+              >
+                *
+              </span>
             </label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></Mail>
@@ -361,7 +371,12 @@ const SignUp = () => {
                 darkMode ? "text-gray-200" : "text-gray-700"
               } mb-2`}
             >
-              Password *
+              Password{" "}
+              <span
+                className={`${darkMode ? "text-red-400" : "text-red-500"} ml-1`}
+              >
+                *
+              </span>
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></Lock>
@@ -491,7 +506,12 @@ const SignUp = () => {
                 darkMode ? "text-gray-200" : "text-gray-700"
               } mb-2`}
             >
-              I am a *
+              I am a{" "}
+              <span
+                className={`${darkMode ? "text-red-400" : "text-red-500"} ml-1`}
+              >
+                *
+              </span>
             </label>
             <div className="grid grid-cols-2 gap-4">
               <button

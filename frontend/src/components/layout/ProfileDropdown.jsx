@@ -141,13 +141,13 @@ const ProfileDropdown = ({
 
             <div className="flex items-center justify-between px-4 py-2">
               <p
-                className={`not-odd:text-sm font-medium ${
+                className={`not-odd:text-sm font-medium text-sm ${
                   darkMode ? "text-gray-300" : "text-gray-900"
                 }`}
               >
                 {darkMode ? "Light Mode" : "Dark Mode"}
               </p>
-              <div onClick={(e) => e.stopPropagation()}>
+              <div onClick={(e) => e.stopPropagation()} className="transform scale-75">
                 <ToggleMode />
               </div>
             </div>

@@ -15,8 +15,10 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import DashboardLayout from "../../components/layout/DashboardLayout";
+import { useTheme } from "../../context/ThemeContext";
 
 export default function ManageJobs() {
+  const { darkMode } = useTheme();
   const navigate = useNavigate();
   const tableContainerRef = useRef(null);
 
@@ -26,7 +28,7 @@ export default function ManageJobs() {
   const [sortField, setSortField] = useState("title");
   const [sortDirection, setSortDirection] = useState("asc");
   const [isLoading, setIsLoading] = useState(false);
-  const itemsPerPage = 15;
+  const itemsPerPage = 5;
 
   const [jobs, setJobs] = useState([]);
 
@@ -107,32 +109,59 @@ export default function ManageJobs() {
       <ChevronDown className="h-4 w-4 text-purple-600" />
     );
   };
-  const LoadingRow = () => (
-    <tr className="animate-pulse">
-      <td className="px-6 py-4">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
-          <div className="space-y-2">
-            <div className="h-4 bg-gray-200 rounded w-32"></div>
-            <div className="h-3 bg-gray-200 rounded w-24"></div>
-          </div>
-        </div>
-      </td>
-      <td className="px-6 py-4">
-        <div className="h-6 bg-gray-200 rounded-full w-16"></div>
-      </td>
-      <td className="px-6 py-4">
-        <div className="h-4 bg-gray-200 rounded w-12"></div>
-      </td>
-      <td className="px-6 py-4">
-        <div className="flex space-x-2">
-          <div className="h-8 bg-gray-200 rounded w-16"></div>
-          <div className="h-8 bg-gray-200 rounded w-16"></div>
-          <div className="h-8 bg-gray-200 rounded w-16"></div>
-        </div>
-      </td>
-    </tr>
-  );
+
+ const LoadingRow = ({ darkMode }) => (
+   <tr className="animate-pulse">
+     <td className="px-6 py-4">
+       <div className="flex items-center space-x-3">
+         <div
+           className={`w-10 h-10 rounded-full ${
+             darkMode ? "bg-gray-700" : "bg-gray-200"
+           }`}
+         ></div>
+         <div className="space-y-2">
+           <div
+             className={`h-4 rounded w-32 ${
+               darkMode ? "bg-gray-700" : "bg-gray-200"
+             }`}
+           ></div>
+           <div
+             className={`h-3 rounded w-24 ${
+               darkMode ? "bg-gray-700" : "bg-gray-200"
+             }`}
+           ></div>
+         </div>
+       </div>
+     </td>
+     <td className="px-6 py-4">
+       <div
+         className={`h-6 rounded-full w-16 ${
+           darkMode ? "bg-gray-700" : "bg-gray-200"
+         }`}
+       ></div>
+     </td>
+     <td className="px-6 py-4">
+       <div
+         className={`h-4 rounded w-12 ${
+           darkMode ? "bg-gray-700" : "bg-gray-200"
+         }`}
+       ></div>
+     </td>
+     <td className="px-6 py-4">
+       <div className="flex space-x-2">
+         {[1, 2, 3].map((i) => (
+           <div
+             key={i}
+             className={`h-8 rounded w-16 ${
+               darkMode ? "bg-gray-700" : "bg-gray-200"
+             }`}
+           ></div>
+         ))}
+       </div>
+     </td>
+   </tr>
+ );
+
 
   const getPostedJobs = async (disableLoader) => {
     setIsLoading(!disableLoader);
@@ -199,10 +228,20 @@ export default function ManageJobs() {
           <div className="mb-4">
             <div className="flex flex-row items-center justify-between gap-x-5">
               <div className="mb-4 sm:mb-8">
-                <h1 className="text-xl md:text-2xl font-semibold text-gray-900">
+                <h1
+                  className={`text-xl font-bold bg-gradient-to-r ${
+                    darkMode
+                      ? "from-white to-gray-400"
+                      : "from-gray-900 to-gray-100"
+                  } bg-clip-text text-transparent`}
+                >
                   Job Management
                 </h1>
-                <p className="text-sm text-gray-600 mt-1">
+                <p
+                  className={`text-sm ${
+                    darkMode ? "text-gray-300" : "text-gray-600"
+                  } mt-1`}
+                >
                   Manage your Job Postings and track your Applications here.
                 </p>
               </div>
@@ -216,11 +255,21 @@ export default function ManageJobs() {
             </div>
           </div>
 
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl shadow-black/5 border border-white/20 p-6 mb-8">
+          <div
+            className={`border ${
+              darkMode
+                ? "border-gray-900 bg-gray-900 shadow-[0_4px_12px_rgba(255,255,255,0.4)]"
+                : "border-white/20 bg-white/80 shadow-xl"
+            } backdrop-blur-sm rounded-2xl p-6 mb-8`}
+          >
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-4 w-4 text-gray-400"></Search>
+                  <Search
+                    className={`h-4 w-4 ${
+                      darkMode ? "text-gray-300" : "text-gray-400"
+                    }`}
+                  ></Search>
                 </div>
 
                 <input
@@ -228,7 +277,11 @@ export default function ManageJobs() {
                   placeholder="Search jobs ..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="block w-full pl-10 pr-4 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-0 transition-all duration-300 bg-gray-50/50 placeholder-gray-400"
+                  className={`block w-full pl-10 pr-4 py-2 text-sm border focus:ring-2 ${
+                    darkMode
+                      ? "border-gray-700  focus:ring-purple-600 bg-gray-800/50 placeholder-gray-300"
+                      : "border-gray-200  focus:ring-purple-500 bg-gray-50/50 placeholder-gray-400"
+                  } rounded-lg  outline-0 transition-all duration-300`}
                 />
               </div>
 
@@ -236,7 +289,11 @@ export default function ManageJobs() {
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="block w-full px-4 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300"
+                  className={`block w-full pl-10 pr-4 py-2 text-sm border focus:ring-2 ${
+                    darkMode
+                      ? "border-gray-700  focus:ring-purple-600 bg-gray-800/50 text-gray-100"
+                      : "border-gray-200  focus:ring-purple-500 bg-gray-50/50"
+                  } rounded-lg  outline-0 transition-all duration-300`}
                 >
                   <option value="All" className="">
                     All Status
@@ -252,23 +309,49 @@ export default function ManageJobs() {
             </div>
 
             <div className="my-4">
-              <p className="text-sm text-gray-600">
+              <p
+                className={`text-sm ${
+                  darkMode ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
                 Showing {paginatedJobs.length} of {filteredAndSortedJobs.length}{" "}
                 jobs
               </p>
             </div>
 
             {/* Table */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 overflow-hidden w-full">
+            <div
+              className={`border ${
+                darkMode
+                  ? "bg-gray-800/80 border-white/20"
+                  : "bg-gray-200/50 border-gray-300"
+              } backdrop-blur-sm rounded-2xl overflow-hidden w-full`}
+            >
               {filteredAndSortedJobs.length === 0 && !isLoading ? (
                 <div className="text-center py-12">
-                  <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                    <Search className="w-10 h-10 text-gray-400"></Search>
+                  <div
+                    className={`w-24 h-24 mx-auto ${
+                      darkMode ? "bg-gray-700" : "bg-gray-100"
+                    } rounded-full flex items-center justify-center mb-4`}
+                  >
+                    <Search
+                      className={`w-10 h-10 ${
+                        darkMode ? "text-gray-400" : "text-gray-500"
+                      }`}
+                    ></Search>
                   </div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  <h3
+                    className={`text-lg font-medium ${
+                      darkMode ? "text-gray-200" : "text-gray-900"
+                    } mb-2`}
+                  >
                     No jobs found
                   </h3>
-                  <p className="text-gray-500">
+                  <p
+                    className={`${
+                      darkMode ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
                     Try adjusting your search or filter criteria
                   </p>
                 </div>
@@ -277,11 +360,21 @@ export default function ManageJobs() {
                   className="w-full overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
                   ref={tableContainerRef}
                 >
-                  <table className="w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-100">
+                  <table
+                    className={`w-full divide-y ${
+                      darkMode ? "divide-gray-800" : "divide-gray-300"
+                    }`}
+                  >
+                    <thead
+                      className={`${darkMode ? "bg-gray-800" : "bg-gray-100"}`}
+                    >
                       <tr>
                         <th
-                          className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100/60 transition-all duration-300"
+                          className={`px-6 py-4 text-left text-xs font-semibold ${
+                            darkMode
+                              ? "text-gray-300 hover:bg-gray-700"
+                              : "text-gray-600 hover:bg-gray-200"
+                          } uppercase tracking-wider cursor-pointer transition-all duration-300`}
                           onClick={() => handleSort("title")}
                         >
                           <div className="flex items-center space-x-1">
@@ -290,7 +383,11 @@ export default function ManageJobs() {
                           </div>
                         </th>
                         <th
-                          className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100/60 transition-all duration-300"
+                          className={`px-6 py-4 text-left text-xs font-semibold ${
+                            darkMode
+                              ? "text-gray-300 hover:bg-gray-700"
+                              : "text-gray-600 hover:bg-gray-200"
+                          } uppercase tracking-wider cursor-pointer transition-all duration-300`}
                           onClick={() => handleSort("status")}
                         >
                           <div className="flex items-center space-x-1">
@@ -299,7 +396,11 @@ export default function ManageJobs() {
                           </div>
                         </th>
                         <th
-                          className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100/60 transition-all duration-300"
+                          className={`px-6 py-4 text-left text-xs font-semibold ${
+                            darkMode
+                              ? "text-gray-300 hover:bg-gray-700"
+                              : "text-gray-600 hover:bg-gray-200"
+                          } uppercase tracking-wider cursor-pointer transition-all duration-300`}
                           onClick={() => handleSort("applicants")}
                         >
                           <div className="flex items-center space-x-1">
@@ -307,12 +408,24 @@ export default function ManageJobs() {
                             <SortIcon field="applicants" />
                           </div>
                         </th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        <th
+                          className={`px-6 py-4 text-left text-xs font-semibold ${
+                            darkMode
+                              ? "text-gray-300"
+                              : "text-gray-600"
+                          } uppercase tracking-wider cursor-pointer transition-all duration-300`}
+                        >
                           Actions
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
+                    <tbody
+                      className={` ${
+                        darkMode
+                          ? "divide-gray-800 bg-gray-900"
+                          : "divide-gray-200 bg-white"
+                      }`}
+                    >
                       {isLoading
                         ? Array.from({ length: 5 }).map((_, index) => (
                             <LoadingRow key={index} />
@@ -320,14 +433,30 @@ export default function ManageJobs() {
                         : paginatedJobs.map((job) => (
                             <tr
                               key={job.id}
-                              className="hover:bg-purple-50/30 transition-all duration-300 border-b border-gray-100/60"
+                              className={`border-b ${
+                                darkMode
+                                  ? "border-gray-800 hover:bg-purple-950"
+                                  : "border-gray-100/60 hover:bg-purple-200"
+                              } transition-all duration-300`}
                             >
                               <td className="px-6 py-5 whitespace-nowrap">
                                 <div>
-                                  <div className="text-sm font-semibold text-gray-900">
+                                  <div
+                                    className={`text-sm font-semibold ${
+                                      darkMode
+                                        ? "text-gray-100"
+                                        : "text-gray-900"
+                                    }`}
+                                  >
                                     {job.title}
                                   </div>
-                                  <div className="text-xs text-gray-500 font-medium">
+                                  <div
+                                    className={`text-xs ${
+                                      darkMode
+                                        ? "text-gray-300"
+                                        : "text-gray-500"
+                                    } font-medium`}
+                                  >
                                     {job.company}
                                   </div>
                                 </div>
@@ -336,8 +465,16 @@ export default function ManageJobs() {
                                 <span
                                   className={`inline-flex px-3 py-1.5 text-xs font-semibold rounded-full ${
                                     job.status === "Active"
-                                      ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
-                                      : "bg-gray-100 text-gray-700 border border-gray-200"
+                                      ? `${
+                                          darkMode
+                                            ? "bg-green-300 text-green-900"
+                                            : "bg-green-100 text-green-700"
+                                        }`
+                                      : `${
+                                          darkMode
+                                            ? "bg-gray-800 text-gray-400"
+                                            : "bg-gray-300 text-gray-700"
+                                        }`
                                   }`}
                                 >
                                   {job.status}
@@ -345,7 +482,11 @@ export default function ManageJobs() {
                               </td>
                               <td className="px-6 py-5 whitespace-nowrap">
                                 <button
-                                  className="flex items-center text-sm text-purple-600 hover:text-purple-800 font-semibold transition-colors duration-300 hover:bg-purple-100 px-2 py-1 rounded-lg"
+                                  className={`flex items-center text-sm ${
+                                    darkMode
+                                      ? "text-purple-400 hover:text-purple-200 hover:bg-purple-800"
+                                      : "text-purple-600 hover:text-purple-800 hover:bg-purple-50"
+                                  } font-semibold transition-colors duration-300 px-2 py-1 rounded-lg`}
                                   onClick={() =>
                                     navigate("/applicants", {
                                       state: {
@@ -362,7 +503,11 @@ export default function ManageJobs() {
                                 <div className="flex space-x-2">
                                   {/* Edit Button */}
                                   <button
-                                    className="text-purple-600 hover:text-purple-800 p-2 rounded-lg hover:bg-purple-100 transition-colors duration-300"
+                                    className={`${
+                                      darkMode
+                                        ? "text-purple-400 hover:text-purple-200 hover:bg-purple-800"
+                                        : "text-purple-600 hover:text-purple-800 hover:bg-purple-50"
+                                    } p-2 rounded-lg transition-colors duration-300`}
                                     onClick={() =>
                                       navigate("/post-job", {
                                         state: { jobId: job.id },
@@ -376,7 +521,11 @@ export default function ManageJobs() {
                                   {job.status === "Active" ? (
                                     <button
                                       onClick={() => handleStatusChange(job.id)}
-                                      className="flex items-center gap-2 text-xs text-orange-600 hover:text-orange-800 p-2 rounded-lg hover:bg-orange-50 transition-colors duration-300"
+                                      className={`flex items-center gap-2 text-xs hover:border ${
+                                        darkMode
+                                          ? "text-red-400 hover:text-red-200 hover:bg-orange-600 hover:border-red-700"
+                                          : "text-red-500 hover:text-red-700 hover:bg-orange-100 hover:border-red-200"
+                                      } p-2 rounded-lg transition-colors duration-300`}
                                     >
                                       <X className="h-4 w-4" />
                                       <span className="hidden sm:inline w-[30px] text-left">
@@ -386,7 +535,11 @@ export default function ManageJobs() {
                                   ) : (
                                     <button
                                       onClick={() => handleStatusChange(job.id)}
-                                      className="flex items-center gap-2 text-xs text-green-600 hover:text-green-800 p-2 rounded-lg hover:bg-green-50 transition-colors duration-300"
+                                      className={`flex items-center gap-2 text-xs hover:border ${
+                                        darkMode
+                                          ? "text-green-400 hover:text-green-200 hover:bg-green-600 hover:border-green-900"
+                                          : "text-green-500 hover:text-green-700 hover:bg-green-100 hover:border-green-300"
+                                      } p-2 rounded-lg transition-colors duration-300`}
                                     >
                                       <Plus className="h-4 w-4" />
                                       <span className="hidden sm:inline w-[30px] text-left">
@@ -397,7 +550,11 @@ export default function ManageJobs() {
 
                                   {/* Delete Button */}
                                   <button
-                                    className="text-red-600 hover:text-red-800 p-2 rounded-lg hover:bg-red-50 transition-colors duration-300"
+                                    className={`${
+                                      darkMode
+                                        ? "text-red-400 hover:text-red-300 hover:bg-orange-700"
+                                        : "text-red-500 hover:text-red-700 hover:bg-orange-200"
+                                    } p-2 rounded-lg transition-colors duration-300`}
                                     onClick={() => handleDeleteJob(job.id)}
                                   >
                                     <Trash2 className="h-4 w-4" />
@@ -417,14 +574,22 @@ export default function ManageJobs() {
             <div className="mt-6 flex items-center justify-between">
               <div className="flex-1 flex justify-between sm:hidden">
                 <button
-                  className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className={`relative inline-flex items-center px-4 py-2 border ${
+                    darkMode
+                      ? "border-gray-600 text-gray-200 bg-gray-800 hover:bg-gray-900"
+                      : "border-gray-400 text-gray-700 bg-white hover:bg-gray-50"
+                  } text-sm font-medium rounded-md disabled:opacity-50 disabled:cursor-not-allowed`}
                   onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
                 >
                   Previous
                 </button>{" "}
                 <button
-                  className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className={`relative inline-flex items-center px-4 py-2 border ${
+                    darkMode
+                      ? "border-gray-600 text-gray-200 bg-gray-800 hover:bg-gray-900"
+                      : "border-gray-400 text-gray-700 bg-white hover:bg-gray-50"
+                  } text-sm font-medium rounded-md disabled:opacity-50 disabled:cursor-not-allowed`}
                   onClick={() =>
                     setCurrentPage(Math.min(totalPages, currentPage + 1))
                   }
@@ -433,9 +598,14 @@ export default function ManageJobs() {
                   Next
                 </button>
               </div>
+
               <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                 <div className="">
-                  <p className="text-sm text-gray-700">
+                  <p
+                    className={`text-sm ${
+                      darkMode ? "text-gray-200" : "text-gray-600"
+                    }`}
+                  >
                     Showing{" "}
                     <span className="font-medium">{startIndex + 1}</span> to{" "}
                     <span className="font-medium">
@@ -454,7 +624,11 @@ export default function ManageJobs() {
                 <div className="">
                   <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
                     <button
-                      className="relative inline-flex items-center p-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className={`relative inline-flex items-center p-2 rounded-l-md border ${
+                        darkMode
+                          ? "border-gray-600 text-gray-200 bg-gray-800 hover:bg-gray-900"
+                          : "border-gray-400 text-gray-700 bg-white hover:bg-gray-50"
+                      } text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed`}
                       onClick={() =>
                         setCurrentPage(Math.max(1, currentPage - 1))
                       }
@@ -469,11 +643,17 @@ export default function ManageJobs() {
                       <button
                         key={page}
                         onClick={() => setCurrentPage(page)}
-                        className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
-                          currentPage === page
-                            ? "z-10 bg-purple-100 border-purple-500 text-purple-600"
-                            : "bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
-                        }`}
+                        className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium
+  ${
+    currentPage === page
+      ? darkMode
+        ? "z-10 bg-purple-900 border-purple-500 text-purple-300"
+        : "z-10 bg-purple-100 border-purple-500 text-purple-600"
+      : darkMode
+      ? "border-gray-600 text-gray-200 bg-gray-800 hover:bg-gray-700"
+      : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"
+  }
+`}
                       >
                         {page}
                       </button>
@@ -483,7 +663,11 @@ export default function ManageJobs() {
                         setCurrentPage(Math.min(totalPages, currentPage + 1))
                       }
                       disabled={currentPage === totalPages}
-                      className="relative inline-flex items-center p-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className={`relative inline-flex items-center p-2 rounded-r-md border ${
+                        darkMode
+                          ? "border-gray-600 text-gray-200 bg-gray-800 hover:bg-gray-900"
+                          : "border-gray-400 text-gray-700 bg-white hover:bg-gray-50"
+                      } text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed`}
                     >
                       Next
                     </button>
