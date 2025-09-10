@@ -76,8 +76,8 @@ const SalaryRangeSlider = ({ filters, handleFilterChange }) => {
           className={`text-sm px-3 py-2 rounded
       ${darkMode ? "text-gray-300 bg-gray-800" : "text-gray-600 bg-gray-50"}`}
         >
-          Range: {minSalary ? `$${minSalary.toLocaleString()}` : "$0"} -{" "}
-          {maxSalary ? `$${maxSalary.toLocaleString()}` : "No limit"}
+          Range: {minSalary ? `₹${minSalary.toLocaleString()}` : "₹0"} -{" "}
+          {maxSalary ? `₹${maxSalary.toLocaleString()}` : "No limit"}
         </div>
       ) : null}
     </div>

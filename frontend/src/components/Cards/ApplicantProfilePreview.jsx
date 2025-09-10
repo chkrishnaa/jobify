@@ -6,7 +6,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import toast from "react-hot-toast";
 
-import StatusBadge from "../StatusBadge";
+import StatusBadge from "../Utility/StatusBadge";
 import { useTheme } from "../../context/ThemeContext";
 
 const statusOptions = ["Applied", "In Review", "Rejected", "Accepted"];

@@ -1,17 +1,32 @@
-import { MapPin, IndianRupee, Building2, Clock, Users } from "lucide-react";
+import {
+  MapPin,
+  IndianRupee,
+  Building2,
+  Clock,
+  Users,
+  ArrowLeft,
+} from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../../components/layout/Navbar";
 import moment from "moment";
-import StatusBadge from "../../components/StatusBadge";
+import StatusBadge from "../../components/Utility/StatusBadge";
 import toast from "react-hot-toast";
+import { useTheme } from "../../context/ThemeContext";
+import JobInfo from "../../components/Utility/JobInfo";
+import JobCardHeader from "../../components/Utility/JobCardHeader";
+import { usePDF } from "react-to-pdf";
 
 const JobDetails = () => {
+  const { darkMode } = useTheme();
   const { user } = useAuth();
   const { jobId } = useParams();
+  const pdfRef = useRef();
+const navigate = useNavigate();
+  const { toPDF, targetRef } = usePDF({ filename: "page.pdf" });
 
   const [jobDetails, setJobDetails] = useState(null);
 
@@ -48,137 +63,137 @@ const JobDetails = () => {
   }, [jobId, user]);
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 via-white to-purple-100">
-      <Navbar />
+    <div
+      className={`bg-gradient-to-br ${
+        darkMode
+          ? "from-blue-900 via-black to-purple-950"
+          : "from-blue-100 via-white to-purple-200"
+      } py-12 print:py-0 print:px-0`}
+    >
+      <Navbar className="" />
 
-      <div className="container mx-auto pt-24 px-3">
+      <div className="container mx-auto pt-24 px-3 print:m-0 print:p-0 print:pt-0 print-area">
         {jobDetails && (
-          <div className="bg-white p-6 rounded-lg">
-            <div className="relative px-0 pb-8 border-b border-gray-100">
+          <div
+            className={`relative ${
+              darkMode
+                ? " bg-gray-800 shadow-[0_4px_12px_rgba(255,255,255,0.3)]"
+                : " bg-white shadow-lg"
+            } py-4 sm:py-8 px-4 sm:px-8 lg:px-12 rounded-lg`}
+            ref={targetRef}
+          >
+            <div className="relative px-0 pb-8">
               <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  {jobDetails?.company?.companyLogo ? (
-                    <img
-                      src={jobDetails?.company?.companyLogo}
-                      alt="Company Logo"
-                      className="h-20 w-20 object-cover rounded-2xl border-4 border-white/20 shadow-lg"
-                    />
-                  ) : (
-                    <div className="h-20 w-20 bg-gray-50 border-2 border-gray-200 rounded-2xl flex items-center justify-center">
-                      <Building2 className="h-8 w-8 text-gray-400" />
-                    </div>
-                  )}
-
-                  <div className="flex-1">
-                    <h1 className="text-lg lg:text-xl font-semibold mb-2 leading-tight text-gray-900">
-                      {jobDetails.title}
-                    </h1>
-
-                    <div className="flex items-center space-x-4 text-gray-600">
-                      <div className="flex items-center space-x-2">
-                        <MapPin className="h-4 w-4"></MapPin>
-                        <span className="text-sm font-medium">
-                          {jobDetails.location}
-                        </span>
+                <JobCardHeader
+                  category={jobDetails.category}
+                  type={jobDetails.type}
+                  createdAt={
+                    jobDetails.createdAt
+                      ? moment(jobDetails.createdAt).format("Do MMM, YYYY")
+                      : "N/A"
+                  }
+                >
+                  <div className="flex items-center gap-3 mb-6">
+                    {jobDetails?.company?.companyLogo ? (
+                      <img
+                        src={jobDetails?.company?.companyLogo}
+                        alt="Company Logo"
+                        className="h-20 w-20 object-cover rounded-2xl border-4 border-white/20 shadow-lg"
+                      />
+                    ) : (
+                      <div
+                        className={`h-20 w-20 ${
+                          darkMode
+                            ? "bg-gray-600 border-2 border-gray-700"
+                            : "bg-gray-200 border-2 border-gray-300"
+                        } rounded-2xl flex items-center justify-center`}
+                      >
+                        <Building2 className="h-8 w-8 text-gray-400" />
                       </div>
-                    </div>
-                  </div>
+                    )}
 
-                  {jobDetails?.applicationStatus ? (
-                    <StatusBadge status={jobDetails.applicationStatus} />
-                  ) : (
-                    <button
-                      className="bg-gradient-to-r from-blue-50 to-blue-100 text-sm text-blue-700 hover:text-white px-6 py-2.5 rounded-xl hover:from-blue-500 hover:to-blue-600 transition-all duration-300 font-semibold transform hover:-translate-y-0.5"
-                      onClick={applyToJob}
-                    >
-                      Apply Now
-                    </button>
-                  )}
-                </div>
+                    <div className="flex-1">
+                      <h1
+                        className={`text-lg lg:text-xl font-semibold mb-2 leading-tight ${
+                          darkMode ? "text-gray-200" : "text-gray-900"
+                        }`}
+                      >
+                        {jobDetails.title}
+                      </h1>
 
-                <div className="flex flex-wrap gap-3">
-                  <span className="px-4 py-2 bg-blue-50 text-sm text-blue-700 font-semibold rounded-full border border-blue-200">
-                    {jobDetails.category}
-                  </span>
-                  <span className="px-4 py-2 text-sm bg-purple-50 text-purple-700 font-semibold rounded-full border border-purple-200">
-                    {jobDetails.type}
-                  </span>
-                  <div className="flex items-center space-x-1 px-4 py-2 bg-gray-50 text-sm text-gray-700 font-semibold rounded-full border border-gray-200">
-                    <Clock className="h-4 w-4"></Clock>
-                    <span className="">
-                      {jobDetails.createdAt
-                        ? moment(jobDetails.createdAt).format("Do MMM, YYYY")
-                        : "N/A"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="px-0 pb-8 space-y-8">
-              <div className="relative overflow-hidden bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 p-6 rounded-2xl">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-400/10 to-teal-400/10 rounded-full -translate-y-16 translate-x-16"></div>
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="p-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl">
-                        <IndianRupee className="h-4 w-4 md:h-6 md;w-6 text-white" />
-                      </div>
-
-                      <div className="">
-                        <h3 className="text-sm font-semibold text-gray-900 mb-1">
-                          Compensation
-                        </h3>
-                        <div className="text-lg font-bold text-gray-900">
-                          {jobDetails.salaryMin} - {jobDetails.salaryMax}
-                          <span className="text-lg text-gray-600 font-normal ml-1">
-                            {" "}
-                            per year
+                      <div
+                        className={`flex items-center space-x-4 ${
+                          darkMode ? "text-gray-300" : "text-gray-600"
+                        }`}
+                      >
+                        <div className="flex items-center space-x-2">
+                          <MapPin className="h-4 w-4" />
+                          <span className="text-sm font-medium">
+                            {jobDetails.location}
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="hidden md:flex items-centerspace-x-2 text-sm text-emarald-700 bg-emarald-100 px-3 py-1 rounded-full">
-                      <Users className="h-4 w-4" />
-                      <span>Competitive</span>
-                    </div>
+                    {jobDetails?.applicationStatus ? (
+                      <StatusBadge status={jobDetails.applicationStatus} />
+                    ) : (
+                      <button
+                        className={`bg-gradient-to-r text-sm no-print ${
+                          darkMode
+                            ? "from-blue-400 to-blue-600 text-blue-50 hover:text-white hover:from-blue-500 hover:to-blue-700"
+                            : "from-blue-50 to-blue-100 text-blue-700 hover:text-white hover:from-blue-400 hover:to-blue-600"
+                        } px-6 py-2.5 rounded-xl transition-all duration-300 font-semibold transform hover:-translate-y-0.5`}
+                        onClick={applyToJob}
+                      >
+                        Apply Now
+                      </button>
+                    )}
                   </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-gray-900 flex items-center space-x-3">
-                  <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full"></div>
-                  <span className="text-base md:text-lg">About This Role</span>
-                </h3>
-                <div className="relative overflow-hidden bg-gradient-to-br from-blue-100 to-purple-100 border border-purple-100 p-6 rounded-xl">
-                  <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-600/10 to-purple-600/10 rounded-full -translate-y-16 translate-x-16"></div>
-                  <div className="absolute bottom-[-8rem] left-[4rem] w-60 h-60 bg-gradient-to-br from-blue-600/10 to-purple-400/10 rounded-full"></div>
-                  <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap text-justify">
-                    {jobDetails.description}
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-gray-900 flex items-center space-x-3">
-                  <div className="w-1 h-8 bg-gradient-to-b from-purple-500 to-pink-600 rounded-full"></div>
-                  <span className="text-base md:text-lg">
-                    What We're Looking For
-                  </span>
-                </h3>
-                <div className="relative overflow-hidden bg-gradient-to-br from-purple-100 to-pink-100 border border-purple-100 p-6 rounded-xl">
-                  <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-purple-600/10 to-pink-600/10 rounded-full -translate-y-16 translate-x-16"></div>
-                  <div className="absolute bottom-[-8rem] left-[4rem] w-60 h-60 bg-gradient-to-br from-purple-800/10 to-pink-400/10 rounded-full"></div>
-                  <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap text-justify">
-                    {jobDetails.requirements}
-                  </div>
-                </div>
+                </JobCardHeader>
               </div>
             </div>
+
+            <JobInfo
+              salaryMin={jobDetails.salaryMin}
+              salaryMax={jobDetails.salaryMax}
+              description={jobDetails.description}
+              requirements={jobDetails.requirements}
+            />
           </div>
         )}
+
+        <div className="flex justify-between mt-6">
+          <button
+            className={`flex items-center bg-gradient-to-r text-sm no-print ${
+              darkMode
+                ? "from-green-400 to-green-600 text-green-50 hover:text-white hover:from-green-500 hover:to-green-700"
+                : "from-green-50 to-green-100 text-green-700 hover:text-white hover:from-green-400 hover:to-green-600"
+            } px-6 py-2.5 rounded-xl transition-all duration-300 font-semibold transform hover:-translate-y-0.5`}
+            onClick={() => navigate(-1)}
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            <span>Back</span>
+          </button>
+
+          <button
+            className={`bg-gradient-to-r text-sm no-print ${
+              darkMode
+                ? "from-green-400 to-green-600 text-green-50 hover:text-white hover:from-green-500 hover:to-green-700"
+                : "from-green-50 to-green-100 text-green-700 hover:text-white hover:from-green-400 hover:to-green-600"
+            } px-6 py-2.5 rounded-xl transition-all duration-300 font-semibold transform hover:-translate-y-0.5`}
+            onClick={() => window.print()}
+          >
+            Download PDF
+          </button>
+        </div>
+      </div>
+
+      <div className="hidden print:block print-area bottom">
+        <div className="flex justify-between px-3 text-sm">
+          <p>JobiFy - Find Your Dream Job</p>
+          <p>{`Job ID: ${jobDetails?._id}`}</p>
+        </div>
       </div>
     </div>
   );

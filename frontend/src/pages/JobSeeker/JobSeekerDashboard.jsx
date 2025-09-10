@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Search, Filter, Grid, List, X } from "lucide-react";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import { Search, Filter, X } from "lucide-react";
+import LoadingSpinner from "../../components/Utility/LoadingSpinner";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +10,13 @@ import FilterContent from "./components/FilterContent";
 import SearchHeader from "./components/SearchHeader";
 import Navbar from "../../components/layout/Navbar";
 import JobCard from "../../components/Cards/JobCard";
+import { useTheme } from "../../context/ThemeContext";
+import NoResults from "../../components/Utility/NoResults";
+import ViewMode from "../../components/Utility/ViewMode";
 
 const JobSeekerDashboard = () => {
   const { user } = useAuth();
+  const { darkMode } = useTheme();
 
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -134,36 +138,58 @@ const JobSeekerDashboard = () => {
   };
 
   const MobileFilterOverlay = () => {
-    <div
-      className={`fixed inset-0 z-50 lg:hidden ${
-        showMobileFilters ? "" : "hidden"
-      }`}
-    >
+    return (
       <div
-        className="fixed inset-0 bg-black/50"
-        onClick={() => setShowMobileFilters(false)}
-      />
-      <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-xl">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h3 className="font-bold text-gray-900 text-lg">Filters</h3>
-          <button
-            onClick={() => setShowMobileFilters(false)}
-            className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+        className={`fixed inset-0 z-50 lg:hidden ${
+          showMobileFilters ? "" : "hidden"
+        }`}
+      >
+        <div
+          className={`fixed inset-0 bg-black/50`}
+          onClick={() => setShowMobileFilters(false)}
+        />
+        <div
+          className={`fixed inset-y-0 right-0 w-[300px] max-w-sm ${
+            darkMode ? "bg-gray-900" : "bg-white"
+          } shadow-xl`}
+        >
+          <div
+            className={`flex items-center justify-between p-6 border-b ${
+              darkMode ? "border-gray-700" : "border-gray-200"
+            }`}
           >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-        <div className="p-6 overflow-y-auto h-full pb-20">
-          <FilterContent
-            toggleSection={toggleSection}
-            clearAllFilters={clearAllFilters}
-            expandedSections={expandedSections}
-            filters={filters}
-            handleFilterChange={handleFilterChange}
-          />
+            <h3
+              className={`font-bold ${
+                darkMode ? "text-gray-200" : "text-gray-900"
+              } text-xl`}
+            >
+              Filter Jobs
+            </h3>
+            <button
+              onClick={() => setShowMobileFilters(false)}
+              className={`p-2 ${
+                darkMode ? "hover:bg-gray-600" : "hover:bg-gray-100"
+              } rounded-xl transition-colors`}
+            >
+              <X
+                className={`w-5 h-5 ${
+                  darkMode ? "text-gray-200" : "text-gray-800"
+                }`}
+              />
+            </button>
+          </div>
+          <div className="p-6 overflow-y-auto h-full pb-20">
+            <FilterContent
+              toggleSection={toggleSection}
+              clearAllFilters={clearAllFilters}
+              expandedSections={expandedSections}
+              filters={filters}
+              handleFilterChange={handleFilterChange}
+            />
+          </div>
         </div>
       </div>
-    </div>;
+    );
   };
 
   const toggleSaveJob = async (jobId, isSaved) => {
@@ -198,11 +224,17 @@ const JobSeekerDashboard = () => {
   };
 
   if (jobs.length === 0 && loading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner color="blue" />;
   }
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div
+      className={`bg-gradient-to-br ${
+        darkMode
+          ? "from-blue-900 via-black to-purple-950"
+          : "from-blue-100 via-white to-purple-200"
+      } `}
+    >
       <Navbar />
       <div className="min-h-screen mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-8">
@@ -213,8 +245,18 @@ const JobSeekerDashboard = () => {
 
           <div className="flex gap-6 lg:gap-8">
             <div className="hidden lg:block w-80 flex-shrink-0">
-              <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-white/20 p-6 sticky top-20">
-                <h3 className="font-bold text-gray-900 text-xl mb-6">
+              <div
+                className={`border ${
+                  darkMode
+                    ? "border-gray-700 bg-gray-900"
+                    : "border-white/20 bg-white/80"
+                } backdrop-blur-xl rounded-2xl shadow-lg p-6 sticky top-20`}
+              >
+                <h3
+                  className={`font-bold ${
+                    darkMode ? "text-gray-200" : "text-gray-900"
+                  } text-xl mb-6`}
+                >
                   Filter Jobs
                 </h3>
                 <FilterContent
@@ -230,7 +272,11 @@ const JobSeekerDashboard = () => {
             <div className="flex-1 min-w-0">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-6 lg:mb-8 gap-4">
                 <div>
-                  <p className="text-gray-600 text-sm lg:text-base">
+                  <p
+                    className={`${
+                      darkMode ? "text-gray-300" : "text-gray-600"
+                    } text-sm lg:text-base`}
+                  >
                     Showing{" "}
                     <span className="font-bold textgray-900">
                       {jobs.length}
@@ -240,49 +286,33 @@ const JobSeekerDashboard = () => {
                 </div>
 
                 <div className="flex items-center justify-between lg:justify-end gap-4">
-                  <button className="lg:hidden flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-gray-200 font-medium text-gray-700 hover:bg-gray-100 transition-colors">
+                  <button
+                    className={`lg:hidden flex items-center gap-2 border ${
+                      darkMode
+                        ? "border-gray-700 bg-gray-800 text-gray-300 hover:bg-gray-700"
+                        : "border-gray-200 bg-white text-gray-700 hover:bg-gray-100"
+                    } px-4 py-2 rounded-xl font-medium transition-colors`}
+                    onClick={() => setShowMobileFilters(true)} // ✅ toggle sidebar
+                  >
                     <Filter className="w-4 h-4" /> Filters
                   </button>
-
-                  <div className="flex items-center gap-3 lg:gap-4">
-                    <div className="flex items-center border border-gray-200 rounded-xl p-1 bg-white">
-                      <button
-                        onClick={() => setViewMode("grid")}
-                        className={`p-2 rounded-lg transition-colors ${
-                          viewMode === "grid"
-                            ? "bg-blue-600 text-white shadow-sm"
-                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                        }`}
-                      >
-                        <Grid className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => setViewMode("list")}
-                        className={`p-2 rounded-lg transition-colors ${
-                          viewMode === "list"
-                            ? "bg-blue-600 text-white shadow-sm"
-                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                        }`}
-                      >
-                        <List className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
+                  <ViewMode viewMode={viewMode} setViewMode={setViewMode} />
                 </div>
               </div>
 
               {jobs.length === 0 ? (
-                <div className="text-center py-16 lg:py-20 bg-white/60 backdrop-blur-xl rounded-2xl border border-white/20">
-                  <div className="text-gray-400 mb-6">
-                    <Search className="h-16 w-16 mx-auto"></Search>
-                  </div>
-                  <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-3">No jobs found</h3>
-                  <p className="text-gray-600 mb-6">
-                    Try adjusting your search criteria or filters.
-                  </p>
-                  <button className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:blue-700 transition-colors" onClick={clearAllFilters}>
-                    Clear All Filters
-                  </button>
+                <div
+                  className={`bg-gradient-to-br ${
+                    darkMode
+                      ? "from-gray-800 to-gray-950 shadow-[0_6px_18px_rgba(255,255,255,0.4)]"
+                      : "from-gray-100 to-gray-300 shadow-xl"
+                  } rounded-xl overflow-hidden`}
+                >
+                  <NoResults
+                    icon={Search}
+                    title="No Jobs found"
+                    text="Try adjusting your search criteria or filters."
+                  />
                 </div>
               ) : (
                 <>

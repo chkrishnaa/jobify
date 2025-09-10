@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import { useTheme } from "../../context/ThemeContext";
-import NoResults from "../../components/NoResults";
+import NoResults from "../../components/Utility/NoResults";
 
 export default function ManageJobs() {
   const { darkMode } = useTheme();

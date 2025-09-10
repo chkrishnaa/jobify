@@ -14,11 +14,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { getInitials } from "../../utils/helper";
 import DashboardLayout from "../../components/layout/DashboardLayout";
-import StatusBadge from "../../components/StatusBadge";
+import StatusBadge from "../../components/Utility/StatusBadge";
 import ApplicantProfilePreview from "../../components/Cards/ApplicantProfilePreview";
 import { useTheme } from "../../context/ThemeContext";
-import LoadingSpinner from "../../components/LoadingSpinner";
-import NoResults from "../../components/NoResults";
+import LoadingSpinner from "../../components/Utility/LoadingSpinner";
+import NoResults from "../../components/Utility/NoResults";
 
 export default function ApplicationViewer() {
   const { darkMode } = useTheme();
@@ -73,7 +73,7 @@ export default function ApplicationViewer() {
   return (
     <DashboardLayout activeMenu="manage-jobs">
       {loading ? (
-        <LoadingSpinner text="Loading Applications ..." />
+        <LoadingSpinner text="Loading Applications ..." color="purple" />
       ) : (
         <div className="min-h-screen">
           <div className="">

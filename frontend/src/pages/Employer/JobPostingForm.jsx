@@ -165,8 +165,8 @@ export default function JobPostingForm() {
           <div
             className={` ${
               darkMode
-                ? "bg-gray-900 shadow-[0_6px_18px_rgba(255,255,255,0.4)]"
-                : "bg-white shadow-xl"
+                ? "bg-gray-900 shadow-[0_4px_12px_rgba(255,255,255,0.4)]"
+                : "bg-white shadow-lg"
             } rounded-2xl p-6`}
           >
             <div className="flex items-center justify-between mb-8">

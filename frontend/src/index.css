@@ -11,14 +11,68 @@
     html{
         font-family: var(--font-display);
     }
-
     body{
         background-color: #f7fafe;
         overflow-x: hidden;
     }
-
-    
-
-
-    
 }
+
+/* Hide elements with class "no-print" when printing */
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .print-area, .print-area * {
+    visibility: visible;
+  }
+
+  .print-area {
+    position: relative !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    margin: 0 !important;   /* remove default margins */
+    padding: 0 !important;  /* ✅ no negative padding */
+  }
+
+  @page {
+    margin: 10mm; /* uniform margins (top, right, bottom, left) */
+  }
+
+  /* Default: allow breaking */
+  .print-area * {
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+  }
+
+  /* Keep small blocks/cards/headings together */
+  .print-area h1,
+  .print-area h2,
+  .print-area h3,
+  .print-area .card {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .print-area .font-sm {
+    font-size: 10px !important;
+  }
+
+  .print-area .bottom{
+    margin-bottom: 0px !important;
+  }
+
+}
+
+

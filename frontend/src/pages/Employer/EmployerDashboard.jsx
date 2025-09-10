@@ -5,12 +5,12 @@ import moment from "moment";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import DashboardLayout from "../../components/layout/DashboardLayout";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import LoadingSpinner from "../../components/Utility/LoadingSpinner";
 import JobDashboardCard from "../../components/Cards/JobDashboardCard";
 import ApplicantDashboardCard from "../../components/Cards/ApplicantDashboardCard";
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
-import NoResults from "../../components/NoResults";
+import NoResults from "../../components/Utility/NoResults";
 
 const Card = ({ title, headerAction, subtitle, className, children }) => {
   const { darkMode } = useTheme();
@@ -162,7 +162,7 @@ const EmployerDashboard = () => {
   return (
     <DashboardLayout activeMenu="employer-dashboard">
       {isLoading ? (
-        <LoadingSpinner text="Finding Amazing Opportunities ..." />
+        <LoadingSpinner text="Finding Amazing Opportunities ..." color="purple" />
       ) : (
         <div className="max-w-7xl mx-auto space-y-8 ">
           {/* Dashboard Stats */}

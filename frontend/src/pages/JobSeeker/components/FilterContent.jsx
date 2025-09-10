@@ -2,19 +2,31 @@ import React from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { CATEGORIES, JOB_TYPES } from "../../../utils/data";
 import SalaryRangeSlider from "../../../components/Input/SalaryRangeSlider";
+import { useTheme } from "../../../context/ThemeContext";
 
 const FilterSection = ({ title, children, isExpanded, onToggle }) => {
+  const { darkMode } = useTheme();
   return (
-    <div className="border-b border-gray-200 pb-4 mb-4 last:border-b-0">
+    <div
+      className={`border-b ${
+        darkMode ? "border-gray-700" : "border-gray-200"
+      } pb-4 mb-4 last:border-b-0`}
+    >
       <button
         onClick={onToggle}
         className="flex items-center justify-between w-full text-left font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors"
       >
-        <span className="text-lg font-semibold text-gray-800">{title}</span>
+        <span
+          className={`text-lg font-semibold ${
+            darkMode ? "text-gray-300" : "text-gray-800"
+          }`}
+        >
+          {title}
+        </span>
         {isExpanded ? (
-          <ChevronUp className="h-5 w-5" />
+          <ChevronUp className="h-5 w-5 text-blue-600" />
         ) : (
-          <ChevronDown className="h-5 w-5" />
+          <ChevronDown className="h-5 w-5 text-blue-600" />
         )}
       </button>
       {isExpanded && children}
@@ -29,6 +41,8 @@ const FilterContent = ({
   filters,
   handleFilterChange,
 }) => {
+      const { darkMode } = useTheme();
+
   return (
     <>
       <div className="flex items-center justify-between mb-6">
@@ -59,7 +73,11 @@ const FilterContent = ({
                   handleFilterChange("type", e.target.checked ? type.value : "")
                 }
               />
-              <span className="text-gray-700 ml-3 font-medium">
+              <span
+                className={`${
+                  darkMode ? "text-gray-400 " : "text-gray-700 "
+                } ml-3 font-medium`}
+              >
                 {type.value}
               </span>
             </label>
@@ -77,10 +95,10 @@ const FilterContent = ({
           handleFilterChange={handleFilterChange}
         />
       </FilterSection>
-
+ 
       <FilterSection
         title="Category"
-        isExpanded={expandedSections.salary}
+        isExpanded={expandedSections.categories}
         onToggle={() => toggleSection("categories")}
       >
         <div className="space-y-3">
@@ -100,7 +118,11 @@ const FilterContent = ({
                   )
                 }
               />
-              <span className="text-gray-700 ml-3 font-medium">
+              <span
+                className={`${
+                  darkMode ? "text-gray-400 " : "text-gray-700 "
+                } ml-3 font-medium`}
+              >
                 {type.value}
               </span>
             </label>
