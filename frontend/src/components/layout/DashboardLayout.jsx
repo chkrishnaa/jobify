@@ -123,8 +123,8 @@ const DashboardLayout = ({ activeMenu, children }) => {
               <div
                 className={`h-8 w-8 bg-gradient-to-br ${
                   darkMode
-                    ? "from-blue-700 to-purple-700"
-                    : "from-blue-600 to-purple-600"
+                    ? "from-purple-500 to-purple-700"
+                    : "from-purple-400 to-purple-600"
                 } rounded-lg flex items-center justify-center`}
               >
                 <Briefcase
@@ -138,7 +138,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
                   darkMode ? "text-white" : "text-gray-900"
                 } font-bold text-xl`}
               >
-                JobFinder
+                JobiFy
               </span>
             </Link>
           ) : (

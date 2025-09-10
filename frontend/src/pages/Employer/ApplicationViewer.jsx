@@ -19,6 +19,7 @@ import ApplicantProfilePreview from "../../components/Cards/ApplicantProfilePrev
 import { useTheme } from "../../context/ThemeContext";
 import LoadingSpinner from "../../components/Utility/LoadingSpinner";
 import NoResults from "../../components/Utility/NoResults";
+import ExportOptions from "../../components/Utility/ExportDatasheetButtons/ExportOptions";
 
 export default function ApplicationViewer() {
   const { darkMode } = useTheme();
@@ -30,6 +31,7 @@ export default function ApplicationViewer() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
+  const [statusFilter, setStatusFilter] = useState("All"); // default: show all
 
   const fetchApplications = async () => {
     try {
@@ -50,8 +52,29 @@ export default function ApplicationViewer() {
     else navigate("/manage-jobs");
   }, [jobId, navigate]);
 
+  // const groupedApplications = useMemo(() => {
+  //   const filtered = applications.filter((app) => app.job.title.toLowerCase());
+  //   return filtered.reduce((acc, app) => {
+  //     const jobId = app.job._id;
+  //     console.log(jobId);
+
+  //     if (!acc[jobId]) {
+  //       acc[jobId] = {
+  //         job: app.job,
+  //         applications: [],
+  //       };
+  //     }
+  //     acc[jobId].applications.push(app);
+  //     return acc;
+  //   }, {});
+  // }, [applications]);
+
   const groupedApplications = useMemo(() => {
-    const filtered = applications.filter((app) => app.job.title.toLowerCase());
+    const filtered = applications.filter((app) => {
+      if (statusFilter === "All") return true;
+      return app.status === statusFilter;
+    });
+
     return filtered.reduce((acc, app) => {
       const jobId = app.job._id;
 
@@ -64,7 +87,7 @@ export default function ApplicationViewer() {
       acc[jobId].applications.push(app);
       return acc;
     }, {});
-  }, [applications]);
+  }, [applications, statusFilter]);
 
   const handleDownloadResume = (resumeUrl) => {
     window.open(resumeUrl, "_blank");
@@ -103,6 +126,23 @@ export default function ApplicationViewer() {
               </div>
             </div>
           </div>
+
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className={`px-3 py-2 rounded-xl text-sm font-medium border ${
+              darkMode
+                ? "bg-gray-800 text-gray-300 border-gray-600"
+                : "bg-white text-gray-700 border-gray-300"
+            }`}
+          >
+            <option value="All">All</option>
+            <option value="Applied">Applied</option>
+            <option value="In Review">In Review</option>
+            <option value="Accepted">Accepted</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+          
           <div className="max-w-7xl mx-auto">
             {Object.keys(groupedApplications).length === 0 ? (
               <div
@@ -170,6 +210,11 @@ export default function ApplicationViewer() {
                               {applications.length !== 1 ? "s" : ""}
                             </span>
                           </div>
+
+                          <ExportOptions
+                            applications={applications}
+                            darkMode={darkMode}
+                          />
                         </div>
                       </div>
                       <div
@@ -301,7 +346,6 @@ export default function ApplicationViewer() {
               </div>
             )}
           </div>
-
           {selectedApplicant && (
             <ApplicantProfilePreview
               selectedApplicant={selectedApplicant}

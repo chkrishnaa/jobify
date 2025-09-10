@@ -25,6 +25,8 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import uploadImage from "../../utils/uploadImage";
 import { useTheme } from "../../context/ThemeContext";
+import InputType from "../../components/Input/InputType";
+import AuthCommonConponent from "../../components/Input/AuthCommonComponent";
 
 const SignUp = () => {
   const { login } = useAuth();
@@ -198,8 +200,10 @@ const SignUp = () => {
   if (formState.success) {
     return (
       <div
-        className={`min-h-screen flex items-center justify-center ${
-          darkMode ? "bg-gray-950" : "bg-gray-50"
+        className={`min-h-screen flex items-center justify-center  ${
+          darkMode
+            ? "from-blue-900 via-black to-purple-950"
+            : "from-blue-100 via-white to-purple-200"
         } px-4`}
       >
         <motion.div
@@ -225,7 +229,7 @@ const SignUp = () => {
             Account Created!
           </h2>
           <p className={`${darkMode ? "text-gray-400" : "text-gray-600"} mb-4`}>
-            Welcome to JobFinder! Your account has been successfully created.
+            Welcome to JobiFy! Your account has been successfully created.
           </p>
           <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full mx-auto" />
           <p
@@ -242,8 +246,10 @@ const SignUp = () => {
 
   return (
     <div
-      className={`min-h-screen flex items-center justify-center ${
-        darkMode ? "bg-gray-950" : "bg-gray-50"
+      className={`min-h-screen flex items-center justify-center bg-gradient-to-br ${
+        darkMode
+          ? "from-blue-900 via-black to-purple-950"
+          : "from-blue-100 via-white to-purple-200"
       } px-4 py-[100px]`}
     >
       <motion.div
@@ -271,163 +277,41 @@ const SignUp = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="">
-            <label
-              className={`block text-sm font-medium ${
-                darkMode ? "text-gray-200" : "text-gray-700"
-              } mb-2`}
-            >
-              Full Name{" "}
-              <span
-                className={`${darkMode ? "text-red-400" : "text-red-500"} ml-1`}
-              >
-                *
-              </span>
-            </label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></User>
-              <input
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleInputChange}
-                className={`w-full pl-10 pr-4 py-3 rounded-lg border appearance-none 
-  ${
-    formState.errors.fullName
-      ? darkMode
-        ? "border-red-400 bg-gray-800 text-gray-300 placeholder-gray-500"
-        : "border-red-500 bg-white text-gray-900 placeholder-gray-400"
-      : darkMode
-      ? "border-gray-600 bg-gray-800 text-gray-300 placeholder-gray-500"
-      : "border-gray-300 bg-white text-gray-900 placeholder-gray-400"
-  }
-  focus:ring-blue-500 focus:border-transparent transition-colors`}
-                placeholder="Enter your full name"
-              ></input>
-            </div>
+          <InputType
+            label="Full Name"
+            type="text"
+            name="fullName"
+            icon={User}
+            placeholder="Enter your full name"
+            value={formData.fullName}
+            onChange={handleInputChange}
+            error={formState.errors.fullName}
+            required={true}
+          />
 
-            {formState.errors.fullName && (
-              <p
-                className={`${
-                  darkMode ? "text-red-400" : "text-red-500"
-                } text-sm mt-1 flex items-center`}
-              >
-                <AlertCircle className="w-4 h-4 mr-1"></AlertCircle>
-                {formState.errors.fullName}
-              </p>
-            )}
-          </div>
+          <InputType
+            label="Email Address"
+            type="email"
+            name="email"
+            icon={Mail}
+            placeholder="Enter your password"
+            value={formData.email}
+            onChange={handleInputChange}
+            error={formState.errors.email}
+            required={true}
+          />
 
-          <div className="">
-            <label
-              className={`block text-sm font-medium ${
-                darkMode ? "text-gray-200" : "text-gray-700"
-              } mb-2`}
-            >
-              Email Address{" "}
-              <span
-                className={`${darkMode ? "text-red-400" : "text-red-500"} ml-1`}
-              >
-                *
-              </span>
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></Mail>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className={`w-full pl-10 pr-4 py-3 rounded-lg border appearance-none 
-  ${
-    formState.errors.email
-      ? darkMode
-        ? "border-red-400 bg-gray-800 text-gray-300 placeholder-gray-500"
-        : "border-red-500 bg-white text-gray-900 placeholder-gray-400"
-      : darkMode
-      ? "border-gray-600 bg-gray-800 text-gray-300 placeholder-gray-500"
-      : "border-gray-300 bg-white text-gray-900 placeholder-gray-400"
-  }
-  focus:ring-blue-500 focus:border-transparent transition-colors`}
-                placeholder="Enter your email"
-              ></input>
-            </div>
-
-            {formState.errors.email && (
-              <p
-                className={`${
-                  darkMode ? "text-red-400" : "text-red-500"
-                } text-sm mt-1 flex items-center`}
-              >
-                <AlertCircle className="w-4 h-4 mr-1"></AlertCircle>
-                {formState.errors.email}
-              </p>
-            )}
-          </div>
-
-          <div className="">
-            <label
-              className={`block text-sm font-medium ${
-                darkMode ? "text-gray-200" : "text-gray-700"
-              } mb-2`}
-            >
-              Password{" "}
-              <span
-                className={`${darkMode ? "text-red-400" : "text-red-500"} ml-1`}
-              >
-                *
-              </span>
-            </label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"></Lock>
-              <input
-                type={formState.showPassword ? "text" : "password"}
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className={`w-full pl-10 pr-4 py-3 rounded-lg border appearance-none 
-  ${
-    formState.errors.password
-      ? darkMode
-        ? "border-red-400 bg-gray-800 text-gray-300 placeholder-gray-500"
-        : "border-red-500 bg-white text-gray-900 placeholder-gray-400"
-      : darkMode
-      ? "border-gray-600 bg-gray-800 text-gray-300 placeholder-gray-500"
-      : "border-gray-300 bg-white text-gray-900 placeholder-gray-400"
-  }
-  focus:ring-blue-500 focus:border-transparent transition-colors`}
-                placeholder="Enter your password"
-              ></input>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setFormState((prev) => ({
-                    ...prev,
-                    showPassword: !prev.showPassword,
-                  }))
-                }
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-              >
-                {formState.showPassword ? (
-                  <EyeOff className="h-5 w-5"></EyeOff>
-                ) : (
-                  <Eye className="h-5 w-5"></Eye>
-                )}
-              </button>
-            </div>
-
-            {formState.errors.password && (
-              <p
-                className={`${
-                  darkMode ? "text-red-400" : "text-red-500"
-                } text-sm mt-1 flex items-center`}
-              >
-                <AlertCircle className="h-4 w-4 mr-1"></AlertCircle>{" "}
-                {formState.errors.password}
-              </p>
-            )}
-          </div>
+          <InputType
+            label="Password"
+            type="password"
+            name="password"
+            icon={Lock}
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleInputChange}
+            error={formState.errors.password}
+            required={true}
+          />
 
           {/* avatar Upload */}
           <div className="">
@@ -606,7 +490,7 @@ const SignUp = () => {
               </p>
             )}
           </div>
-
+          {/* 
           {formState.errors.submit && (
             <div
               className={`${
@@ -624,111 +508,20 @@ const SignUp = () => {
                 {formState.errors.submit}
               </p>
             </div>
-          )}
+          )} */}
 
-          <button
-            type="submit"
-            disabled={formState.loading}
-            className={`w-full bg-gradient-to-r ${
-              darkMode
-                ? "from-blue-700 to-purple-700 text-gray-300 hover:from-blue-800 hover:to-purple-800"
-                : "from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
-            } py-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
-          >
-            {formState.loading ? (
-              <>
-                <Loader className="w-5 h-5 animate-spin"></Loader>
-                <span>Creating Account ...</span>
-              </>
-            ) : (
-              <span>Create Account</span>
-            )}
-          </button>
-
-          <div className="flex items-center space-x-3">
-            <div
-              className={`flex-1 h-px ${
-                darkMode ? "bg-gray-600" : "bg-gray-300"
-              }`}
-            ></div>
-            <span
-              className={`${
-                darkMode ? "text-gray-400" : "text-gray-600"
-              } text-sm whitespace-nowrap`}
-            >
-              or Create with
-            </span>
-            <div
-              className={`flex-1 h-px ${
-                darkMode ? "bg-gray-600" : "bg-gray-300"
-              }`}
-            ></div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              className={`border-2 border-blue-600 ${
-                darkMode ? "hover:bg-blue-300" : "bg-white hover:bg-blue-200"
-              } w-full h-full rounded-lg py-2 transition-all duration-300 space-x-2 sm:space-x-5`}
-            >
-              <i className="fa-brands fa-google text-blue-600"></i>
-              <span className="font-semibold text-blue-600">Google</span>
-            </button>
-
-            <button
-              className={`border-2 border-purple-600 ${
-                darkMode
-                  ? "hover:bg-purple-300"
-                  : "bg-white hover:bg-purple-200"
-              } w-full h-full rounded-lg py-2 transition-all duration-300 space-x-2 sm:space-x-5`}
-            >
-              <i className="fa-brands fa-facebook-f text-purple-600"></i>{" "}
-              <span className="font-semibold text-purple-600 ">Facebook</span>
-            </button>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              className="h-4 w-4 rounded-full border border-gray-400 bg-transparent 
-             checked:bg-blue-500 checked:border-blue-500 
-             focus:ring-2 focus:ring-blue-400 transition-colors"
-            />
-            <span
-              className={`text-sm ${
-                darkMode ? "text-gray-400" : "text-gray-600"
-              } font-semibold`}
-            >
-              I agree to the{" "}
-              <Link
-                to="/terms-of-service"
-                className="text-blue-600 hover:underline"
-              >
-                Terms of Service
-              </Link>{" "}
-              and{" "}
-              <Link
-                to="/privacy-policy"
-                className="text-purple-600 hover:underline"
-              >
-                Privacy Policy
-              </Link>
-            </span>
-          </div>
-
-          <div className="text-center font-semibold">
-            <p className={`${darkMode ? "text-gray-400" : "text-gray-600"}`}>
-              Already have an account?{" "}
-              <a
-                href="/login"
-                className={`text-blue-600 ${
-                  darkMode ? "hover:text-blue-500" : "hover:text-blue-700"
-                } font-medium`}
-              >
-                Sign In
-              </a>
-            </p>
-          </div>
+          <AuthCommonConponent
+            darkMode={darkMode}
+            formState={formState}
+            message={formState.errors.submit}
+            submitLabel="Create Account"
+            loadingLabel="Creating Account ..."
+            dividerLabel="or Create with"
+            bottomText="Already have an account?"
+            bottomLinkText="Sign In"
+            bottomLinkHref="/login"
+            showTerms={true}
+          />
         </form>
       </motion.div>
     </div>

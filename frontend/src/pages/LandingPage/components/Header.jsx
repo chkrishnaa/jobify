@@ -42,7 +42,7 @@ export default function Header() {
                 darkMode ? "text-white" : "text-gray-900"
               } hidden sm:inline`}
             >
-              JobFinder
+              JobiFy
             </span>
           </div>
 

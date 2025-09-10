@@ -61,8 +61,6 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
               } py-8 px-4 my-8 rounded-lg`}
             >
               <div className="relative z-10">
-                
-
                 <JobCardHeader
                   category={
                     CATEGORIES.find((c) => c.value === formData.category)?.label
@@ -134,6 +132,17 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
             />
           </div>
         </div>
+
+        <button
+          className={`bg-gradient-to-r text-sm no-print ${
+            darkMode
+              ? "from-green-400 to-green-600 text-green-50 hover:text-white hover:from-green-500 hover:to-green-700"
+              : "from-green-50 to-green-100 text-green-700 hover:text-white hover:from-green-400 hover:to-green-600"
+          } px-6 py-2.5 rounded-xl transition-all duration-300 font-semibold transform hover:-translate-y-0.5`}
+          onClick={() => window.print()}
+        >
+          Download PDF
+        </button>
       </div>
     </div>
   );

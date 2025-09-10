@@ -38,21 +38,26 @@ const uploadToCloudinary = async (file) => {
       throw new Error("Invalid file object");
     }
 
-    console.log("Uploading file:", file.originalFilename, "from path:", file.filepath);
-    
+    console.log(
+      "Uploading file:",
+      file.originalFilename,
+      "from path:",
+      file.filepath
+    );
+
     const result = await cloudinary.uploader.upload(file.filepath, {
-      folder: "jobfinder",
+      folder: "JobiFy",
       resource_type: "auto",
       transformation: [{ width: 1000, height: 1000, crop: "limit" }],
     });
-    
+
     console.log("Upload successful:", result.secure_url);
-    
+
     return {
       url: result.secure_url,
       public_id: result.public_id,
       format: result.format,
-      size: result.bytes
+      size: result.bytes,
     };
   } catch (error) {
     console.error("Cloudinary upload error:", error);
@@ -68,41 +73,41 @@ const uploadBase64ToCloudinary = async (base64String, options = {}) => {
     }
 
     const { fileType, fileName } = options;
-    
-    if (fileType === 'resume') {
+
+    if (fileType === "resume") {
       console.log("Uploading resume PDF to Cloudinary");
-      
+
       const result = await cloudinary.uploader.upload(base64String, {
-        folder: "jobfinder/resumes",
+        folder: "JobiFy/resumes",
         resource_type: "auto",
-        public_id: fileName ? fileName.replace('.pdf', '') : undefined,
-        format: 'pdf'
+        public_id: fileName ? fileName.replace(".pdf", "") : undefined,
+        format: "pdf",
       });
-      
+
       console.log("Resume upload successful:", result.secure_url);
-      
+
       return {
         url: result.secure_url,
         public_id: result.public_id,
         format: result.format,
-        size: result.bytes
+        size: result.bytes,
       };
     } else {
       console.log("Uploading base64 image to Cloudinary");
-      
+
       const result = await cloudinary.uploader.upload(base64String, {
-        folder: "jobfinder",
+        folder: "JobiFy",
         resource_type: "auto",
         transformation: [{ width: 1000, height: 1000, crop: "limit" }],
       });
-      
+
       console.log("Base64 upload successful:", result.secure_url);
-      
+
       return {
         url: result.secure_url,
         public_id: result.public_id,
         format: result.format,
-        size: result.bytes
+        size: result.bytes,
       };
     }
   } catch (error) {

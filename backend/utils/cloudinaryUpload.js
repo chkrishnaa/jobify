@@ -1,7 +1,7 @@
 const cloudinary = require("../config/cloudinary");
 
 // Upload file to Cloudinary
-const uploadToCloudinary = async (file, folder = "jobfinder") => {
+const uploadToCloudinary = async (file, folder = "JobiFy") => {
   try {
     const result = await cloudinary.uploader.upload(file.path, {
       folder: folder,

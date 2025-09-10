@@ -50,7 +50,7 @@ const Navbar = () => {
                 darkMode ? "text-gray-200" : "text-gray-900"
               }`}
             >
-              JobFinder
+              JobiFy
             </span>
           </Link>
 

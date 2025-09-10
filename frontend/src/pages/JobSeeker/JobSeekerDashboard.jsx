@@ -149,7 +149,7 @@ const JobSeekerDashboard = () => {
           onClick={() => setShowMobileFilters(false)}
         />
         <div
-          className={`fixed inset-y-0 right-0 w-[300px] max-w-sm ${
+          className={`fixed inset-y-0 right-0 w-full max-w-xs ${
             darkMode ? "bg-gray-900" : "bg-white"
           } shadow-xl`}
         >

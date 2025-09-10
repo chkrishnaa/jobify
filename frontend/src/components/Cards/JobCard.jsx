@@ -131,7 +131,7 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
             className={`flex items-center gap-1.5 px-3 py-1 rounded-full font-medium ${
               darkMode
                 ? "bg-gray-800 text-gray-300"
-                : "bg-gray-100 text-gray-700"
+                : "bg-gray-200 text-gray-700"
             }`}
           >
             {job?.category}
@@ -139,26 +139,33 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
         </div>
       </div>
 
-      <div
-        className={`flex items-center justify-between text-sm font-medium ${
-          darkMode ? "text-gray-400" : "text-gray-500"
-        }`}
+      <p
+        className={`line-clamp-4 text-justify text-sm ${
+          darkMode ? "text-gray-400" : "text-gray-700"
+        } mb-6`}
       >
-        <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5" />
-            {job?.createdAt
-              ? moment(job.createdAt).format("Do MMM, YYYY")
-              : "N/A"}
-          </span>
-        </div>
-      </div>
-
+        {job?.description}
+      </p>
       <div
-        className={`flex items-center justify-end my-3 pb-4 border-b ${
-          darkMode ? "border-gray-700" : "border-gray-100"
+        className={`flex items-center justify-between my-2 pb-4 border-b ${
+          darkMode ? "border-gray-700" : "border-gray-300"
         } text-xs`}
       >
+        <div
+          className={`flex items-center justify-between text-sm font-medium ${
+            darkMode ? "text-gray-200" : "text-gray-800"
+          }`}
+        >
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5" />
+              {job?.createdAt
+                ? moment(job.createdAt).format("Do MMM, YYYY")
+                : "N/A"}
+            </span>
+          </div>
+        </div>
+
         <span
           className={`flex items-center gap-1.5 ${
             darkMode ? "bg-gray-800 text-gray-300" : "bg-gray-100 text-gray-700"

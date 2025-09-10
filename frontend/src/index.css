@@ -47,7 +47,7 @@
   }
 
   @page {
-    margin: 10mm; /* uniform margins (top, right, bottom, left) */
+    margin: 5mm; /* uniform margins (top, right, bottom, left) */
   }
 
   /* Default: allow breaking */
@@ -72,7 +72,11 @@
   .print-area .bottom{
     margin-bottom: 0px !important;
   }
-
+ body, html {
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
 
 

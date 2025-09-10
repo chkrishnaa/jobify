@@ -34,7 +34,7 @@ const Footer = () => {
                     darkMode ? "text-gray-200" : "text-gray-800"
                   }`}
                 >
-                  JobFinder
+                  JobiFy
                 </h3>
               </div>
 
@@ -56,10 +56,18 @@ const Footer = () => {
               >
                 © {new Date().getFullYear()} Krishnakumar. All rights reserved.
               </p>
-              <p className={`text-xs ${darkMode?"text-gray-300":"text-gray-500"}`}>
+              <p
+                className={`text-xs ${
+                  darkMode ? "text-gray-300" : "text-gray-500"
+                }`}
+              >
                 Built with passion • Powered by creativity.
               </p>
-              <p className={`text-xs ${darkMode?"text-gray-300":"text-gray-500"}`}>
+              <p
+                className={`text-xs ${
+                  darkMode ? "text-gray-300" : "text-gray-500"
+                }`}
+              >
                 Made with ❤️ by Krishnakumar
               </p>
             </div>

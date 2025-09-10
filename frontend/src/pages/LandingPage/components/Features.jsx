@@ -35,7 +35,7 @@ const Features = () => {
             } max-w-3xl mx-auto`}
           >
             Whether you're looking for your next opportunity or the perfect
-            candidate, JobFinder has got you covered.
+            candidate, JobiFy has got you covered.
           </p>
         </div>
 
