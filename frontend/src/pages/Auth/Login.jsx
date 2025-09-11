@@ -138,7 +138,7 @@ const Login = () => {
    if (formState.success) {
      return (
        <div
-         className={`min-h-screen flex items-center justify-center  ${
+         className={`min-h-screen flex items-center justify-center  bg-gradient-to-br ${
            darkMode
              ? "from-blue-900 via-black to-purple-950"
              : "from-blue-100 via-white to-purple-200"

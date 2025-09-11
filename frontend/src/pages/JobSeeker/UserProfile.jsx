@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Save, X, Trash2 } from "lucide-react";
+import { Save, X, Trash2, Download } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
@@ -8,9 +8,11 @@ import uploadImage from "../../utils/uploadImage";
 import uploadResume from "../../utils/uploadResume";
 import Navbar from "../../components/layout/Navbar";
 import { Link } from "react-router-dom";
+import { useTheme } from "../../context/ThemeContext";
 
 const UserProfile = () => {
   const { user, updateUser } = useAuth();
+  const { darkMode } = useTheme();
 
   const [profileData, setProfileData] = useState({
     name: user?.name || "",
@@ -19,9 +21,14 @@ const UserProfile = () => {
     resume: user?.resume || "",
   });
 
-  const [formData, setFormData] = useState({ ...profileData });
-  const [uploading, setUploading] = useState({ avatar: false, logo: false, resume: false });
+  const [formData, setFormData] = useState({ ...profileData, resumeDraft: "" });
+  const [uploading, setUploading] = useState({
+    avatar: false,
+    logo: false,
+    resume: false,
+  });
   const [saving, setSaving] = useState(false);
+  const [showResumeWarning, setShowResumeWarning] = useState(true);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -37,13 +44,13 @@ const UserProfile = () => {
     }));
     try {
       let uploadRes;
-      
-      if (type === 'resume') {
+
+      if (type === "resume") {
         uploadRes = await uploadResume(file);
       } else {
         uploadRes = await uploadImage(file);
       }
-      
+
       const fileUrl = uploadRes.imageUrl || "";
       handleInputChange(type, fileUrl);
     } catch (error) {
@@ -60,7 +67,7 @@ const UserProfile = () => {
   const handleImageChange = (e, type) => {
     const file = e.target.files[0];
     if (file) {
-      if (type === 'resume') {
+      if (type === "resume") {
         // For resumes, don't create preview URLs - just upload directly
         handleImageUpload(file, type);
       } else {
@@ -76,16 +83,33 @@ const UserProfile = () => {
     setSaving(true);
 
     try {
-      const response = await axiosInstance.put(
-        API_PATHS.AUTH.UPDATE_PROFILE,
-        formData
-      );
+      const response = await axiosInstance.put(API_PATHS.AUTH.UPDATE_PROFILE, {
+        ...formData,
+        resume: formData.resumeDraft || formData.resume, // ✅ commit draft if exists
+      });
 
       if (response.status === 200) {
         toast.success("Profile Details Updated Successfully!");
-        setProfileData({ ...formData });
-        updateUser({ ...formData });
-        updateUser({ ...formData });
+        setProfileData({
+          ...formData,
+          resume: formData.resumeDraft || formData.resume,
+        });
+        updateUser({
+          ...formData,
+          resume: formData.resumeDraft || formData.resume,
+        });
+
+        // ✅ Reset draft after save
+        setFormData((prev) => ({
+          ...prev,
+          resume: formData.resumeDraft || formData.resume,
+          resumeDraft: "",
+        }));
+        setShowResumeWarning(false);
+
+        if (formData.resumeDraft) {
+          toast.success("Resume Uploaded Successfully 🎉");
+        }
       }
     } catch (error) {
       console.error("Profile Update Failed.", error);
@@ -97,6 +121,44 @@ const UserProfile = () => {
   const handleCancel = () => {
     setFormData({ ...profileData });
   };
+
+  // Add inside your component
+  const getDirectDownloadLink = (url) => {
+    // Check if it's a Google Drive link
+    if (url.includes("drive.google.com")) {
+      const match = url.match(/\/d\/([^/]+)\//);
+      if (match && match[1]) {
+        return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+      }
+    }
+    return url; // return original if not drive
+  };
+
+  const handleDownloadResume = () => {
+    try {
+      const directUrl = getDirectDownloadLink(formData.resume);
+
+      // Create a hidden <a> tag and trigger click
+      const a = document.createElement("a");
+      a.href = directUrl;
+      a.setAttribute(
+        "download",
+        `${user?.name?.split(" ")[0] || "User"}Resume.pdf`
+      );
+      a.setAttribute("target", "_blank"); // ensure it works even if download attr is ignored
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      toast.success("Resume Downloaded Successfully!");
+    } catch (error) {
+      console.error("Download failed", error);
+      toast.error("Failed to download resume");
+    }
+  };
+
+
+
 
   const DeleteResume = async () => {
     setSaving(true);
@@ -110,6 +172,9 @@ const UserProfile = () => {
         toast.success("Resume Deleted Successfully!");
         setProfileData({ ...formData, resume: "" });
         updateUser({ ...formData, resume: "" });
+
+        // ✅ Show warning again
+        setShowResumeWarning(true);
       }
     } catch (error) {
       console.error("Profile Update Failed.", error);
@@ -123,42 +188,59 @@ const UserProfile = () => {
       name: user?.name || "",
       email: user?.email || "",
       avatar: user?.avatar || "",
+      resume: user?.resume || "", // ✅ include resume in reset
     };
     setProfileData({ ...userData });
     setFormData({ ...userData });
-    
+
     // Cleanup function to revoke blob URLs
     return () => {
       // Clean up any blob URLs that might have been created
-      if (formData.avatar && formData.avatar.startsWith('blob:')) {
+      if (formData.avatar && formData.avatar.startsWith("blob:")) {
         URL.revokeObjectURL(formData.avatar);
       }
     };
   }, [user]);
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div
+      className={`bg-gradient-to-br ${
+        darkMode
+          ? "from-blue-900 via-black to-purple-950"
+          : "from-blue-100 via-white to-purple-200"
+      } py-24 px-6`}
+    >
       <Navbar />
 
-      <div className="min-h-screen bg-gray-50 py-8 px-4 mt-16 lg:m-20">
+      <div className="min-h-screen mt-16">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-8 py-6 flex justify-between items-center">
-              <h1 className="text-xl font-medium text-white">Profile</h1>
+          <div
+            className={`${
+              darkMode ? "bg-gray-900" : "bg-white"
+            } rounded-xl shadow-lg overflow-hidden`}
+          >
+            <div
+              className={`bg-gradient-to-r ${
+                darkMode
+                  ? "from-blue-600 to-blue-800"
+                  : "from-blue-400 to-blue-600"
+              } px-8 py-6 flex justify-between items-center`}
+            >
+              <h1 className={`text-xl font-medium text-white`}>Profile</h1>
             </div>
 
             <div className="p-8">
               <div className="space-y-6">
                 <div className="flex items-center space-x-4">
-                  <div className="">
+                  <div className="relative w-20 h-20">
                     <img
                       src={formData?.avatar}
                       alt="Avatar"
                       className="w-20 h-20 rounded-full object-cover border-4 border-gray-200"
                     />
                     {uploading?.avatar && (
-                      <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center">
-                        <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <div className="absolute inset-0 bg-blue-300 bg-opacity-50 rounded-full flex items-center justify-center">
+                        <div className="w-6 h-6 border-2 border-blue-700 border-t-transparent rounded-full animate-spin"></div>
                       </div>
                     )}
                   </div>
@@ -170,83 +252,146 @@ const UserProfile = () => {
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleImageChange(e, "avatar")}
-                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors"
+                        className={`block w-full text-sm 
+  ${darkMode ? "text-gray-300" : "text-gray-500"} 
+  file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 
+  file:text-sm file:font-semibold 
+  ${
+    darkMode
+      ? "file:bg-gray-800 file:text-blue-400 hover:file:bg-gray-700"
+      : "file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+  } 
+  transition-colors`}
                       />
                     </label>
                   </div>
                 </div>
                 <div className="">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    className={`block text-sm font-medium ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    } mb-2`}
+                  >
                     Full Name
                   </label>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                      darkMode
+                        ? "border-gray-700 focus:ring-purple-600 text-gray-200"
+                        : "border-gray-300 focus:ring-purple-500"
+                    } focus:ring-opacity-20 transition-all`}
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                     placeholder="Enter your name"
                   />
                 </div>{" "}
                 <div className="">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    className={`block text-sm font-medium ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    } mb-2`}
+                  >
                     Email Address
                   </label>
                   <input
                     type="email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                      darkMode
+                        ? "border-gray-700 focus:ring-purple-600 text-gray-200 bg-gray-700"
+                        : "border-gray-300 focus:ring-purple-500 bg-gray-300"
+                    } focus:ring-opacity-20 transition-all`}
                     value={formData.email}
                     disabled
                   />
                 </div>
-                {user?.resume ? (
+                {formData?.resume ? (
+                  // ✅ Show after save
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      className={`block text-sm font-medium ${
+                        darkMode ? "text-gray-300" : "text-gray-700"
+                      } mb-2`}
+                    >
                       Resume
                     </label>
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border">
-                        <svg className="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
-                        </svg>
-                        <span className="text-sm text-gray-600">PDF Resume</span>
-                      </div>
-                      
-                      <a
-                        href={user?.resume}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-3 py-2 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600 transition-colors"
-                      >
-                        View Resume
-                      </a>
+                    <div
+                      className={`flex justify-between items-center gap-3 p-3 rounded-lg border ${
+                        darkMode
+                          ? "bg-gray-800 border-gray-700"
+                          : "bg-gray-50 border-gray-200"
+                      }`}
+                    >
+                      {/* PDF Icon */}
+                      <div className="flex items-center gap-4">
+                        <div className="h-8 w-8 overflow-hidden rounded-sm">
+                          <img
+                            src="/PdfIcon.png"
+                            alt="PDF Icon"
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
 
-                      <button
-                        className="cursor-pointer p-2 hover:bg-red-50 rounded-lg transition-colors"
-                        onClick={DeleteResume}
-                      >
-                        <Trash2 className="w-5 h-5 text-red-500"/>
-                      </button>
+                        {/* ✅ FirstName + Resume.pdf */}
+                        <a
+                          href={formData.resume}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-blue-600 underline truncate max-w-[250px]"
+                        >
+                          {user?.name?.split(" ")[0] || "User"}Resume.pdf
+                        </a>
+                      </div>
+
+                      {/* Delete */}
+                      <div className="flex items-center gap-2">
+                        {/* Delete Button */}
+                        <button
+                          className="cursor-pointer p-2 hover:bg-red-100 dark:hover:bg-red-900 rounded-lg transition-colors"
+                          onClick={DeleteResume}
+                        >
+                          <Trash2 className="w-5 h-5 text-red-500" />
+                        </button>
+
+                        {/* Download Button */}
+                        <button
+                          onClick={handleDownloadResume}
+                          className="cursor-pointer p-2 hover:bg-green-100 dark:hover:bg-green-900 rounded-lg transition-colors"
+                        >
+                          <Download className="h-6 w-6 text-green-500" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ) : (
+                  // 🔹 Input before save
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Resume (PDF only)
+                    <label
+                      className={`block text-sm font-medium ${
+                        darkMode ? "text-gray-300" : "text-gray-700"
+                      } mb-2`}
+                    >
+                      Resume Link
                     </label>
-                    <div className="space-y-2">
-                      <input
-                        type="file"
-                        accept=".pdf"
-                        onChange={(e) => handleImageChange(e, "resume")}
-                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors"
-                      />
-                      {uploading?.resume && (
-                        <div className="flex items-center gap-2 text-sm text-blue-600">
-                          <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-                          Uploading resume...
-                        </div>
-                      )}
-                    </div>
+                    <input
+                      type="url"
+                      placeholder="Paste your resume link here"
+                      value={formData.resumeDraft}
+                      onChange={(e) => {
+                        handleInputChange("resumeDraft", e.target.value);
+                        setShowResumeWarning(true);
+                      }}
+                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                        darkMode
+                          ? "border-gray-700 focus:ring-purple-600 text-gray-200"
+                          : "border-gray-300 focus:ring-purple-500"
+                      } focus:ring-opacity-20 transition-all`}
+                    />
+                    {showResumeWarning && (
+                      <p className="text-xs text-yellow-600 mt-1">
+                        ⚠️ The PDF link should be accessible publicly.
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
@@ -262,7 +407,12 @@ const UserProfile = () => {
                 </Link>
                 <button
                   onClick={handleSave}
-                  disabled={saving || uploading.avatar || uploading.logo || uploading.resume}
+                  disabled={
+                    saving ||
+                    uploading.avatar ||
+                    uploading.logo ||
+                    uploading.resume
+                  }
                   className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
                 >
                   {saving ? (

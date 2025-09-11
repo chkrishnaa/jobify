@@ -52,23 +52,6 @@ export default function ApplicationViewer() {
     else navigate("/manage-jobs");
   }, [jobId, navigate]);
 
-  // const groupedApplications = useMemo(() => {
-  //   const filtered = applications.filter((app) => app.job.title.toLowerCase());
-  //   return filtered.reduce((acc, app) => {
-  //     const jobId = app.job._id;
-  //     console.log(jobId);
-
-  //     if (!acc[jobId]) {
-  //       acc[jobId] = {
-  //         job: app.job,
-  //         applications: [],
-  //       };
-  //     }
-  //     acc[jobId].applications.push(app);
-  //     return acc;
-  //   }, {});
-  // }, [applications]);
-
   const groupedApplications = useMemo(() => {
     const filtered = applications.filter((app) => {
       if (statusFilter === "All") return true;

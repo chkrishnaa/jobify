@@ -34,7 +34,7 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
                   darkMode
                     ? "from-white to-gray-300"
                     : "from-gray-900 to-gray-500"
-                } bg-clip-text text-transparent`}
+                } bg-clip-text text-transparent no-print`}
               >
                 Job Preview
               </h2>
@@ -45,10 +45,10 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
                 darkMode
                   ? "text-gray-300 bg-gray-800/50 border border-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-purple-700 hover:to-purple-800 shadow-gray-600 hover:shadow-gray-500"
                   : "text-gray-600 bg-white/50 border border-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700 shadow-lg hover:shadow-xl"
-              } hover:border-transparent transform hover:-translate-y-0.5`}
+              } hover:border-transparent transform hover:-translate-y-0.5 print:p-0 print:m-0`}
             >
               <ArrowLeft
-                className={`h-4 w-4 transition-transform group-hover:-translate-x-1`}
+                className={`h-4 w-4 transition-transform group-hover:-translate-x-1 np-print`}
               />
               <span>Back to Edit</span>
             </button>
@@ -56,7 +56,7 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
           <div className="">
             {/* Hero section with clean background */}
             <div
-              className={`relative ${
+              className={`relative print-area ${
                 darkMode ? " bg-gray-800" : " bg-white"
               } py-8 px-4 my-8 rounded-lg`}
             >

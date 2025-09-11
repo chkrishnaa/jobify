@@ -69,7 +69,7 @@ const SavedJobs = () => {
                       ? "text-gray-300 bg-gray-800/50 border border-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-800 shadow-gray-600 hover:shadow-gray-500"
                       : "text-gray-600 bg-white/50 border border-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-700 shadow-lg hover:shadow-xl"
                   } hover:border-transparent transform hover:-translate-y-0.5`}
-                  onClick={() => navigate(-1)}
+                  onClick={() => navigate("/find-jobs")}
                 >
                   <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
                 </button>

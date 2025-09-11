@@ -48,7 +48,7 @@ const ApplicantProfilePreview = ({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 flex items-center justify-center p-4 z-50 bg-black/50">
       <div
         className={`${
           darkMode ? "bg-gray-900" : "bg-white"
@@ -153,7 +153,7 @@ const ApplicantProfilePreview = ({
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span
-                    className={`${
+                    className={`flex self-center ${
                       darkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
@@ -223,7 +223,7 @@ const ApplicantProfilePreview = ({
                 ))}
               </select>
 
-              {!loading && (
+              {loading && (
                 <p
                   className={`text-xs ${
                     darkMode ? "text-gray-300" : "text-gray-600"

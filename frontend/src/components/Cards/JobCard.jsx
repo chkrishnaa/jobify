@@ -147,7 +147,7 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
         {job?.description}
       </p>
       <div
-        className={`flex items-center justify-between my-2 pb-4 border-b ${
+        className={`flex items-center justify-end my-2 pb-4 border-b ${
           darkMode ? "border-gray-700" : "border-gray-300"
         } text-xs`}
       >
@@ -165,15 +165,6 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
             </span>
           </div>
         </div>
-
-        <span
-          className={`flex items-center gap-1.5 ${
-            darkMode ? "bg-gray-800 text-gray-300" : "bg-gray-100 text-gray-700"
-          } px-3 py-1 rounded-full font-medium`}
-        >
-          <MapPin className="h-4 w-4" />
-          {job?.location}
-        </span>
       </div>
 
       <div className="flex items-center justify-between">
