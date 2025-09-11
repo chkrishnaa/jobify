@@ -13,6 +13,7 @@ import JobCard from "../../components/Cards/JobCard";
 import { useTheme } from "../../context/ThemeContext";
 import NoResults from "../../components/Utility/NoResults";
 import ViewMode from "../../components/Utility/ViewMode";
+import Pagination from "../../components/Utility/Pagination";
 
 const JobSeekerDashboard = () => {
   const { user } = useAuth();
@@ -23,8 +24,15 @@ const JobSeekerDashboard = () => {
   const [viewMode, setViewMode] = useState("grid");
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // you can change this
 
   const navigate = useNavigate();
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const paginatedJobs = jobs.slice(startIndex, endIndex);
 
   const [filters, setFilters] = useState({
     keywords: "",
@@ -111,6 +119,11 @@ const JobSeekerDashboard = () => {
 
     return () => clearTimeout(timeoutId);
   }, [filters, user]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [jobs]);
+
 
   const handleFilterChange = (key, value) => {
     setFilters((prev) => ({
@@ -323,7 +336,7 @@ const JobSeekerDashboard = () => {
                         : "space-y-4 lg:space-y-6"
                     }
                   >
-                    {jobs.map((job) => (
+                    {paginatedJobs.map((job) => (
                       <JobCard
                         key={job._id}
                         job={job}
@@ -332,6 +345,20 @@ const JobSeekerDashboard = () => {
                         onApply={() => applyToJob(job._id)}
                       />
                     ))}
+                  </div>
+
+                  {/* Pagination */}
+                  <div className="mt-6">
+                    <Pagination
+                      darkMode={darkMode}
+                      currentPage={currentPage}
+                      totalPages={Math.ceil(jobs.length / itemsPerPage)}
+                      startIndex={startIndex}
+                      itemsPerPage={itemsPerPage}
+                      totalItems={jobs.length}
+                      setCurrentPage={setCurrentPage}
+                      color="blue"
+                    />
                   </div>
                 </>
               )}

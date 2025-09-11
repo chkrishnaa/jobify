@@ -61,7 +61,7 @@ export default function EditProfilePage({
                         />
                         {uploading?.avatar && (
                           <div
-                            className={`absolute inset-0 bg-gradient-to-br${
+                            className={`absolute inset-0 bg-gradient-to-br ${
                               darkMode
                                 ? " from-purple-700 to-purple-800"
                                 : "from-purple-500 to-purple-600"

@@ -258,9 +258,9 @@ const UserProfile = () => {
   file:text-sm file:font-semibold 
   ${
     darkMode
-      ? "file:bg-gray-800 file:text-blue-400 hover:file:bg-gray-700"
-      : "file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-  } 
+      ? "text-gray-200 file:bg-blue-700 file:text-blue-100 hover:file:bg-blue-600"
+      : "text-gray-700 file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
+  }
   transition-colors`}
                       />
                     </label>
@@ -316,7 +316,7 @@ const UserProfile = () => {
                       Resume
                     </label>
                     <div
-                      className={`flex justify-between items-center gap-3 p-3 rounded-lg border ${
+                      className={`flex justify-between items-center gap-3 px-3 py-2 rounded-lg border ${
                         darkMode
                           ? "bg-gray-800 border-gray-700"
                           : "bg-gray-50 border-gray-200"
@@ -324,12 +324,8 @@ const UserProfile = () => {
                     >
                       {/* PDF Icon */}
                       <div className="flex items-center gap-4">
-                        <div className="h-8 w-8 overflow-hidden rounded-sm">
-                          <img
-                            src="/PdfIcon.png"
-                            alt="PDF Icon"
-                            className="h-full w-full object-cover"
-                          />
+                        <div className="h-8 w-8 rounded-sm bg-red-600 text-white text-xs flex items-center justify-center">
+                          PDF
                         </div>
 
                         {/* ✅ FirstName + Resume.pdf */}
@@ -337,7 +333,7 @@ const UserProfile = () => {
                           href={formData.resume}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm text-blue-600 underline truncate max-w-[250px]"
+                          className="text-blue-500 hover:text-blue-600 underline truncate max-w-[120px] sm:max-w-[250px] overflow-hidden text-ellipsis whitespace-nowrap"
                         >
                           {user?.name?.split(" ")[0] || "User"}Resume.pdf
                         </a>
@@ -345,20 +341,26 @@ const UserProfile = () => {
 
                       {/* Delete */}
                       <div className="flex items-center gap-2">
-                        {/* Delete Button */}
-                        <button
-                          className="cursor-pointer p-2 hover:bg-red-100 dark:hover:bg-red-900 rounded-lg transition-colors"
-                          onClick={DeleteResume}
-                        >
-                          <Trash2 className="w-5 h-5 text-red-500" />
-                        </button>
-
-                        {/* Download Button */}
                         <button
                           onClick={handleDownloadResume}
-                          className="cursor-pointer p-2 hover:bg-green-100 dark:hover:bg-green-900 rounded-lg transition-colors"
+                          className={`flex items-center gap-2 text-xs ${
+                            darkMode
+                              ? "text-green-400 hover:text-green-800 hover:bg-green-300"
+                              : "text-green-500 hover:text-green-700 hover:bg-green-100"
+                          } p-2 rounded-lg transition-colors duration-300`}
                         >
-                          <Download className="h-6 w-6 text-green-500" />
+                          <Download className="h-5 w-5" />
+                        </button>
+
+                        <button
+                          className={`${
+                            darkMode
+                              ? "text-red-400 hover:text-red-800 hover:bg-orange-300"
+                              : "text-red-500 hover:text-red-700 hover:bg-orange-100"
+                          } p-2 rounded-lg transition-colors duration-300`}
+                          onClick={DeleteResume}
+                        >
+                          <Trash2 className="h-5 w-5" />
                         </button>
                       </div>
                     </div>
@@ -373,20 +375,34 @@ const UserProfile = () => {
                     >
                       Resume Link
                     </label>
-                    <input
-                      type="url"
-                      placeholder="Paste your resume link here"
-                      value={formData.resumeDraft}
-                      onChange={(e) => {
-                        handleInputChange("resumeDraft", e.target.value);
-                        setShowResumeWarning(true);
-                      }}
-                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
-                        darkMode
-                          ? "border-gray-700 focus:ring-purple-600 text-gray-200"
-                          : "border-gray-300 focus:ring-purple-500"
-                      } focus:ring-opacity-20 transition-all`}
-                    />
+                    <div className="relative w-full">
+                      <input
+                        type="url"
+                        placeholder="Paste your resume link here"
+                        value={formData.resumeDraft}
+                        onChange={(e) => {
+                          handleInputChange("resumeDraft", e.target.value);
+                          setShowResumeWarning(true);
+                        }}
+                        className={`w-full px-4 py-3 pr-20 border rounded-lg focus:outline-none focus:ring-2 ${
+                          darkMode
+                            ? "border-gray-700 focus:ring-purple-600 text-gray-200"
+                            : "border-gray-300 focus:ring-purple-500"
+                        } focus:ring-opacity-20 transition-all text-sm`}
+                      />
+
+                      {formData.resumeDraft && (
+                        <a
+                          href={formData.resumeDraft}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-600 text-sm font-medium hover:underline"
+                        >
+                          Open
+                        </a>
+                      )}
+                    </div>
+
                     {showResumeWarning && (
                       <p className="text-xs text-yellow-600 mt-1">
                         ⚠️ The PDF link should be accessible publicly.
@@ -396,38 +412,50 @@ const UserProfile = () => {
                 )}
               </div>
 
-              <div className="flex justify-end space-x-4 mt-8 pt-6 border-t border-gray-300">
-                <Link
-                  className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center space-x-2"
-                  onClick={handleCancel}
-                  to="/find-jobs"
-                >
-                  <X className="w-4 h-4"></X>
-                  <span>Cancel</span>
-                </Link>
-                <button
-                  onClick={handleSave}
-                  disabled={
-                    saving ||
-                    uploading.avatar ||
-                    uploading.logo ||
-                    uploading.resume
-                  }
-                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
-                >
-                  {saving ? (
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  ) : (
-                    <Save className="w-4 h-4" />
-                  )}
-                  <span>{saving ? "Saving ..." : "Save Changes"}</span>
-                </button>
+                
+
+                <div className={`flex justify-end space-x-4 mt-8 pt-6 border-t ${
+                  darkMode ? "border-gray-700" : "border-gray-300"
+                }`}>
+                  <Link
+                    className={`px-6 py-3 border ${
+                      darkMode
+                        ? "border-gray-700 text-gray-300 hover:bg-gray-800"
+                        : "border-gray-300 text-gray-700 hover:bg-gray-200"
+                    } rounded-lg transition-colors flex items-center space-x-2`}
+                    onClick={handleCancel}
+                    to="/find-jobs"
+                  >
+                    <X className="w-4 h-4"></X>
+                    <span>Cancel</span>
+                  </Link>
+                  <button
+                    onClick={handleSave}
+                    disabled={
+                      saving ||
+                      uploading.avatar ||
+                      uploading.logo ||
+                      uploading.resume
+                    }
+                    className={`px-6 py-3 ${
+                      darkMode
+                        ? "bg-blue-700 text-gray-300 hover:bg-blue-800"
+                        : "bg-blue-600 text-white hover:bg-blue-700"
+                    } rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2`}
+                  >
+                    {saving ? (
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    ) : (
+                      <Save className="w-4 h-4" />
+                    )}
+                    <span>{saving ? "Saving ..." : "Save Changes"}</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
