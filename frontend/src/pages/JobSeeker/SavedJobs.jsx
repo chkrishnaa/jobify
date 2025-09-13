@@ -59,15 +59,15 @@ const SavedJobs = () => {
           <div
             className={`${
               darkMode ? "bg-gray-900" : "bg-white"
-            } p-6 rounded-lg`}
+            } px-2 py-6 sm:px-6 rounded-none sm:rounded-lg`}
           >
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-4">
                 <button
-                  className={`group flex items-center space-x-2 text-sm font-medium px-6 py-3 rounded-xl transition-all duration-300 shadow-lg ${
+                  className={`group flex items-center space-x-2 text-sm font-medium px-6 py-3 rounded-md sm:rounded-xl transition-all duration-300 shadow-lg ${
                     darkMode
-                      ? "text-gray-300 bg-gray-800/50 border border-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-800 shadow-gray-600 hover:shadow-gray-500"
-                      : "text-gray-600 bg-white/50 border border-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-700 shadow-lg hover:shadow-xl"
+                      ? "text-gray-300 bg-gray-800/50 border border-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-800 hover:shadow-gray-500"
+                      : "text-gray-600 bg-white/50 border border-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-700 hover:shadow-xl"
                   } hover:border-transparent transform hover:-translate-y-0.5`}
                   onClick={() => navigate("/find-jobs")}
                 >

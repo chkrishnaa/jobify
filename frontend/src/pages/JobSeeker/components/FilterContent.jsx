@@ -45,7 +45,7 @@ const FilterContent = ({
 
   return (
     <>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-3 sm:mb-6">
         <button
           className="text-blue-600 hover:text-blue-700 font-semibold text-sm"
           onClick={clearAllFilters}
@@ -59,7 +59,7 @@ const FilterContent = ({
         isExpanded={expandedSections?.jobType}
         onToggle={() => toggleSection("jobType")}
       >
-        <div className="space-y-3">
+        <div className="space-y-1 sm:space-y-3">
           {JOB_TYPES.map((type) => (
             <label
               key={type.value}
@@ -95,13 +95,13 @@ const FilterContent = ({
           handleFilterChange={handleFilterChange}
         />
       </FilterSection>
- 
+
       <FilterSection
         title="Category"
         isExpanded={expandedSections.categories}
         onToggle={() => toggleSection("categories")}
       >
-        <div className="space-y-3">
+        <div className="space-y-1 sm:space-y-3">
           {CATEGORIES.map((type) => (
             <label
               key={type.value}

@@ -19,20 +19,20 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
 
   return (
     <div
-      className={`bg-gradient-to-br ${
+      className={`bg-gradient-to-br shadow-none ${
         darkMode
-          ? "from-gray-800 to-gray-950 border border-gray-700 shadow-[0_4px_12px_rgba(255,255,255,0.4)] hover:shadow-[0_6px_18px_rgba(255,255,255,0.4)]"
-          : "from-gray-50 to-gray-200 border border-gray-200 shadow-lg hover:shadow-xl"
-      } rounded-2xl p-6  transition-all duration-300 group relative overflow-hidden cursor-pointer`}
+          ? "from-gray-800 to-gray-950 border border-gray-700 sm:shadow-[0_4px_12px_rgba(255,255,255,0.4)] hover:shadow-[0_6px_18px_rgba(255,255,255,0.4)]"
+          : "from-gray-50 to-gray-200 border border-gray-200 sm:shadow-lg hover:shadow-xl"
+      } rounded-lg sm:rounded-2xl p-3 sm:p-6 transition-all duration-300 group relative overflow-hidden cursor-pointer`}
       onClick={onClick}
     >
       <div className="flex items-start justify-between mb-4">
-        <div className="flex items-start gap-4">
+        <div className="flex items-start gap-2 sm:gap-4">
           {job?.company?.companyLogo ? (
             <img
               src={job?.company?.companyLogo}
               alt="Company Logo"
-              className={`w-14 h-14 object-cover rounded-2xl border-4 ${
+              className={`w-12 sm:w-14 h-12 sm:h-14 object-cover rounded-lg sm:rounded-2xl border-4 ${
                 darkMode
                   ? "border-gray-700 shadow-[0_4px_12px_rgba(255,255,255,0.4)]"
                   : "border-white/20 shadow-lg"
@@ -44,7 +44,7 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
                 darkMode
                   ? "border-gray-700 bg-gray-800"
                   : "border-gray-200 bg-gray-50"
-              } rounded-2xl flex items-center justify-center`}
+              } rounded-lg sm:rounded-2xl flex items-center justify-center`}
             >
               <Building2
                 className={`h-8 w-8 ${
@@ -77,7 +77,7 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
 
         {user && (
           <button
-            className={`p-2 rounded-xl transition-colors ${
+            className={`p-0 sm:p-2 rounded-xl transition-colors ${
               darkMode
                 ? "hover:bg-gray-800 text-gray-300"
                 : "hover:bg-gray-200 text-gray-600"
@@ -186,7 +186,7 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
                     darkMode
                       ? "from-blue-400 to-blue-600 text-blue-50 hover:text-white hover:from-blue-500 hover:to-blue-700"
                       : "from-blue-50 to-blue-100 text-blue-700 hover:text-white hover:from-blue-400 hover:to-blue-600"
-                  } px-6 py-2.5 rounded-xl transition-all duration-300 font-semibold transform hover:-translate-y-0.5`}
+                  } px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-md sm:rounded-xl transition-all duration-300 font-semibold transform hover:-translate-y-0.5`}
                   onClick={(e) => {
                     e.stopPropagation();
                     onApply();

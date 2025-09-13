@@ -25,7 +25,7 @@ const JobSeekerDashboard = () => {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // you can change this
+  const itemsPerPage = 10;
 
   const navigate = useNavigate();
 
@@ -100,7 +100,6 @@ const JobSeekerDashboard = () => {
         remoteOnly: filters.remoteOnly,
       };
 
-      // Only call API if there are meaningful filters
       const hasFilters = Object.values(apiFilters).some(
         (value) =>
           value !== "" &&
@@ -112,7 +111,6 @@ const JobSeekerDashboard = () => {
       if (hasFilters) {
         fetchJobs(apiFilters);
       } else {
-        // Clear jobs or show all jobs if there are no filters
         fetchJobs();
       }
     }, 500);
@@ -162,12 +160,12 @@ const JobSeekerDashboard = () => {
           onClick={() => setShowMobileFilters(false)}
         />
         <div
-          className={`fixed inset-y-0 right-0 w-full max-w-xs ${
+          className={`fixed inset-y-0 right-0 w-[70%] sm:w-full max-w-xs ${
             darkMode ? "bg-gray-900" : "bg-white"
           } shadow-xl`}
         >
           <div
-            className={`flex items-center justify-between p-6 border-b ${
+            className={`flex items-center justify-between p-4 sm:p-6 border-b ${
               darkMode ? "border-gray-700" : "border-gray-200"
             }`}
           >
@@ -180,7 +178,7 @@ const JobSeekerDashboard = () => {
             </h3>
             <button
               onClick={() => setShowMobileFilters(false)}
-              className={`p-2 ${
+              className={`p-0 sm:p-2 ${
                 darkMode ? "hover:bg-gray-600" : "hover:bg-gray-100"
               } rounded-xl transition-colors`}
             >
@@ -191,7 +189,7 @@ const JobSeekerDashboard = () => {
               />
             </button>
           </div>
-          <div className="p-6 overflow-y-auto h-full pb-20">
+          <div className="p-4 sm:p-6 overflow-y-auto h-full pb-20">
             <FilterContent
               toggleSection={toggleSection}
               clearAllFilters={clearAllFilters}
@@ -304,7 +302,7 @@ const JobSeekerDashboard = () => {
                       darkMode
                         ? "border-gray-700 bg-gray-800 text-gray-300 hover:bg-gray-700"
                         : "border-gray-200 bg-white text-gray-700 hover:bg-gray-100"
-                    } px-4 py-2 rounded-xl font-medium transition-colors`}
+                    } px-4 py-2 rounded-md sm:rounded-xl font-medium transition-colors`}
                     onClick={() => setShowMobileFilters(true)} // ✅ toggle sidebar
                   >
                     <Filter className="w-4 h-4" /> Filters
@@ -319,7 +317,7 @@ const JobSeekerDashboard = () => {
                     darkMode
                       ? "from-gray-800 to-gray-950 shadow-[0_6px_18px_rgba(255,255,255,0.4)]"
                       : "from-gray-100 to-gray-300 shadow-xl"
-                  } rounded-xl overflow-hidden`}
+                  } rounded-md sm:rounded-xl overflow-hidden`}
                 >
                   <NoResults
                     icon={Search}
