@@ -5,13 +5,13 @@ import { IndianRupee, Users } from "lucide-react";
 const JobInfo = ({ ...props }) => {
   const { darkMode } = useTheme();
   return (
-    <div className="px-0 pb-8 print:py-0 space-y-8">
+    <div className="px-0 pb-4 sm:pb-8 print:py-0 space-y-4 sm:space-y-8">
       <div
         className={`relative overflow-hidden bg-gradient-to-r ${
           darkMode
             ? "from-emerald-300 to-teal-300 border border-emerald-950"
             : "from-emerald-50 to-teal-50 border border-emerald-100"
-        } p-6 rounded-2xl`}
+        } p-2 sm:p-6 rounded-lg sm:rounded-2xl`}
       >
         <div
           className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${
@@ -34,12 +34,12 @@ const JobInfo = ({ ...props }) => {
               </div>
 
               <div className="">
-                <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900">
                   Compensation
                 </h3>
-                <div className="text-lg font-bold text-gray-900">
+                <div className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900">
                   {props.salaryMin} - {props.salaryMax}
-                  <span className="text-lg text-gray-600 font-normal ml-1">
+                  <span className="text-xs sm:text-sm text-gray-600 font-normal ml-1">
                     {" "}
                     per year
                   </span>
@@ -81,7 +81,7 @@ const JobInfo = ({ ...props }) => {
             darkMode
               ? "from-blue-400 to-purple-400 border-purple-400"
               : "from-blue-100 to-purple-100 border-purple-100"
-          } p-6 rounded-xl`}
+          } p-2 sm:p-6 rounded-md sm:rounded-xl`}
         >
           <div
             className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-br ${
@@ -98,7 +98,7 @@ const JobInfo = ({ ...props }) => {
             } rounded-full`}
           ></div>
           <div
-            className={`text-sm ${
+            className={`text-xs sm:text-sm ${
               darkMode ? "text-gray-950" : "text-gray-700"
             } leading-relaxed whitespace-pre-wrap text-justify font-sm`}
           >
@@ -127,7 +127,7 @@ const JobInfo = ({ ...props }) => {
             darkMode
               ? "from-purple-400 via-blue-300 to-pink-300 border-pink-300"
               : "from-purple-100 via-blue-100 to-pink-100 border-pink-100"
-          } p-6 rounded-xl`}
+          } p-2 sm:p-6 rounded-md sm:rounded-xl`}
         >
           <div
             className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-br ${
@@ -144,7 +144,7 @@ const JobInfo = ({ ...props }) => {
             } rounded-full`}
           ></div>
           <div
-            className={`text-sm ${
+            className={`text-xs sm:text-sm ${
               darkMode ? "text-gray-950" : "text-gray-700"
             } leading-relaxed whitespace-pre-wrap text-justify font-sm`}
           >

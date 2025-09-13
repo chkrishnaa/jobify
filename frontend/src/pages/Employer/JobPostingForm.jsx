@@ -160,56 +160,56 @@ export default function JobPostingForm() {
   }
   return (
     <DashboardLayout activeMenu="post-job">
-      <div className="min-h-screen py-[50px]">
+      <div className="min-h-screen px-2 sm:px-0 py-10 sm:py-[50px]">
         <div className="max-w-4xl mx-auto">
           <div
             className={` ${
               darkMode
                 ? "bg-gray-900 shadow-[0_4px_12px_rgba(255,255,255,0.4)]"
                 : "bg-white shadow-lg"
-            } rounded-2xl p-6`}
+            } rounded-md sm:rounded-2xl p-3 sm:p-6`}
           >
-            <div className="flex items-center justify-between mb-8">
-              <div className="">
-                <h2
-                  className={`text-xl font-bold bg-gradient-to-r ${
-                    darkMode ? "from-white to-gray-400" : "from-gray-900 to-gray-100"
-                  } bg-clip-text text-transparent`}
-                >
-                  Post a New Job
-                </h2>
-                <p
-                  className={`text-sm ${
-                    darkMode ? "text-gray-400" : "text-gray-600"
-                  } mt-1`}
-                >
-                  Fill out the form below to create your job posting.
-                </p>
-              </div>
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => setIsPreview(true)}
-                  disabled={!isFormValid}
-                  className={`group flex items-center space-x-2 text-sm font-medium px-6 py-3 rounded-xl transition-all duration-300 shadow-lg ${
-                    !isFormValid()
-                      ? darkMode
-                        ? "bg-gray-700 text-gray-400 border border-gray-700 cursor-not-allowed shadow-gray-800"
-                        : "bg-gray-300 text-gray-600 border border-gray-300 cursor-not-allowed shadow-gray-300"
-                      : darkMode
-                      ? "text-gray-300 bg-gray-800/50 border border-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700 hover:border-transparent transform hover:-translate-y-0.5 shadow-gray-800 hover:shadow-xl"
-                      : "text-gray-600 bg-white/50 border border-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700 hover:border-transparent transform hover:-translate-y-0.5 shadow-gray-300 hover:shadow-xl"
+            <div className="flex items-center space-x-2 justify-between">
+              <h2
+                className={`text-xl font-bold bg-gradient-to-r ${
+                  darkMode
+                    ? "from-white to-gray-400"
+                    : "from-gray-900 to-gray-100"
+                } bg-clip-text text-transparent`}
+              >
+                Post a New Job
+              </h2>
+              <button
+                onClick={() => setIsPreview(true)}
+                disabled={!isFormValid()}
+                className={`group flex items-center space-x-2 text-sm font-medium px-2 sm:px-6 py-2 sm:py-3 rounded-xl transition-all duration-300 shadow-lg ${
+                  !isFormValid()
+                    ? darkMode
+                      ? "bg-gray-700 text-gray-400 border border-gray-700 cursor-not-allowed shadow-gray-800"
+                      : "bg-gray-300 text-gray-600 border border-gray-300 cursor-not-allowed shadow-gray-300"
+                    : darkMode
+                    ? "text-gray-300 bg-gray-800/50 border border-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700 hover:border-transparent transform hover:-translate-y-0.5 shadow-gray-800 hover:shadow-xl"
+                    : "text-gray-600 bg-white/50 border border-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700 hover:border-transparent transform hover:-translate-y-0.5 shadow-gray-300 hover:shadow-xl"
+                }`}
+              >
+                <Eye
+                  className={`h-4 w-4 transition-transform ${
+                    isFormValid() ? "group-hover:-translate-x-1" : ""
                   }`}
-                >
-                  <Eye
-                    className={`h-4 w-4 transition-transform ${
-                      isFormValid() ? "group-hover:-translate-x-1" : ""
-                    }`}
-                  />
-                  <span>Preview</span>
-                </button>
-              </div>
+                />
+                <span>Preview</span>
+              </button>
             </div>
-            <div className="space-y-6">
+            <div className="flex items-center mb-4 sm:mb-8">
+              <p
+                className={`text-sm ${
+                  darkMode ? "text-gray-400" : "text-gray-600"
+                } mt-1`}
+              >
+                Fill out the form below to create your job posting.
+              </p>
+            </div>
+            <div className="space-y-3 sm:space-y-6">
               <InputField
                 label="Job Title"
                 id="jobTitle"
@@ -310,7 +310,7 @@ export default function JobPostingForm() {
                   </span>
                 </label>
 
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                       <IndianRupee className="h-4 w-4 text-gray-400"></IndianRupee>

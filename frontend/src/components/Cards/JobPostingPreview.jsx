@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  MapPin,
-  IndianRupee,
-  ArrowLeft,
-  Building2,
-  Clock,
-  Users,
-} from "lucide-react";
+import { MapPin, ArrowLeft, Building2 } from "lucide-react";
 import { CATEGORIES, JOB_TYPES } from "../../utils/data";
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
@@ -19,7 +12,7 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
   const { darkMode } = useTheme();
   const currencies = [{ label: "INR", value: "₹" }];
   return (
-    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 print:p-0 print:m-0">
+    <div className="min-h-screen px-2 sm:px-0 py-10 sm:py-[50px] print:p-0 print:m-0">
       <div className="max-w-4xl mx-auto print-area print:rounded-2xl">
         {/* ✅ Only this area will print */}
         <div
@@ -27,7 +20,7 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
             darkMode
               ? "bg-gray-900 shadow-[0_6px_18px_rgba(255,255,255,0.4)]"
               : "bg-white/80 border-white/20 shadow-xl"
-          } rounded-2xl p-6 print:pt-0`}
+          } rounded-md sm:rounded-2xl p-3 sm:p-6 print:pt-0`}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -45,14 +38,14 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
             {/* 👇 Hide this back button on print */}
             <button
               onClick={() => setIsPreview(false)}
-              className={`group flex items-center space-x-2 text-sm font-medium px-6 py-3 rounded-xl transition-all duration-300 shadow-lg no-print ${
+              className={`group flex items-center space-x-2 text-sm font-medium px-2 sm:px-6 py-2 sm:py-3 rounded-xl transition-all duration-300 shadow-lg no-print ${
                 darkMode
                   ? "text-gray-300 bg-gray-800/50 border border-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-purple-700 hover:to-purple-800 shadow-gray-600 hover:shadow-gray-500"
                   : "text-gray-600 bg-white/50 border border-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700 shadow-lg hover:shadow-xl"
               }`}
             >
               <ArrowLeft className="h-4 w-4" />
-              <span>Back to Edit</span>
+              <span>Back</span>
             </button>
           </div>
 
@@ -61,7 +54,7 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
             <div
               className={`relative ${
                 darkMode ? " bg-gray-800" : " bg-white"
-              } py-8 px-4 my-8 rounded-lg`}
+              } px-3 sm:px-4 py-3 sm:py-8 my-4 sm:my-8 rounded-lg`}
             >
               <div className="relative z-10">
                 <JobCardHeader
@@ -76,7 +69,7 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
                   <div className="flex items-center justify-between mb-0">
                     <div className="flex-1">
                       <h1
-                        className={`text-lg lg:text-xl font-semibold mb-2 leading-tight ${
+                        className={`text-md sm:text-lg lg:text-xl font-semibold mb-2 leading-tight ${
                           darkMode ? "text-gray-200" : "text-gray-900"
                         }`}
                       >
@@ -104,11 +97,11 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
                       <img
                         src={user?.companyLogo}
                         alt="company logo"
-                        className="h-16 w-16 md:h-20 md:w-20 object-cover rounded-2xl border-4 border-white/20 shadow-lg"
+                        className="h-12 sm:h-16 w-12 sm:w-16 md:h-20 md:w-20 object-cover rounded-lg sm:rounded-2xl border-2 sm:border-4 border-white/20 shadow-lg"
                       />
                     ) : (
                       <div
-                        className={`h-20 w-20 ${
+                        className={`h-12 sm:h-16 w-12 sm:w-16 md:h-20 md:w-20 ${
                           darkMode
                             ? "bg-gray-600 border-2 border-gray-700"
                             : "bg-gray-200 border-2 border-gray-300"

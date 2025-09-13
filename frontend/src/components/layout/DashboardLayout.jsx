@@ -225,7 +225,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
             darkMode
               ? "bg-gray-900 border-gray-700"
               : "bg-white/80 border-gray-200"
-          } backdrop-blur-sm h-16 flex items-center justify-between px-6 sticky top-0 z-30 print:hidden`}
+          } backdrop-blur-sm h-16 flex items-center justify-between px-2 sm:px-6 sticky top-0 z-30 print:hidden`}
         >
           <div className="flex items-center space-x-4">
             {isMobile && (

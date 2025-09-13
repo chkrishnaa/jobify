@@ -162,9 +162,12 @@ const EmployerDashboard = () => {
   return (
     <DashboardLayout activeMenu="employer-dashboard">
       {isLoading ? (
-        <LoadingSpinner text="Finding Amazing Opportunities ..." color="purple" />
+        <LoadingSpinner
+          text="Finding Amazing Opportunities ..."
+          color="purple"
+        />
       ) : (
-        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-8">
+        <div className="max-w-7xl mx-auto space-y-2 sm:space-y-8">
           {/* Dashboard Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-3">
             <StatCard
