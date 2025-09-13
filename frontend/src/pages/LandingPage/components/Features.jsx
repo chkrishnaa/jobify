@@ -3,7 +3,7 @@ import { jobSeekerFeatures, employerFeatures } from "../../../utils/data";
 import { useTheme } from "../../../context/ThemeContext";
 
 const Features = () => {
-    const { darkMode } = useTheme();
+  const { darkMode } = useTheme();
 
   return (
     <section
@@ -61,7 +61,7 @@ const Features = () => {
             <div className="space-y-8">
               {jobSeekerFeatures.map((feature, index) => (
                 <div
-                  className={`group flex items-start space-x-4 p-6 rounded-2xl transform transition-all duration-300 cursor-pointer
+                  className={`group flex items-start space-x-4 p-3 sm:p-6 rounded-2xl transform transition-all duration-300 cursor-pointer
     ${
       darkMode
         ? "bg-gray-900/40 hover:bg-gradient-to-r hover:from-blue-800 hover:to-blue-700 hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]"
@@ -70,7 +70,7 @@ const Features = () => {
     hover:scale-[1.02] hover:-translate-y-1`}
                 >
                   <div
-                    className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300
+                    className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-300
       ${
         darkMode
           ? "bg-blue-300 group-hover:bg-blue-500"
@@ -78,7 +78,7 @@ const Features = () => {
       }`}
                   >
                     <feature.icon
-                      className={`h-6 w-6 transform transition-transform duration-300
+                      className={`h-5 w-5 sm:h-6 sm:w-6 transform transition-transform duration-300
         ${
           darkMode
             ? "text-blue-800 group-hover:rotate-6 group-hover:scale-110"
@@ -88,7 +88,7 @@ const Features = () => {
                   </div>
                   <div>
                     <h4
-                      className={`text-xl font-semibold transition-colors duration-300 mb-2
+                      className={`text-xl sm:text-2xl font-semibold transition-colors duration-300 mb-2
         ${
           darkMode
             ? "text-gray-50 group-hover:text-white"
@@ -98,7 +98,7 @@ const Features = () => {
                       {feature.title}
                     </h4>
                     <p
-                      className={`leading-relaxed text-justify transition-colors duration-300
+                      className={`leading-normal text-sm sm:text-md sm:leading-relaxed text-justify transition-colors duration-300
         ${
           darkMode
             ? "text-gray-300 group-hover:text-gray-200"
@@ -134,7 +134,7 @@ const Features = () => {
             <div className="space-y-8">
               {employerFeatures.map((feature, index) => (
                 <div
-                  className={`group flex items-start space-x-4 p-6 rounded-2xl transform transition-all duration-300 cursor-pointer
+                  className={`group flex items-start space-x-4 p-3 sm:p-6 rounded-2xl transform transition-all duration-300 cursor-pointer
     ${
       darkMode
         ? "bg-gray-900/40 hover:bg-gradient-to-r hover:from-purple-800 hover:to-purple-700 hover:shadow-[0_0_20px_rgba(168,85,247,0.5)]"
@@ -143,7 +143,7 @@ const Features = () => {
     hover:scale-[1.02] hover:-translate-y-1`}
                 >
                   <div
-                    className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300
+                    className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-300
       ${
         darkMode
           ? "bg-purple-300 group-hover:bg-purple-500"
@@ -151,7 +151,7 @@ const Features = () => {
       }`}
                   >
                     <feature.icon
-                      className={`h-6 w-6 transform transition-transform duration-300
+                      className={`h-5 w-5 sm:h-6 sm:w-6 transform transition-transform duration-300
         ${
           darkMode
             ? "text-purple-800 group-hover:rotate-6 group-hover:scale-110"
@@ -171,7 +171,7 @@ const Features = () => {
                       {feature.title}
                     </h4>
                     <p
-                      className={`leading-relaxed text-justify transition-colors duration-300
+                      className={`leading-normal text-sm sm:text-md sm:text-md sm:leading-relaxed text-justify transition-colors duration-300
         ${
           darkMode
             ? "text-gray-300 group-hover:text-gray-200"

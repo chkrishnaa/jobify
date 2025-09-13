@@ -285,7 +285,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto overflow-x-hidden p-6 print:p-0 print:shadow-none">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden p-0 sm:p-6 print:p-0 print:shadow-none">
           {children}
         </main>
       </div>

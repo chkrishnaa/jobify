@@ -49,7 +49,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className={`text-xl md:text-xl ${
+            className={`text-lg sm:text-xl ${
               darkMode ? "text-gray-200" : "text-gray-600"
             } mb-12 max-w-2xl mx-auto leading-relaxed`}
           >

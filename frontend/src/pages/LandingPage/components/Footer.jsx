@@ -17,14 +17,14 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex justify-center items-center space-x-2 mb-6">
                 <div
-                  className={`w-10 h-10 bg-gradient-to-r ${
+                  className={`w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r ${
                     darkMode
                       ? "from-blue-700 to-purple-700"
                       : "from-blue-600 to-purple-600"
                   } rounded-lg flex items-center justify-center`}
                 >
                   <Briefcase
-                    className={`h-6 w-6 ${
+                    className={`h-5 w-5 sm:h-6 sm:w-6 ${
                       darkMode ? "text-gray-300" : "text-white"
                     }`}
                   ></Briefcase>

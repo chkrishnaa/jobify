@@ -14,7 +14,7 @@ const AuthCommonConponent = ({
   showTerms = false,
 }) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Error Message */}
       {(message || formState.errors?.submit) && (
         <>

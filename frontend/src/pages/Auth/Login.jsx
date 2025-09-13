@@ -3,10 +3,7 @@ import { motion } from "framer-motion";
 import {
   Mail,
   Lock,
-  Eye,
-  EyeOff,
-  Loader,
-  AlertCircle,
+
   CheckCircle,
 } from "lucide-react";
 import {Link} from "react-router-dom"
@@ -190,7 +187,7 @@ const Login = () => {
         darkMode
           ? "from-blue-900 via-black to-purple-950"
           : "from-blue-100 via-white to-purple-200"
-      } px-4`}
+      } px-2 sm:px-4`}
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -200,7 +197,7 @@ const Login = () => {
           darkMode
             ? "bg-gray-900 shadow-[0_4px_12px_rgba(255,255,255,0.3)]"
             : "bg-white shadow-lg"
-        } p-8 rounded-xl w-full max-w-md`}
+        } p-5 sm:p-8 rounded-xl w-full max-w-md`}
       >
         <div className="text-center mb-8">
           <h2
@@ -240,36 +237,6 @@ const Login = () => {
             onChange={handleInputChange}
             error={formState.errors.password}
           />
-
-          {/* {formState.errors.submit && (
-            <>
-              <div
-                className={`${
-                  darkMode
-                    ? "border border-red-500 bg-red-100"
-                    : "border border-red-200 bg-red-50"
-                } rounded-lg p-3`}
-              >
-                <p
-                  className={`${
-                    darkMode ? "text-red-400" : "text-red-500"
-                  } text-sm flex items-center`}
-                >
-                  <AlertCircle className="w-4 h-4 mr-2" />
-                  {formState.errors.submit}
-                </p>
-              </div>
-
-              <div className="flex justify-end mt-1">
-                <Link
-                  to="/forgot-password"
-                  className="text-sm text-blue-600 hover:underline font-semibold"
-                >
-                  Forgot Password?
-                </Link>
-              </div>
-            </>
-          )} */}
 
           <AuthCommonConponent
             darkMode={darkMode}

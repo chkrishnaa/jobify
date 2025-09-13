@@ -65,7 +65,7 @@ const Analytics = () => {
             </span>
           </h2>
           <p
-            className={`text-xl ${
+            className={`text-lg sm:text-xl ${
               darkMode ? "text-gray-300" : "text-gray-600"
             } max-w-3xl mx-auto`}
           >
@@ -93,14 +93,14 @@ const Analytics = () => {
             >
               <div className="flex items-center justify-between mb-4">
                 <div
-                  className={`w-12 h-12 ${
+                  className={`w-10 h-10 sm:w-12 sm:h-12 ${
                     darkMode
                       ? `bg-${index % 2 === 0 ? "blue" : "purple"}-300`
                       : `bg-${index % 2 === 0 ? "blue" : "purple"}-100`
                   } rounded-xl flex items-center justify-center`}
                 >
                   <stat.icon
-                    className={`w-6 h-6 ${
+                    className={`h-5 w-5 sm:h-6 sm:w-6 ${
                       darkMode
                         ? `text-${index % 2 === 0 ? "blue" : "purple"}-800`
                         : `text-${index % 2 === 0 ? "blue" : "purple"}-600`
@@ -112,7 +112,7 @@ const Analytics = () => {
                     darkMode
                       ? "text-green-700 bg-green-200"
                       : "text-green-500 bg-green-50"
-                  } text-sm font-semibold px-2 py-1 rounded-full`}
+                  } text-xs sm:text-sm font-semibold px-2 py-1 rounded-full`}
                 >
                   {stat.growth}
                 </span>

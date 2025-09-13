@@ -126,7 +126,7 @@ export default function Header() {
             )}
           </div>
 
-          <ToggleMode />
+          <ToggleMode className="scale-75" />
         </div>
       </div>
     </motion.header>

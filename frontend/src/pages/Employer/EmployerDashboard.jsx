@@ -21,10 +21,10 @@ const Card = ({ title, headerAction, subtitle, className, children }) => {
         darkMode
           ? "bg-gray-900 border-gray-800 shadow-[0_4px_6px_rgba(255,255,255,0.1)] hover:shadow-[0_6px_10px_rgba(255,255,255,0.15)]"
           : "bg-white border-gray-100 shadow-sm hover:shadow-md"
-      } rounded-xl transition-shadow duration-300 ${className}`}
+      } sm:border-x-0 rounded-none sm:rounded-xl transition-shadow duration-300 ${className}`}
     >
       {(title || headerAction) && (
-        <div className="flex items-center justify-between p-6 pb-4">
+        <div className="flex items-center justify-between p-3 sm:p-6 pb-4">
           <div className="">
             {title && (
               <h3
@@ -48,7 +48,7 @@ const Card = ({ title, headerAction, subtitle, className, children }) => {
           {headerAction}
         </div>
       )}
-      <div className={title ? "px-6 pb-6" : "p-6"}>{children}</div>
+      <div className={title ? "px-3 sm:px-6 pb-6" : "p-6"}>{children}</div>
     </div>
   );
 };
@@ -86,7 +86,7 @@ const StatCard = ({ title, value, icon: Icon, trend, trendValue, color }) => {
     <Card
       className={`bg-gradient-to-br ${
         darkMode ? darkColorClasses[color] : colorClasses[color]
-      } text-white border-0`}
+      } text-white border-0 rounded-xl`}
     >
       <div className="flex items-center justify-between">
         <div>
@@ -164,9 +164,9 @@ const EmployerDashboard = () => {
       {isLoading ? (
         <LoadingSpinner text="Finding Amazing Opportunities ..." color="purple" />
       ) : (
-        <div className="max-w-7xl mx-auto space-y-8 ">
+        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-8">
           {/* Dashboard Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-3">
             <StatCard
               title="Active Jobs"
               value={dashboardData?.counts?.totalActiveJobs || 0}
@@ -198,7 +198,7 @@ const EmployerDashboard = () => {
           </div>
 
           {/* Recent Activity */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-8">
             <Card
               title="Recent Job Posts"
               subtitle="Your Latest Job Postings"
@@ -307,7 +307,7 @@ const EmployerDashboard = () => {
               ].map((action, index) => (
                 <button
                   key={index}
-                  className={`flex items-center space-x-3 p-4 rounded-xl border ${
+                  className={`flex items-center space-x-3 p-2 sm:p-4 rounded-xl border ${
                     darkMode
                       ? "border-gray-700 hover:border-gray-600 shadow-[0_2px_6px_rgba(255,255,255,0.08)] hover:shadow-[0_4px_8px_rgba(255,255,255,0.12)]"
                       : "border-gray-200 hover:border-gray-300 hover:shadow-sm"

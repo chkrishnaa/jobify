@@ -250,7 +250,7 @@ const SignUp = () => {
         darkMode
           ? "from-blue-900 via-black to-purple-950"
           : "from-blue-100 via-white to-purple-200"
-      } px-4 py-[100px]`}
+      } px-2 sm:px-4 py-[100px]`}
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -260,7 +260,7 @@ const SignUp = () => {
           darkMode
             ? "bg-gray-900 shadow-[0_4px_12px_rgba(255,255,255,0.3)]"
             : "bg-white shadow-lg"
-        } p-8 rounded-xl w-full max-w-md`}
+        } p-5 sm:p-8 rounded-xl w-full max-w-md`}
       >
         <div className="text-center mb-8">
           <h2

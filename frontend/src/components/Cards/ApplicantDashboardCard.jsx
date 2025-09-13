@@ -7,26 +7,26 @@ const ApplicantDashboardCard = ({ applicant, position, time }) => {
   const { darkMode } = useTheme();
   return (
     <div
-      className={`flex items-center justify-between p-4 rounded-xl border ${
+      className={`flex items-center justify-between p-2 sm:p-4 rounded-xl border ${
         darkMode
           ? "border-gray-700 hover:border-gray-600 shadow-[0_2px_6px_rgba(255,255,255,0.08)] hover:shadow-[0_4px_8px_rgba(255,255,255,0.12)]"
           : "border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md"
       } transition-colors`}
     >
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-2 sm:space-x-4">
         {applicant.avatar ? (
           <img
             src={applicant.avatar}
             alt="Avatar"
-            className="h-10 w-10 object-cover rounded-xl"
+            className="h-8 w-8 sm:h-10 sm:w-10 object-cover rounded-lg sm:rounded-xl"
           />
         ) : (
           <div
-            className={`h-10 w-10 bg-gradient-to-br ${
+            className={`h-8 w-8 sm:h-10 sm:w-10 bg-gradient-to-br ${
               darkMode
                 ? "from-purple-500 to-purple-700"
                 : "from-purple-300 to-purple-500"
-            } rounded-xl flex items-center justify-center`}
+            } rounded-lg sm:rounded-xl flex items-center justify-center`}
           >
             <span className="text-white font-medium text-sm">
               {getInitials(applicant.name)}
@@ -35,7 +35,7 @@ const ApplicantDashboardCard = ({ applicant, position, time }) => {
         )}
         <div className="">
           <h4
-            className={`text-[15px] font-medium ${
+            className={`text-[14px] sm:text-[16px]  font-medium ${
               darkMode ? "text-gray-300" : "text-gray-900"
             }`}
           >
