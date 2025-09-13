@@ -110,7 +110,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
             : "translate-x-0"
         } ${sidebarCollapsed ? "w-16" : "w-64"} border-r ${
           darkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"
-        }`}
+        } no-print`}
       >
         {/* Sidebar Header (inside sidebar div) */}
         <div
@@ -215,9 +215,9 @@ const DashboardLayout = ({ activeMenu, children }) => {
 
       {/* Main Content  */}
       <div
-        className={`flex-1 flex flex-col transition-all duration-300 min-w-0 ${
-          isMobile ? "ml-0" : sidebarCollapsed ? "ml-16" : "ml-64"
-        }`}
+        className={`flex-1 flex flex-col transition-all duration-300 min-w-0 
+    ${isMobile ? "ml-0" : sidebarCollapsed ? "ml-16" : "ml-64"} 
+    print:ml-0`}
       >
         {/* Top Navbar */}
         <header
@@ -225,7 +225,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
             darkMode
               ? "bg-gray-900 border-gray-700"
               : "bg-white/80 border-gray-200"
-          } backdrop-blur-sm h-16 flex items-center justify-between px-6 sticky top-0 z-30`}
+          } backdrop-blur-sm h-16 flex items-center justify-between px-6 sticky top-0 z-30 print:hidden`}
         >
           <div className="flex items-center space-x-4">
             {isMobile && (
@@ -285,7 +285,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto overflow-x-hidden p-6">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden p-6 print:p-0 print:shadow-none">
           {children}
         </main>
       </div>

@@ -18,7 +18,7 @@ const StatusBadge = ({ status }) => {
 
   return (
     <span
-      className={`px-3 py-2 rounded text-sm font-medium ${
+      className={`px-3 py-2 rounded text-sm font-medium print:hidden ${
         statusConfig[status] ||
         (darkMode ? "bg-gray-800 text-gray-200" : "bg-gray-100 text-gray-800")
       }`}

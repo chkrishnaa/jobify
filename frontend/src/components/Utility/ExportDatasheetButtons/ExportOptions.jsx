@@ -3,7 +3,7 @@ import ExportCSVButton from "./ExportCSVButton";
 import ExportTSVButton from "./ExportTSVButton";
 import ExportJSONButton from "./ExportJSONButton";
 import ExportXLSXButton from "./ExportXLSXButton";
-import { Download } from "lucide-react";
+import { ChevronDown, Download } from "lucide-react";
 
 const ExportOptions = ({ applications = [], darkMode }) => {
   const [format, setFormat] = useState(""); // "" | "csv" | "tsv" | "json" | "xlsx"
@@ -35,34 +35,40 @@ const ExportOptions = ({ applications = [], darkMode }) => {
   return (
     <div className="flex items-center gap-3">
       {/* Format Selector */}
-      <select
-        value={format}
-        onChange={(e) => setFormat(e.target.value)}
-        className={`px-3 py-2 rounded-xl text-sm font-medium border ${
-          darkMode
-            ? "bg-gray-800 text-gray-300 border-gray-600"
-            : "bg-white text-gray-700 border-gray-300"
-        }`}
-      >
-        <option value="">Select Format</option>
-        <option value="csv">CSV</option>
-        <option value="tsv">TSV</option>
-        <option value="json">JSON</option>
-        <option value="xlsx">XLSX</option>
-      </select>
+      <div className="relative inline-block w-48">
+        <select
+          value={format}
+          onChange={(e) => setFormat(e.target.value)}
+          className={`w-full px-3 py-2 rounded-lg text-sm font-medium appearance-none pr-8 text-white
+      ${
+        darkMode
+          ? "bg-purple-600 hover:bg-purple-500"
+          : "bg-purple-700 hover:bg-purple-800"
+      }`}
+        >
+          <option value="">Select Format</option>
+          <option value="csv">CSV</option>
+          <option value="tsv">TSV</option>
+          <option value="json">JSON</option>
+          <option value="xlsx">XLSX</option>
+        </select>
+
+        {/* Chevron inside the select field */}
+        <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+      </div>
 
       {/* Always show export button, enable only when a format is selected */}
       <button
-        className={`ml-3 inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-xl ${
+        className={`inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg text-white ${
           darkMode
-            ? "bg-gray-800 text-gray-300 hover:bg-gradient-to-r hover:from-purple-700 hover:to-purple-800"
-            : "bg-white/10 text-gray-700 hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700"
+            ? "bg-purple-600 hover:bg-purple-500"
+            : "bg-purple-700 hover:bg-purple-800"
         } ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
         disabled={isDisabled}
         onClick={handleExport}
       >
-        <Download />
-        Export 
+        <Download className="h-4 w-4" />
+        Export
       </button>
     </div>
   );

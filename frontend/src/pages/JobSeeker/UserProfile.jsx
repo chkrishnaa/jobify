@@ -324,7 +324,7 @@ const UserProfile = () => {
                     >
                       {/* PDF Icon */}
                       <div className="flex items-center gap-4">
-                        <div className="h-8 w-8 rounded-sm bg-red-600 text-white text-xs flex items-center justify-center">
+                        <div className="h-8 w-8 rounded-sm font-extrabold scale-125 bg-red-600 text-white text-xs flex items-center justify-center">
                           PDF
                         </div>
 

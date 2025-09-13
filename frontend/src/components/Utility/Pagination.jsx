@@ -1,6 +1,17 @@
 // src/components/Utility/Pagination.jsx
 import React from "react";
 
+const COLOR_STYLES = {
+  blue: {
+    dark: "z-10 bg-blue-900 border-blue-500 text-blue-300",
+    light: "z-10 bg-blue-100 border-blue-500 text-blue-600",
+  },
+  purple: {
+    dark: "z-10 bg-purple-900 border-purple-500 text-purple-300",
+    light: "z-10 bg-purple-100 border-purple-500 text-purple-600",
+  },
+};
+
 export default function Pagination({
   darkMode,
   currentPage,
@@ -9,12 +20,12 @@ export default function Pagination({
   itemsPerPage,
   totalItems,
   setCurrentPage,
-  color, // default color
+  color,
 }) {
-  // Dynamic Tailwind classes based on color
-  const activeClasses = darkMode
-    ? `z-10 bg-${color}-900 border-${color}-500 text-${color}-300`
-    : `z-10 bg-${color}-100 border-${color}-500 text-${color}-300`; // ✅ changed from -600 to -300
+
+
+ const Color = (color || "blue").toLowerCase();
+ const colorStyles = COLOR_STYLES[Color] || COLOR_STYLES.blue;
 
   return (
     <div className="mt-6 flex items-center justify-between">
@@ -82,7 +93,9 @@ export default function Pagination({
                   className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium
                     ${
                       currentPage === page
-                        ? activeClasses
+                        ? darkMode
+                          ? colorStyles.dark
+                          : colorStyles.light
                         : darkMode
                         ? "border-gray-600 text-gray-200 bg-gray-800 hover:bg-gray-700"
                         : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"

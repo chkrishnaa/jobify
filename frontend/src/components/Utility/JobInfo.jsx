@@ -5,7 +5,7 @@ import { IndianRupee, Users } from "lucide-react";
 const JobInfo = ({ ...props }) => {
   const { darkMode } = useTheme();
   return (
-    <div className="px-0 pb-8 space-y-8">
+    <div className="px-0 pb-8 print:py-0 space-y-8">
       <div
         className={`relative overflow-hidden bg-gradient-to-r ${
           darkMode

@@ -7,6 +7,7 @@ import {
   Download,
   Eye,
   ArrowLeft,
+  ChevronDown,
 } from "lucide-react";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
@@ -72,8 +73,30 @@ export default function ApplicationViewer() {
     }, {});
   }, [applications, statusFilter]);
 
-  const handleDownloadResume = (resumeUrl) => {
-    window.open(resumeUrl, "_blank");
+  const handleDownloadResume = async (applicantName, resumeUrl) => {
+    try {
+      const response = await fetch(resumeUrl, { mode: "cors" }); // file fetch karo
+      const blob = await response.blob(); // blob banao
+
+      // Temporary blob URL banao
+      const url = window.URL.createObjectURL(blob);
+
+      // File ka naam set karo
+      const fileName = `${applicantName?.split(" ")[0] || "User"}Resume.pdf`;
+
+      // Hidden anchor element banao aur click karo
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Memory free karo
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading resume:", error);
+    }
   };
 
   return (
@@ -86,11 +109,11 @@ export default function ApplicationViewer() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-4 mb-4 sm:mb-8">
                 <button
-                  className={`group flex items-center space-x-2 px-3 py-2 text-sm font-medium
+                  className={`group flex items-center space-x-2 px-3 py-2 text-sm font-medium border
                   ${
                     darkMode
-                      ? "text-gray-300 bg-gray-800/10 border border-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-purple-700 hover:to-purple-800 shadow-gray-600 hover:shadow-gray-500"
-                      : "text-gray-600 bg-white/10 border border-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700 shadow-gray-400 hover:shadow-xl"
+                      ? "text-gray-300 bg-gray-800/10 border-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-purple-700 hover:to-purple-800 shadow-gray-600 hover:shadow-gray-500"
+                      : "text-gray-600 bg-white/10 border-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700 shadow-gray-400 hover:shadow-xl"
                   } border  hover:border-transparent rounded-xl transition-all duration-300`}
                   onClick={() => navigate("/manage-jobs")}
                 >
@@ -110,22 +133,27 @@ export default function ApplicationViewer() {
             </div>
           </div>
 
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className={`px-3 py-2 rounded-xl text-sm font-medium border ${
-              darkMode
-                ? "bg-gray-800 text-gray-300 border-gray-600"
-                : "bg-white text-gray-700 border-gray-300"
-            }`}
-          >
-            <option value="All">All</option>
-            <option value="Applied">Applied</option>
-            <option value="In Review">In Review</option>
-            <option value="Accepted">Accepted</option>
-            <option value="Rejected">Rejected</option>
-          </select>
-          
+          <div className="relative inline-block w-full sm:w-1/4 mb-3">
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className={`w-full px-3 py-2 rounded-lg text-sm font-medium border appearance-none pr-8 ${
+                darkMode
+                  ? "text-gray-300 bg-gray-800/10 border-gray-500 hover:text-white  hover:shadow-gray-500"
+                  : "text-gray-600 bg-white/10 border-gray-300 hover:text-white  hover:shadow-xl"
+              }`}
+            >
+              <option value="All">All</option>
+              <option value="Applied">Applied</option>
+              <option value="In Review">In Review</option>
+              <option value="Accepted">Accepted</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+
+            {/* Chevron placed inside the select field */}
+            <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+          </div>
+
           <div className="max-w-7xl mx-auto">
             {Object.keys(groupedApplications).length === 0 ? (
               <div
@@ -297,6 +325,7 @@ export default function ApplicationViewer() {
                                   } text-sm font-medium rounded-lg transition-colors duration-300 w-full sm:w-auto`}
                                   onClick={() =>
                                     handleDownloadResume(
+                                      application.applicant.name,
                                       application.applicant.resume
                                     )
                                   }

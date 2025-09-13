@@ -12,20 +12,22 @@ import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
 import JobInfo from "../Utility/JobInfo";
 import JobCardHeader from "../Utility/JobCardHeader";
+import moment from "moment";
 
 const JobPostingPreview = ({ formData, setIsPreview }) => {
   const { user } = useAuth();
   const { darkMode } = useTheme();
   const currencies = [{ label: "INR", value: "₹" }];
   return (
-    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 print:p-0 print:m-0">
+      <div className="max-w-4xl mx-auto print-area print:rounded-2xl">
+        {/* ✅ Only this area will print */}
         <div
-          className={` mb-8 backdrop-blur-sm ${
+          className={`mb-8 backdrop-blur-sm ${
             darkMode
               ? "bg-gray-900 shadow-[0_6px_18px_rgba(255,255,255,0.4)]"
               : "bg-white/80 border-white/20 shadow-xl"
-          } rounded-2xl p-6`}
+          } rounded-2xl p-6 print:pt-0`}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -39,24 +41,25 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
                 Job Preview
               </h2>
             </div>
+
+            {/* 👇 Hide this back button on print */}
             <button
               onClick={() => setIsPreview(false)}
-              className={`group flex items-center space-x-2 text-sm font-medium px-6 py-3 rounded-xl transition-all duration-300 shadow-lg ${
+              className={`group flex items-center space-x-2 text-sm font-medium px-6 py-3 rounded-xl transition-all duration-300 shadow-lg no-print ${
                 darkMode
                   ? "text-gray-300 bg-gray-800/50 border border-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-purple-700 hover:to-purple-800 shadow-gray-600 hover:shadow-gray-500"
                   : "text-gray-600 bg-white/50 border border-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700 shadow-lg hover:shadow-xl"
-              } hover:border-transparent transform hover:-translate-y-0.5 print:p-0 print:m-0`}
+              }`}
             >
-              <ArrowLeft
-                className={`h-4 w-4 transition-transform group-hover:-translate-x-1 np-print`}
-              />
+              <ArrowLeft className="h-4 w-4" />
               <span>Back to Edit</span>
             </button>
           </div>
-          <div className="">
-            {/* Hero section with clean background */}
+
+          <div>
+            {/* Hero section */}
             <div
-              className={`relative print-area ${
+              className={`relative ${
                 darkMode ? " bg-gray-800" : " bg-white"
               } py-8 px-4 my-8 rounded-lg`}
             >
@@ -86,15 +89,12 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
                         }`}
                       >
                         <div className="flex items-center space-x-2">
-                          <MapPin className="h-4 w-4"></MapPin>
+                          <MapPin className="h-4 w-4" />
                           <span className="text-sm font-medium">
                             {formData.isRemote ? "Remote" : formData.location}
                           </span>
                           {formData.isRemote && formData.location && (
-                            <span className={`text-sm `}>
-                              {" "}
-                              {formData.location}
-                            </span>
+                            <span className="text-sm">{formData.location}</span>
                           )}
                         </div>
                       </div>
@@ -122,8 +122,7 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
               </div>
             </div>
 
-            {/* Content section */}
-
+            {/* Job content */}
             <JobInfo
               salaryMin={formData.salaryMin}
               salaryMax={formData.salaryMax}
@@ -133,6 +132,14 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
           </div>
         </div>
 
+        <div className="hidden print:block print-area">
+          <div className="flex justify-between px-3 text-sm">
+            <p>JobiFy - Find Your Dream Job</p>
+            <p>Created At: {moment().format("Do MMM, YYYY [at] hh:mm A")}</p>
+          </div>
+        </div>
+
+        {/* 👇 Hide this button on print */}
         <button
           className={`bg-gradient-to-r text-sm no-print ${
             darkMode

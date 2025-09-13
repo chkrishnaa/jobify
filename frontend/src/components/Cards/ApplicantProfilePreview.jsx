@@ -191,7 +191,7 @@ const ApplicantProfilePreview = ({
                   : "bg-purple-600 text-white hover:bg-purple-700"
               } font-medium rounded-lg transition-colors`}
               onClick={() =>
-                handleDownloadResume(selectedApplicant.applicant.resume)
+                handleDownloadResume(selectedApplicant.applicant.name, selectedApplicant.applicant.resume)
               }
             >
               <Download className="h-4 w-4"></Download>

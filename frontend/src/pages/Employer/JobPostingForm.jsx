@@ -189,7 +189,7 @@ export default function JobPostingForm() {
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => setIsPreview(true)}
-                  disabled={!isFormValid()}
+                  disabled={!isFormValid}
                   className={`group flex items-center space-x-2 text-sm font-medium px-6 py-3 rounded-xl transition-all duration-300 shadow-lg ${
                     !isFormValid()
                       ? darkMode
