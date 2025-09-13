@@ -18,15 +18,12 @@ import toast from "react-hot-toast";
 import { useTheme } from "../../context/ThemeContext";
 import JobInfo from "../../components/Utility/JobInfo";
 import JobCardHeader from "../../components/Utility/JobCardHeader";
-import { usePDF } from "react-to-pdf";
 
 const JobDetails = () => {
   const { darkMode } = useTheme();
   const { user } = useAuth();
   const { jobId } = useParams();
-  const pdfRef = useRef();
 const navigate = useNavigate();
-  const { toPDF, targetRef } = usePDF({ filename: "page.pdf" });
 
   const [jobDetails, setJobDetails] = useState(null);
 
@@ -69,7 +66,7 @@ const navigate = useNavigate();
           darkMode
             ? "from-blue-900 via-black to-purple-950"
             : "from-blue-100 via-white to-purple-200"
-        } py-12 print:py-0 print:px-0 print:flex print:flex-col print:justify-between`}
+        } pb-6 sm:py-12 print:py-0 print:px-0 print:flex print:flex-col print:justify-between`}
       >
         <Navbar className="no-print" />
 
@@ -81,7 +78,6 @@ const navigate = useNavigate();
                   ? " bg-gray-800 shadow-[0_4px_12px_rgba(255,255,255,0.3)]"
                   : " bg-white shadow-lg"
               } py-4 sm:py-8 px-4 sm:px-8 lg:px-12 rounded-lg`}
-              ref={targetRef}
             >
               <div className="relative px-0 pb-8">
                 <div className="relative z-10">
