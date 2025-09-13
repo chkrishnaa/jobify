@@ -70,14 +70,14 @@ const navigate = useNavigate();
       >
         <Navbar className="no-print" />
 
-        <div className="container mx-auto pt-24 px-3 print:m-0 print:p-0 print:pt-0 print-area">
+        <div className="container mx-auto pt-24 px-0 sm:px-3 print:m-0 print:p-0 print:pt-0 print-area">
           {jobDetails && (
             <div
-              className={`relative ${
+              className={`relative shadow-none${
                 darkMode
-                  ? " bg-gray-800 shadow-[0_4px_12px_rgba(255,255,255,0.3)]"
-                  : " bg-white shadow-lg"
-              } py-4 sm:py-8 px-4 sm:px-8 lg:px-12 rounded-lg`}
+                  ? " bg-gray-800 sm:shadow-[0_4px_12px_rgba(255,255,255,0.3)]"
+                  : " bg-white sm:shadow-lg"
+              } py-6 sm:py-8 px-2 sm:px-8 lg:px-12 rounded-none sm:rounded-lg`}
             >
               <div className="relative px-0 pb-8">
                 <div className="relative z-10">
@@ -95,15 +95,15 @@ const navigate = useNavigate();
                         <img
                           src={jobDetails?.company?.companyLogo}
                           alt="Company Logo"
-                          className="h-20 w-20 object-cover rounded-2xl border-4 border-white/20 shadow-lg"
+                          className="h-12 sm:h-16 w-12 sm:w-16 md:h-20 md:w-20 object-cover rounded-lg sm:rounded-2xl border-4 border-white/20 shadow-lg"
                         />
                       ) : (
                         <div
-                          className={`h-20 w-20 ${
+                          className={`className="h-12 sm:h-16 w-12 sm:w-16 md:h-20 md:w-20 ${
                             darkMode
                               ? "bg-gray-600 border-2 border-gray-700"
                               : "bg-gray-200 border-2 border-gray-300"
-                          } rounded-2xl flex items-center justify-center`}
+                          } rounded-lg sm:rounded-2xl flex items-center justify-center`}
                         >
                           <Building2 className="h-8 w-8 text-gray-400" />
                         </div>
@@ -111,7 +111,7 @@ const navigate = useNavigate();
 
                       <div className="flex-1">
                         <h1
-                          className={`text-lg lg:text-xl font-semibold mb-2 leading-tight ${
+                          className={`text-base sm:text-lg lg:text-xl font-semibold mb-0 sm:mb-2 leading-tight ${
                             darkMode ? "text-gray-200" : "text-gray-900"
                           }`}
                         >
@@ -125,7 +125,7 @@ const navigate = useNavigate();
                         >
                           <div className="flex items-center space-x-2">
                             <MapPin className="h-4 w-4" />
-                            <span className="text-sm font-medium">
+                            <span className="text-xs sm:text-sm font-medium">
                               {jobDetails.location}
                             </span>
                           </div>
@@ -136,11 +136,11 @@ const navigate = useNavigate();
                         <StatusBadge status={jobDetails.applicationStatus} />
                       ) : (
                         <button
-                          className={`bg-gradient-to-r text-sm no-print ${
+                          className={`bg-gradient-to-r text-sm ${
                             darkMode
                               ? "from-blue-400 to-blue-600 text-blue-50 hover:text-white hover:from-blue-500 hover:to-blue-700"
                               : "from-blue-50 to-blue-100 text-blue-700 hover:text-white hover:from-blue-400 hover:to-blue-600"
-                          } px-6 py-2.5 rounded-xl transition-all duration-300 font-semibold transform hover:-translate-y-0.5`}
+                          } px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-md sm:rounded-xl transition-all duration-300 font-semibold transform hover:-translate-y-0.5`}
                           onClick={applyToJob}
                         >
                           Apply Now

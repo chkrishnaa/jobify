@@ -10,11 +10,9 @@ import moment from "moment";
 const JobPostingPreview = ({ formData, setIsPreview }) => {
   const { user } = useAuth();
   const { darkMode } = useTheme();
-  const currencies = [{ label: "INR", value: "₹" }];
   return (
     <div className="min-h-screen px-2 sm:px-0 py-10 sm:py-20 print:p-0 print:m-0">
       <div className="max-w-4xl mx-auto print-area print:rounded-2xl">
-        {/* ✅ Only this area will print */}
         <div
           className={`mb-8 backdrop-blur-sm ${
             darkMode
@@ -35,7 +33,6 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
               </h2>
             </div>
 
-            {/* 👇 Hide this back button on print */}
             <button
               onClick={() => setIsPreview(false)}
               className={`group flex items-center space-x-2 text-sm font-medium px-2 sm:px-6 py-2 sm:py-3 rounded-xl transition-all duration-300 shadow-lg no-print ${

@@ -6,11 +6,11 @@ const SearchHeader = ({ filters, handleFilterChange }) => {
   const { darkMode } = useTheme();
   return (
     <div
-      className={`border ${
+      className={` border-none sm:border ${
         darkMode
           ? "border-gray-700 bg-gray-900 shadow-[0_6px_18px_rgba(255,255,255,0.4)]"
           : "border-white/20 bg-white/80 shadow-lg shadow-gray-200"
-      } backdrop-blur-xl rounded-lg sm:rounded-2xl p-4 lg:p-8 mb-6 lg:mb-8`}
+      } backdrop-blur-xl rounded-none sm:rounded-lg lg:rounded-2xl px-2 py-4 sm:px-4 lg:p-8 mb-6 lg:mb-8`}
     >
       <div className="flex flex-col gap-4 lg:gap-6">
         <div className="text-center lg:text-left">
