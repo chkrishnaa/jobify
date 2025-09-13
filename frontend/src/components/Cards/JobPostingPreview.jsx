@@ -12,7 +12,7 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
   const { darkMode } = useTheme();
   const currencies = [{ label: "INR", value: "₹" }];
   return (
-    <div className="min-h-screen px-2 sm:px-0 py-10 sm:py-[50px] print:p-0 print:m-0">
+    <div className="min-h-screen px-2 sm:px-0 py-10 sm:py-20 print:p-0 print:m-0">
       <div className="max-w-4xl mx-auto print-area print:rounded-2xl">
         {/* ✅ Only this area will print */}
         <div
@@ -20,7 +20,7 @@ const JobPostingPreview = ({ formData, setIsPreview }) => {
             darkMode
               ? "bg-gray-900 shadow-[0_6px_18px_rgba(255,255,255,0.4)]"
               : "bg-white/80 border-white/20 shadow-xl"
-          } rounded-md sm:rounded-2xl p-3 sm:p-6 print:pt-0`}
+          } rounded-lg sm:rounded-2xl p-3 sm:p-6 print:pt-0`}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">

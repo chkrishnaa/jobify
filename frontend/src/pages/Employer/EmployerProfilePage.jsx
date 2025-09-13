@@ -107,23 +107,23 @@ const EmployerProfilePage = () => {
 
   return (
     <DashboardLayout activeMenu="company-profile">
-      <div className="min-h-screen py-8 px-4">
+      <div className="min-h-screen py-8 px-0 sm:px-4">
         <div className="max-w-4xl mx-auto">
           <div
-            className={`bg-gradient-to-br ${
+            className={`bg-gradient-to-br shadow-none ${
               darkMode
-                ? "from-gray-800 to-gray-950 shadow-[0_4px_12px_rgba(255,255,255,0.4)]"
-                : "from-white to-gray-200 shadow-lg"
-            } rounded-xl overflow-hidden`}
+                ? "from-gray-800 to-gray-950 sm:shadow-[0_4px_12px_rgba(255,255,255,0.4)]"
+                : "from-white to-gray-200 sm:shadow-lg"
+            } rounded-none sm:rounded-xl overflow-hidden`}
           >
             <div
               className={`bg-gradient-to-r ${
                 darkMode
                   ? "from-purple-700 to-purple-800"
                   : "from-purple-500 to-purple-600"
-              } py-6 px-8 flex justify-between items-center`}
+              } py-6 px-2 sm:px-8 flex justify-between items-center`}
             >
-              <h1 className={`text-xl font-medium text-white`}>
+              <h1 className={`text-lg sm:text-xl font-medium text-white`}>
                 Employer Profile
               </h1>
               <button
@@ -137,7 +137,7 @@ const EmployerProfilePage = () => {
               </button>
             </div>
 
-            <div className="p-8">
+            <div className="px-3 py-6 sm:p-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="space-y-6">
                   <h2
@@ -153,7 +153,7 @@ const EmployerProfilePage = () => {
                     <img
                       src={profileData.avatar}
                       alt="Avatar"
-                      className={`w-20 h-20 rounded-full object-cover border-4 ${
+                      className={`w-15 sm:w-20 h-15 sm:h-20 rounded-full object-cover border-3 sm:border-4 ${
                         darkMode ? "border-purple-400" : "border-purple-200"
                       }`}
                     />
@@ -191,7 +191,7 @@ const EmployerProfilePage = () => {
                     <img
                       src={profileData.companyLogo}
                       alt="Company Logo"
-                      className={`w-20 h-20 rounded-lg object-cover border-4 ${
+                      className={`w-15 sm:w-20 h-15 sm:h-20 rounded-lg object-cover border-3 sm:border-4 ${
                         darkMode ? "border-purple-400" : "border-purple-200"
                       }`}
                     />
@@ -216,7 +216,7 @@ const EmployerProfilePage = () => {
                 </div>
               </div>
 
-              <div className="mt-8">
+              <div className="mt-12">
                 <h2
                   className={`text-lg font-semibold border-b ${
                     darkMode
@@ -227,11 +227,11 @@ const EmployerProfilePage = () => {
                   About Company
                 </h2>
                 <p
-                  className={`mt-4 text-sm ${
+                  className={`mt-4 text-xs sm:text-sm ${
                     darkMode
                       ? "text-gray-300 bg-gray-900"
                       : "text-gray-600 bg-gray-200"
-                  } leading-relaxed p-2 sm:p-6 rounded-lg text-justify whitespace-pre-line`}
+                  } leading-relaxed p-3 sm:p-6 rounded-lg text-justify whitespace-pre-line`}
                 >
                   {profileData.companyDescription}
                 </p>

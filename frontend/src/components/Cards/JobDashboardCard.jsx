@@ -52,7 +52,7 @@ const JobDashboardCard = ({ job, avatar }) => {
       </div>
       <div className="flex items-center space-x-3">
         <span
-          className={`px-2 sm:px-3 py-1 text-xs font-medium rounded-full ${
+          className={`px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium rounded-full ${
             !job.isClosed
               ? `${
                   darkMode

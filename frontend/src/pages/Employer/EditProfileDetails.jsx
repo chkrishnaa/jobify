@@ -17,28 +17,28 @@ export default function EditProfilePage({
   return (
     <DashboardLayout activeMenu="company-profile">
       {formData && (
-        <div className="min-h-screen py-8 px-4">
+        <div className="min-h-screen screen py-8 px-0 sm:px-4">
           <div className="max-w-4xl mx-auto">
             <div
-              className={`bg-gradient-to-br ${
+              className={`bg-gradient-to-br shadow-none ${
                 darkMode
-                  ? "from-gray-800 to-gray-950 shadow-[0_4px_12px_rgba(255,255,255,0.4)]"
-                  : "from-white to-gray-200 shadow-lg"
-              } rounded-xl overflow-hidden`}
+                  ? "from-gray-800 to-gray-950 sm:shadow-[0_4px_12px_rgba(255,255,255,0.4)]"
+                  : "from-white to-gray-200 sm:shadow-lg"
+              } rounded-none sm:rounded-xl overflow-hidden`}
             >
               <div
                 className={`bg-gradient-to-r  ${
                   darkMode
                     ? "from-purple-700 to-purple-800"
                     : "from-purple-500 to-purple-600"
-                } py-6 px-8`}
+                } py-6 px-2 sm:px-8`}
               >
                 <h1 className={`text-lg md:text-xl font-medium text-white`}>
                   Edit Profile
                 </h1>
               </div>
 
-              <div className="p-8">
+              <div className="px-3 py-6 sm:p-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   <div className="space-y-6">
                     <h2
@@ -55,7 +55,7 @@ export default function EditProfilePage({
                         <img
                           src={formData?.avatar}
                           alt="Avatar"
-                          className={`w-20 h-20 rounded-full object-cover border-4 ${
+                          className={`w-15 sm:w-20 h-15 sm:h-20 rounded-full object-cover border-3 sm:border-4 ${
                             darkMode ? "border-purple-400" : "border-purple-200"
                           }`}
                         />
@@ -79,8 +79,8 @@ export default function EditProfilePage({
                           <span className="sr-only">Choose Avatar</span>
                           <input
                             type="file"
-                            className={`block w-full text-sm 
-  file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold
+                            className={`block w-full text-xs sm:text-sm 
+  file:mr-2 sm:file:mr-4 file:py-1 sm:file:py-2 file:px-2 sm:file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold
   ${
     darkMode
       ? "text-gray-200 file:bg-purple-700 file:text-purple-100 hover:file:bg-purple-600"
@@ -103,7 +103,7 @@ export default function EditProfilePage({
                       </label>
                       <input
                         type="text"
-                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
                           darkMode
                             ? "border-gray-700 focus:ring-purple-600 placeholder:text-gray-400 text-gray-200"
                             : "border-gray-300 focus:ring-purple-500"
@@ -126,7 +126,7 @@ export default function EditProfilePage({
                       </label>
                       <input
                         type="email"
-                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
                           darkMode
                             ? "border-gray-700 focus:ring-purple-600 text-gray-200 bg-gray-700"
                             : "border-gray-300 focus:ring-purple-500 bg-gray-300"
@@ -152,7 +152,7 @@ export default function EditProfilePage({
                         <img
                           src={formData.companyLogo}
                           alt="Company Logo"
-                          className={`w-20 h-20 rounded-lg object-cover border-4 ${
+                          className={`w-15 sm:w-20 h-15 sm:h-20 rounded-lg object-cover border-3 sm:border-4 ${
                             darkMode ? "border-purple-400" : "border-purple-200"
                           }`}
                         />
@@ -164,8 +164,9 @@ export default function EditProfilePage({
                                 : "from-purple-500 to-purple-600"
                             } bg-opacity-50 rounded-lg flex items-center justify-center`}
                           >
-                            className=
-                            {`w-6 h-6 border-3 border-purple-200 border-t-transparent rounded-full animate-spin`}
+                            <div
+                              className={`w-6 h-6 border-3 border-purple-200 border-t-transparent rounded-full animate-spin`}
+                            ></div>
                           </div>
                         )}
                       </div>
@@ -177,8 +178,8 @@ export default function EditProfilePage({
                             type="file"
                             accept="image/*"
                             onChange={(e) => handleImageChange(e, "logo")}
-                            className={`block w-full text-sm 
-  file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold
+                            className={`block w-full text-xs sm:text-sm 
+  file:mr-2 sm:file:mr-4 file:py-1 sm:file:py-2 file:px-2 sm:file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold
   ${
     darkMode
       ? "text-gray-200 file:bg-purple-700 file:text-purple-100 hover:file:bg-purple-600"
@@ -203,7 +204,7 @@ export default function EditProfilePage({
                         onChange={(e) =>
                           handleInputChange("companyName", e.target.value)
                         }
-                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
                           darkMode
                             ? "border-gray-700 focus:ring-purple-600 placeholder:text-gray-400 text-gray-200"
                             : "border-gray-300 focus:ring-purple-500"
@@ -229,7 +230,7 @@ export default function EditProfilePage({
                           )
                         }
                         rows={8}
-                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
                           darkMode
                             ? "border-gray-700 focus:ring-purple-600 placeholder:text-gray-400 text-gray-200"
                             : "border-gray-300 focus:ring-purple-500"
@@ -246,7 +247,7 @@ export default function EditProfilePage({
                   }`}
                 >
                   <button
-                    className={`px-6 py-3 border ${
+                    className={`px-3 sm:px-6 py-2 sm:py-3 border ${
                       darkMode
                         ? "border-gray-700 text-gray-300 hover:bg-gray-700"
                         : "border-gray-300 text-gray-700 hover:bg-gray-50"
@@ -257,7 +258,7 @@ export default function EditProfilePage({
                     <span>Cancel</span>
                   </button>
                   <button
-                    className={`px-6 py-3 ${
+                    className={`px-3 sm:px-6 py-2 sm:py-3 ${
                       darkMode
                         ? "bg-purple-700 text-gray-300 hover:bg-purple-800"
                         : "bg-purple-600 text-white hover:bg-purple-700"

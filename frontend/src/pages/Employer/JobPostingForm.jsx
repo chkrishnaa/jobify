@@ -160,7 +160,7 @@ export default function JobPostingForm() {
   }
   return (
     <DashboardLayout activeMenu="post-job">
-      <div className="min-h-screen px-2 sm:px-0 py-10 sm:py-[50px]">
+      <div className="min-h-screen px-2 sm:px-0 py-10 sm:py-20">
         <div className="max-w-4xl mx-auto">
           <div
             className={` ${
@@ -169,7 +169,7 @@ export default function JobPostingForm() {
                 : "bg-white shadow-lg"
             } rounded-md sm:rounded-2xl p-3 sm:p-6`}
           >
-            <div className="flex items-center space-x-2 justify-between">
+            <div className="flex items-center space-x-2 justify-between mb-4">
               <h2
                 className={`text-xl font-bold bg-gradient-to-r ${
                   darkMode
@@ -182,7 +182,7 @@ export default function JobPostingForm() {
               <button
                 onClick={() => setIsPreview(true)}
                 disabled={!isFormValid()}
-                className={`group flex items-center space-x-2 text-sm font-medium px-2 sm:px-6 py-2 sm:py-3 rounded-xl transition-all duration-300 shadow-lg ${
+                className={`group flex items-center space-x-2 text-sm font-medium px-2 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl transition-all duration-300 shadow-lg ${
                   !isFormValid()
                     ? darkMode
                       ? "bg-gray-700 text-gray-400 border border-gray-700 cursor-not-allowed shadow-gray-800"

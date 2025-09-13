@@ -225,44 +225,44 @@ export default function ManageJobs() {
 
   return (
     <DashboardLayout activeMenu="manage-jobs">
-      <div className="min-h-screen ">
+      <div className="min-h-screen py-10 sm:py-20">
         <div className="w-full max-w-full mx-auto">
-          <div className="mb-4">
-            <div className="flex flex-row items-center justify-between gap-x-5">
-              <div className="mb-4 sm:mb-8">
-                <h1
-                  className={`text-xl font-bold bg-gradient-to-r ${
-                    darkMode
-                      ? "from-white to-gray-400"
-                      : "from-gray-900 to-gray-100"
-                  } bg-clip-text text-transparent`}
-                >
-                  Job Management
-                </h1>
-                <p
-                  className={`text-sm ${
-                    darkMode ? "text-gray-300" : "text-gray-600"
-                  } mt-1`}
-                >
-                  Manage your Job Postings and track your Applications here.
-                </p>
-              </div>
+          <div className="mb-4 px-2 sm:px-0">
+            <div className="flex flex-row items-center justify-between gap-x-5 mb-4">
+              <h1
+                className={`text-xl font-bold bg-gradient-to-r ${
+                  darkMode
+                    ? "from-white to-gray-400"
+                    : "from-gray-900 to-gray-100"
+                } bg-clip-text text-transparent`}
+              >
+                Job Management
+              </h1>
               <button
-                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-sm text-white font-semibold rounded-xl shadow-lg shadow-purple-500/10 hover:shadow-xl hover:shadow-purple-500/30 transition-all duration-300 transform -translate-y-3 hover:-translate-y-3.5 whitespace-nowrap"
+                className="inline-flex items-center px-2 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-sm text-white font-semibold shadow-lg shadow-purple-500/10 hover:shadow-xl hover:shadow-purple-500/30 transition-all duration-300 transform -translate-y-3 hover:-translate-y-3.5 whitespace-nowrap"
                 onClick={() => navigate("/post-job")}
               >
-                <Plus className="w-5 h-5 mr-2" />
+                <Plus className="w-5 h-5 mr-1 sm:mr-2" />
                 Add New Job
               </button>
+            </div>
+            <div className="flex items-center mb-4 sm:mb-8">
+              <p
+                className={`text-sm ${
+                  darkMode ? "text-gray-300" : "text-gray-600"
+                } mt-1`}
+              >
+                Manage your Job Postings and track your Applications here.
+              </p>
             </div>
           </div>
 
           <div
-            className={`border ${
+            className={`border shadow-none ${
               darkMode
-                ? "border-gray-900 bg-gray-900 shadow-[0_4px_12px_rgba(255,255,255,0.4)]"
-                : "border-white/20 bg-white/80 shadow-xl"
-            } backdrop-blur-sm rounded-2xl p-6 mb-8`}
+                ? "border-gray-900 bg-gray-900 sm:shadow-[0_4px_12px_rgba(255,255,255,0.4)]"
+                : "border-white/20 bg-white/80 sm:shadow-xl"
+            } backdrop-blur-sm sm:border-x-0 rounded-none sm:rounded-2xl px-2 py-4 sm:p-6 mb-8`}
           >
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 relative">
@@ -287,11 +287,11 @@ export default function ManageJobs() {
                 />
               </div>
 
-              <div className="sm:w-48">
+              <div className="relative inline-block w-full sm:w-1/4 mb-3">
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className={`block w-full pl-10 pr-4 py-2 text-sm border focus:ring-2 ${
+                  className={`block w-full pl-10 pr-4 py-2 text-sm border focus:ring-2 appearance-none ${
                     darkMode
                       ? "border-gray-700  focus:ring-purple-600 bg-gray-800/50 text-gray-100"
                       : "border-gray-200  focus:ring-purple-500 bg-gray-50/50"
@@ -307,6 +307,8 @@ export default function ManageJobs() {
                     Closed
                   </option>
                 </select>
+
+                <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
               </div>
             </div>
 
@@ -325,7 +327,7 @@ export default function ManageJobs() {
             <div
               className={` ${
                 darkMode ? "bg-gray-800/80" : "bg-gray-200/50"
-              } backdrop-blur-sm rounded-2xl overflow-hidden w-full`}
+              } backdrop-blur-sm rounded-md sm:rounded-2xl overflow-hidden w-full`}
             >
               {filteredAndSortedJobs.length === 0 && !isLoading ? (
                 <NoResults

@@ -10,7 +10,6 @@ const ExportOptions = ({ applications = [], darkMode }) => {
 
   const isDisabled = format === "";
 
-  // Handles export based on selected format
   const handleExport = () => {
     if (!applications || applications.length === 0) return;
 
@@ -53,11 +52,9 @@ const ExportOptions = ({ applications = [], darkMode }) => {
           <option value="xlsx">XLSX</option>
         </select>
 
-        {/* Chevron inside the select field */}
         <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
       </div>
 
-      {/* Always show export button, enable only when a format is selected */}
       <button
         className={`inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg text-white ${
           darkMode

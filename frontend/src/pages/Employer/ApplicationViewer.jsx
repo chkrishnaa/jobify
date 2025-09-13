@@ -76,15 +76,10 @@ export default function ApplicationViewer() {
   const handleDownloadResume = async (applicantName, resumeUrl) => {
     try {
       const response = await fetch(resumeUrl, { mode: "cors" }); // file fetch karo
-      const blob = await response.blob(); // blob banao
+      const blob = await response.blob();
 
-      // Temporary blob URL banao
       const url = window.URL.createObjectURL(blob);
-
-      // File ka naam set karo
       const fileName = `${applicantName?.split(" ")[0] || "User"}Resume.pdf`;
-
-      // Hidden anchor element banao aur click karo
       const link = document.createElement("a");
       link.href = url;
       link.download = fileName;
@@ -92,7 +87,6 @@ export default function ApplicationViewer() {
       link.click();
       document.body.removeChild(link);
 
-      // Memory free karo
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Error downloading resume:", error);
@@ -104,36 +98,34 @@ export default function ApplicationViewer() {
       {loading ? (
         <LoadingSpinner text="Loading Applications ..." color="purple" />
       ) : (
-        <div className="min-h-screen">
-          <div className="">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center gap-4 mb-4 sm:mb-8">
-                <button
-                  className={`group flex items-center space-x-2 px-3 py-2 text-sm font-medium border
+        <div className="min-h-screen py-10 sm:py-20">
+          <div className="mb-4 px-2 sm:px-0">
+            <div className="flex flex-col sm:flex-row items-center gap-4 mb-4 sm:mb-8">
+              <button
+                className={`group flex items-center self-start space-x-2 px-3 py-2 text-sm font-medium border
                   ${
                     darkMode
                       ? "text-gray-300 bg-gray-800/10 border-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-purple-700 hover:to-purple-800 shadow-gray-600 hover:shadow-gray-500"
                       : "text-gray-600 bg-white/10 border-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-700 shadow-gray-400 hover:shadow-xl"
-                  } border  hover:border-transparent rounded-xl transition-all duration-300`}
-                  onClick={() => navigate("/manage-jobs")}
-                >
-                  <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1"></ArrowLeft>
-                  <span>Back</span>
-                </button>
-                <h1
-                  className={`text-xl font-bold bg-gradient-to-r ${
-                    darkMode
-                      ? "from-white to-gray-300"
-                      : "from-gray-900 to-gray-500"
-                  } bg-clip-text text-transparent`}
-                >
-                  Applications Overview
-                </h1>
-              </div>
+                  } border  hover:border-transparent rounded-lg sm:rounded-xl transition-all duration-300`}
+                onClick={() => navigate("/manage-jobs")}
+              >
+                <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1"></ArrowLeft>
+                <span>Back</span>
+              </button>
+              <h1
+                className={`text-xl font-bold bg-gradient-to-r self-start ${
+                  darkMode
+                    ? "from-white to-gray-300"
+                    : "from-gray-900 to-gray-500"
+                } bg-clip-text text-transparent`}
+              >
+                Applications Overview
+              </h1>
             </div>
           </div>
 
-          <div className="relative inline-block w-full sm:w-1/4 mb-3">
+          <div className="relative inline-block w-full sm:w-1/4 mb-3 px-2 sm:px-0">
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
@@ -150,8 +142,7 @@ export default function ApplicationViewer() {
               <option value="Rejected">Rejected</option>
             </select>
 
-            {/* Chevron placed inside the select field */}
-            <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+            <ChevronDown className="absolute right-4 sm:right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
           </div>
 
           <div className="max-w-7xl mx-auto">
@@ -177,16 +168,16 @@ export default function ApplicationViewer() {
                       key={job._id}
                       className={`${
                         darkMode
-                          ? "bg-white shadow-[0_6px_18px_rgba(255,255,255,0.4)]"
-                          : "bg-white shadow-xl"
-                      } rounded-xl overflow-hidden`}
+                          ? "bg-white sm:shadow-[0_6px_18px_rgba(255,255,255,0.4)]"
+                          : "bg-white sm:shadow-xl"
+                      } sm:border-x-0 rounded-none sm:rounded-2xl overflow-hidden`}
                     >
                       <div
                         className={`bg-gradient-to-r ${
                           darkMode
                             ? "from-purple-700 to-purple-800"
                             : "from-purple-500 to-purple-600"
-                        } px-4 sm:px-6 py-4`}
+                        } px-2 sm:px-6 py-4`}
                       >
                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                           <div className="flex-1">
@@ -229,14 +220,14 @@ export default function ApplicationViewer() {
                         </div>
                       </div>
                       <div
-                        className={`p-4 sm:p-6 ${
+                        className={`p-2 sm:p-6 ${
                           darkMode ? "bg-gray-900" : "bg-white/50"
                         }`}
                       >
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                           {applications.map((application) => (
                             <div
-                              className={`relative flex flex-col p-4 border ${
+                              className={`relative flex flex-col p-2 sm:p-4 border ${
                                 darkMode
                                   ? "border-gray-700 hover:bg-gray-800"
                                   : "border-gray-200 hover:bg-gray-100"
@@ -244,7 +235,7 @@ export default function ApplicationViewer() {
                               key={application._id}
                             >
                               {/* Status Badge - Positioned at top-right */}
-                              <div className="absolute top-3 right-3">
+                              <div className="absolute top-2 sm:top-3 right-1 sm:right-4">
                                 <StatusBadge status={application.status} />
                               </div>
 
@@ -305,7 +296,7 @@ export default function ApplicationViewer() {
                                         : "text-gray-500"
                                     } text-xs`}
                                   >
-                                    <Calendar className="h-3 w-3" />
+                                    <Calendar className="h-3 w-3 flex-shrink-0" />
                                     <span className="">
                                       Applied -{" "}
                                       {moment(application.createdAt)?.format(
@@ -322,7 +313,7 @@ export default function ApplicationViewer() {
                                     darkMode
                                       ? "bg-purple-700 text-gray-200 hover:bg-purple-800"
                                       : "bg-purple-600 text-white hover:bg-purple-700"
-                                  } text-sm font-medium rounded-lg transition-colors duration-300 w-full sm:w-auto`}
+                                  } text-sm font-medium rounded-md sm:rounded-lg transition-colors duration-300 w-full sm:w-auto`}
                                   onClick={() =>
                                     handleDownloadResume(
                                       application.applicant.name,
