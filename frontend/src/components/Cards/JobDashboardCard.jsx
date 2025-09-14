@@ -7,7 +7,7 @@ const JobDashboardCard = ({ job, avatar }) => {
   const { darkMode } = useTheme();
   return (
     <div
-      className={`flex items-center justify-between p-2 sm:p-4 rounded-xl border ${
+      className={`flex items-center justify-between p-2 sm:p-4 rounded-md sm:rounded-xl border ${
         darkMode
           ? "border-gray-700 hover:border-gray-600 shadow-[0_2px_6px_rgba(255,255,255,0.08)] hover:shadow-[0_4px_8px_rgba(255,255,255,0.12)]"
           : "border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md"
@@ -18,13 +18,13 @@ const JobDashboardCard = ({ job, avatar }) => {
           <img
             src={avatar}
             alt="Avatar"
-            className="h-8 w-8 sm:h-10 sm:w-10 object-cover rounded-lg sm:rounded-xl"
+            className="h-8 w-8 sm:h-10 sm:w-10 object-cover rounded-md sm:rounded-xl"
           />
         ) : (
           <div
             className={`h-8 w-8 sm:h-10 sm:w-10 ${
               darkMode ? "bg-purple-300" : "bg-purple-100"
-            } rounded-lg sm:rounded-xl flex items-center justify-center overflow-hidden`}
+            } rounded-md sm:rounded-xl flex items-center justify-center overflow-hidden`}
           >
             <Briefcase
               className={`h-5 w-5 ${

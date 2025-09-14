@@ -48,7 +48,7 @@ const Card = ({ title, headerAction, subtitle, className, children }) => {
           {headerAction}
         </div>
       )}
-      <div className={title ? "px-3 sm:px-6 pb-6" : "p-6"}>{children}</div>
+      <div className={title ? "px-3 sm:px-6 pb-6" : "p-4 sm:p-6"}>{children}</div>
     </div>
   );
 };
@@ -310,14 +310,14 @@ const EmployerDashboard = () => {
               ].map((action, index) => (
                 <button
                   key={index}
-                  className={`flex items-center space-x-3 p-2 sm:p-4 rounded-xl border ${
+                  className={`flex items-center space-x-3 p-2 sm:p-4 rounded-md sm:rounded-xl border ${
                     darkMode
                       ? "border-gray-700 hover:border-gray-600 shadow-[0_2px_6px_rgba(255,255,255,0.08)] hover:shadow-[0_4px_8px_rgba(255,255,255,0.12)]"
                       : "border-gray-200 hover:border-gray-300 hover:shadow-sm"
                   } transition-all duration-200 text-left`}
                   onClick={() => navigate(action.path)}
                 >
-                  <div className={`p-2 rounded-lg ${action.color}`}>
+                  <div className={`p-2 rounded-md sm:rounded-lg ${action.color}`}>
                     <action.icon className="h-5 w-5" />
                   </div>
                   <span

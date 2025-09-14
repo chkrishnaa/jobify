@@ -5,7 +5,7 @@ const JobCardHeader = ({ category, type, createdAt, children }) => {
   const { darkMode } = useTheme();
 
   return (
-    <div>
+    <div className="">
       {children}
 
       <div className="flex flex-wrap gap-1 sm:gap-3 mt-6 md:mt-4">

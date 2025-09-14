@@ -133,10 +133,10 @@ const navigate = useNavigate();
                       </div>
 
                       {jobDetails?.applicationStatus ? (
-                        <StatusBadge status={jobDetails.applicationStatus} />
+                        <StatusBadge status={jobDetails.applicationStatus} className="no-print" />
                       ) : (
                         <button
-                          className={`bg-gradient-to-r text-sm ${
+                          className={`bg-gradient-to-r text-sm no-print ${
                             darkMode
                               ? "from-blue-400 to-blue-600 text-blue-50 hover:text-white hover:from-blue-500 hover:to-blue-700"
                               : "from-blue-50 to-blue-100 text-blue-700 hover:text-white hover:from-blue-400 hover:to-blue-600"
@@ -160,7 +160,7 @@ const navigate = useNavigate();
             </div>
           )}
 
-          <div className="flex justify-between mt-6">
+          <div className="flex justify-between mt-6 px-2 sm:px-0">
             <button
               className={`flex items-center bg-gradient-to-r text-sm no-print ${
                 darkMode

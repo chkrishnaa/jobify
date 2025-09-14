@@ -208,7 +208,7 @@ const UserProfile = () => {
         darkMode
           ? "from-blue-900 via-black to-purple-950"
           : "from-blue-100 via-white to-purple-200"
-      } py-24 px-6`}
+      } py-6 sm:py-24 px-0 sm:px-6`}
     >
       <Navbar />
 
@@ -217,26 +217,30 @@ const UserProfile = () => {
           <div
             className={`${
               darkMode ? "bg-gray-900" : "bg-white"
-            } rounded-xl shadow-lg overflow-hidden`}
+            } rounded-none sm:rounded-xl shadow-none sm:shadow-lg overflow-hidden`}
           >
             <div
               className={`bg-gradient-to-r ${
                 darkMode
                   ? "from-blue-600 to-blue-800"
                   : "from-blue-400 to-blue-600"
-              } px-8 py-6 flex justify-between items-center`}
+              } px-2 sm:px-8 py-6 flex justify-between items-center`}
             >
-              <h1 className={`text-xl font-medium text-white`}>Profile</h1>
+              <h1 className={`text-lg sm:text-xl font-medium text-white`}>
+                Profile
+              </h1>
             </div>
 
-            <div className="p-8">
+            <div className="px-3 py-6 sm:p-8">
               <div className="space-y-6">
                 <div className="flex items-center space-x-4">
-                  <div className="relative w-20 h-20">
+                  <div className="relative">
                     <img
                       src={formData?.avatar}
                       alt="Avatar"
-                      className="w-20 h-20 rounded-full object-cover border-4 border-gray-200"
+                      className={`w-15 sm:w-20 h-15 sm:h-20 rounded-full object-cover border-3 sm:border-4 ${
+                        darkMode ? "border-blue-400" : "border-blue-200"
+                      }`}
                     />
                     {uploading?.avatar && (
                       <div className="absolute inset-0 bg-blue-300 bg-opacity-50 rounded-full flex items-center justify-center">
@@ -252,10 +256,8 @@ const UserProfile = () => {
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleImageChange(e, "avatar")}
-                        className={`block w-full text-sm 
-  ${darkMode ? "text-gray-300" : "text-gray-500"} 
-  file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 
-  file:text-sm file:font-semibold 
+                        className={`block w-full text-xs sm:text-sm 
+  file:mr-2 sm:file:mr-4 file:py-1 sm:file:py-2 file:px-2 sm:file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold
   ${
     darkMode
       ? "text-gray-200 file:bg-blue-700 file:text-blue-100 hover:file:bg-blue-600"
@@ -276,7 +278,7 @@ const UserProfile = () => {
                   </label>
                   <input
                     type="text"
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
                       darkMode
                         ? "border-gray-700 focus:ring-purple-600 text-gray-200"
                         : "border-gray-300 focus:ring-purple-500"
@@ -290,13 +292,13 @@ const UserProfile = () => {
                   <label
                     className={`block text-sm font-medium ${
                       darkMode ? "text-gray-300" : "text-gray-700"
-                    } mb-2`}
+                    } mb-2 `}
                   >
                     Email Address
                   </label>
                   <input
                     type="email"
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none text-sm sm:text-base focus:ring-2 ${
                       darkMode
                         ? "border-gray-700 focus:ring-purple-600 text-gray-200 bg-gray-700"
                         : "border-gray-300 focus:ring-purple-500 bg-gray-300"
@@ -316,15 +318,15 @@ const UserProfile = () => {
                       Resume
                     </label>
                     <div
-                      className={`flex justify-between items-center gap-3 px-3 py-2 rounded-lg border ${
+                      className={`flex justify-between items-center gap-3 px-2 sm:px-3 py-1 sm:py-2 rounded-lg border ${
                         darkMode
                           ? "bg-gray-800 border-gray-700"
                           : "bg-gray-50 border-gray-200"
                       }`}
                     >
                       {/* PDF Icon */}
-                      <div className="flex items-center gap-4">
-                        <div className="h-8 w-8 rounded-sm font-extrabold scale-125 bg-red-600 text-white text-xs flex items-center justify-center">
+                      <div className="flex items-center gap-3 sm:gap-4">
+                        <div className="h-7 sm:h-8 w-7 sm:w-8 rounded-sm font-extrabold scale-125 bg-red-600 text-white text-xs sm:text-sm flex items-center justify-center">
                           PDF
                         </div>
 
@@ -333,23 +335,23 @@ const UserProfile = () => {
                           href={formData.resume}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-500 hover:text-blue-600 underline truncate max-w-[120px] sm:max-w-[250px] overflow-hidden text-ellipsis whitespace-nowrap"
+                          className="text-blue-500 hover:text-blue-600 underline truncate max-w-[120px] sm:max-w-[250px] overflow-hidden text-ellipsis whitespace-nowrap text-sm sm:text-base"
                         >
                           {user?.name?.split(" ")[0] || "User"}Resume.pdf
                         </a>
                       </div>
 
                       {/* Delete */}
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-0 sm:gap-2">
                         <button
                           onClick={handleDownloadResume}
-                          className={`flex items-center gap-2 text-xs ${
+                          className={`flex items-center text-xs ${
                             darkMode
                               ? "text-green-400 hover:text-green-800 hover:bg-green-300"
                               : "text-green-500 hover:text-green-700 hover:bg-green-100"
                           } p-2 rounded-lg transition-colors duration-300`}
                         >
-                          <Download className="h-5 w-5" />
+                          <Download className="h-4 sm:h-5 w-4 sm:w-5" />
                         </button>
 
                         <button
@@ -360,7 +362,7 @@ const UserProfile = () => {
                           } p-2 rounded-lg transition-colors duration-300`}
                           onClick={DeleteResume}
                         >
-                          <Trash2 className="h-5 w-5" />
+                          <Trash2 className="h-4 sm:h-5 w-4 sm:w-5" />
                         </button>
                       </div>
                     </div>
@@ -412,50 +414,50 @@ const UserProfile = () => {
                 )}
               </div>
 
-                
-
-                <div className={`flex justify-end space-x-4 mt-8 pt-6 border-t ${
+              <div
+                className={`flex justify-end space-x-4 mt-8 pt-6 border-t ${
                   darkMode ? "border-gray-700" : "border-gray-300"
-                }`}>
-                  <Link
-                    className={`px-6 py-3 border ${
-                      darkMode
-                        ? "border-gray-700 text-gray-300 hover:bg-gray-800"
-                        : "border-gray-300 text-gray-700 hover:bg-gray-200"
-                    } rounded-lg transition-colors flex items-center space-x-2`}
-                    onClick={handleCancel}
-                    to="/find-jobs"
-                  >
-                    <X className="w-4 h-4"></X>
-                    <span>Cancel</span>
-                  </Link>
-                  <button
-                    onClick={handleSave}
-                    disabled={
-                      saving ||
-                      uploading.avatar ||
-                      uploading.logo ||
-                      uploading.resume
-                    }
-                    className={`px-6 py-3 ${
-                      darkMode
-                        ? "bg-blue-700 text-gray-300 hover:bg-blue-800"
-                        : "bg-blue-600 text-white hover:bg-blue-700"
-                    } rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2`}
-                  >
-                    {saving ? (
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    ) : (
-                      <Save className="w-4 h-4" />
-                    )}
-                    <span>{saving ? "Saving ..." : "Save Changes"}</span>
-                  </button>
-                </div>
+                }`}
+              >
+                <Link
+                  className={`px-3 sm:px-6 py-2 sm:py-3 border ${
+                    darkMode
+                      ? "border-gray-700 text-gray-300 hover:bg-gray-800"
+                      : "border-gray-300 text-gray-700 hover:bg-gray-200"
+                  } rounded-lg transition-colors flex items-center space-x-2`}
+                  onClick={handleCancel}
+                  to="/find-jobs"
+                >
+                  <X className="w-4 h-4"></X>
+                  <span>Cancel</span>
+                </Link>
+                <button
+                  onClick={handleSave}
+                  disabled={
+                    saving ||
+                    uploading.avatar ||
+                    uploading.logo ||
+                    uploading.resume
+                  }
+                  className={`px-3 sm:px-6 py-2 sm:py-3 ${
+                    darkMode
+                      ? "bg-blue-700 text-gray-300 hover:bg-blue-800"
+                      : "bg-blue-600 text-white hover:bg-blue-700"
+                  } rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2`}
+                >
+                  {saving ? (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    <Save className="w-4 h-4" />
+                  )}
+                  <span>{saving ? "Saving ..." : "Save Changes"}</span>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
   );
 };
 

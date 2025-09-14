@@ -4,6 +4,17 @@ import { IndianRupee, Users } from "lucide-react";
 
 const JobInfo = ({ ...props }) => {
   const { darkMode } = useTheme();
+
+  const normalizeText = (text) => {
+    if (!text) return "";
+
+    return text
+      .replace(/[ \t]+/g, " ") // collapse multiple spaces/tabs into one
+      .replace(/\n{3,}/g, "\n\n") // collapse 3+ newlines into exactly 2
+      .trim();
+  };
+
+
   return (
     <div className="px-0 pb-4 sm:pb-8 print:py-0 space-y-4 sm:space-y-8">
       <div
@@ -102,7 +113,7 @@ const JobInfo = ({ ...props }) => {
               darkMode ? "text-gray-950" : "text-gray-700"
             } leading-relaxed whitespace-pre-wrap text-justify font-sm`}
           >
-            {props.description}
+            {normalizeText(props.description)}
           </div>
         </div>
       </div>
@@ -148,7 +159,7 @@ const JobInfo = ({ ...props }) => {
               darkMode ? "text-gray-950" : "text-gray-700"
             } leading-relaxed whitespace-pre-wrap text-justify font-sm`}
           >
-            {props.requirements}
+            {normalizeText(props.requirements)}
           </div>
         </div>
       </div>

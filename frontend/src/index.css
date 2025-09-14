@@ -42,21 +42,19 @@
   }
 
   body {
-    margin: 0 !important;   /* remove default margins */
-    padding: 0 !important;  /* ✅ no negative padding */
+    margin: 0 !important;  
+    padding: 0 !important; 
   }
 
   @page {
-    margin: 5mm; /* uniform margins (top, right, bottom, left) */
+    margin: 5mm; 
   }
 
-  /* Default: allow breaking */
   .print-area * {
     page-break-inside: auto !important;
     break-inside: auto !important;
   }
 
-  /* Keep small blocks/cards/headings together */
   .print-area h1,
   .print-area h2,
   .print-area h3,
@@ -77,6 +75,11 @@
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+
+  .print-section {
+    page-break-before: always;
+  }
+  
 }
 
 
