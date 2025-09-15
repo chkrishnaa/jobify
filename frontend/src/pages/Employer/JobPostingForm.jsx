@@ -313,7 +313,7 @@ export default function JobPostingForm() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                      <IndianRupee className="h-4 w-4 text-gray-400"></IndianRupee>
+                      <IndianRupee className="h-3 sm:h-4 w-3 sm:w-4 text-gray-400"></IndianRupee>
                     </div>
                     <input
                       type="number"
@@ -322,7 +322,7 @@ export default function JobPostingForm() {
                       onChange={(e) =>
                         handleInputChange("salaryMin", e.target.value)
                       }
-                      className={`w-full pl-10 pr-3 py-2.5 border rounded-lg text-base 
+                      className={`w-full pl-7 sm:pl-10 pr-3 py-2.5 border rounded-lg text-sm sm:text-base
   focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-20 
   transition-colors duration-300
   ${
@@ -334,7 +334,7 @@ export default function JobPostingForm() {
                   </div>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                      <IndianRupee className="h-4 w-4 text-gray-400"></IndianRupee>
+                      <IndianRupee className="h-3 sm:h-4 w-3 sm:w-4 text-gray-400"></IndianRupee>
                     </div>
                     <input
                       type="number"
@@ -343,7 +343,7 @@ export default function JobPostingForm() {
                       onChange={(e) =>
                         handleInputChange("salaryMax", e.target.value)
                       }
-                      className={`w-full pl-10 pr-3 py-2.5 border rounded-lg text-base 
+                      className={`w-full pl-7 sm:pl-10 pr-3 py-2.5 border rounded-lg text-sm sm:text-base
   focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-20 
   transition-colors duration-300
   ${
@@ -368,7 +368,7 @@ export default function JobPostingForm() {
 
               <div className="pt-2">
                 <button
-                  className={`w-full flex place-items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg
+                  className={`w-full flex place-items-center justify-center px-4 py-3 border border-transparent text-sm sm:text-base font-medium rounded-lg
 ${
   darkMode
     ? "text-gray-300 bg-purple-700 hover:bg-purple-800"
@@ -393,7 +393,7 @@ ${
                     </>
                   ) : (
                     <>
-                      <Send className="h-5 w-5 mr-2" />
+                      <Send className="h-4 sm:h-5 w-4 sm:w-5 mr-2" />
                       Publish Job
                     </>
                   )}

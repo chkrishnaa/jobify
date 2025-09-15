@@ -298,7 +298,7 @@ const UserProfile = () => {
                   </label>
                   <input
                     type="email"
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none text-sm sm:text-base focus:ring-2 ${
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
                       darkMode
                         ? "border-gray-700 focus:ring-purple-600 text-gray-200 bg-gray-700"
                         : "border-gray-300 focus:ring-purple-500 bg-gray-300"
@@ -420,7 +420,7 @@ const UserProfile = () => {
                 }`}
               >
                 <Link
-                  className={`px-3 sm:px-6 py-2 sm:py-3 border ${
+                  className={`px-3 sm:px-6 py-2 sm:py-3 border text-sm sm:text-base ${
                     darkMode
                       ? "border-gray-700 text-gray-300 hover:bg-gray-800"
                       : "border-gray-300 text-gray-700 hover:bg-gray-200"
@@ -439,7 +439,7 @@ const UserProfile = () => {
                     uploading.logo ||
                     uploading.resume
                   }
-                  className={`px-3 sm:px-6 py-2 sm:py-3 ${
+                  className={`px-3 sm:px-6 py-2 sm:py-3 text-sm sm:text-base ${
                     darkMode
                       ? "bg-blue-700 text-gray-300 hover:bg-blue-800"
                       : "bg-blue-600 text-white hover:bg-blue-700"

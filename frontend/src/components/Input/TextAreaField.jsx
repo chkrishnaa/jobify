@@ -14,7 +14,7 @@ const TextAreaField = ({
   required = false,
   disabled = false,
   rows = 10,
-  maxWords = 250,
+  maxWords = 500,
   ...props
 }) => {
   const { darkMode } = useTheme();
@@ -66,7 +66,7 @@ const TextAreaField = ({
           onChange={handleInputChange}
           disabled={disabled}
           rows={rows}
-          className={`w-full px-3 py-2.5 rounded-lg text-base transition-colors duration-200 resize-none focus:outline-none focus:ring-2 focus:ring-opacity-20
+          className={`w-full px-3 py-2.5 rounded-lg text-sm sm:text-base transition-colors duration-200 resize-none focus:outline-none focus:ring-2 focus:ring-opacity-20
           ${
             darkMode
               ? `bg-gray-900 text-gray-200 border ${

@@ -490,25 +490,6 @@ const SignUp = () => {
               </p>
             )}
           </div>
-          {/* 
-          {formState.errors.submit && (
-            <div
-              className={`${
-                darkMode
-                  ? "border border-red-500 bg-red-100"
-                  : "border border-red-200 bg-red-50"
-              } rounded-lg p-3`}
-            >
-              <p
-                className={`${
-                  darkMode ? "text-red-400" : "text-red-500"
-                } text-sm flex items-center`}
-              >
-                <AlertCircle className="w-4 h-4 mr-2" />
-                {formState.errors.submit}
-              </p>
-            </div>
-          )} */}
 
           <AuthCommonConponent
             darkMode={darkMode}

@@ -189,7 +189,7 @@ const ApplicantProfilePreview = ({
                 darkMode
                   ? "bg-purple-700 text-gray-300 hover:bg-purple-800"
                   : "bg-purple-600 text-white hover:bg-purple-700"
-              } font-medium rounded-md sm:rounded-lg transition-colors`}
+              } font-medium text-sm sm:text-base rounded-md sm:rounded-lg transition-colors`}
               onClick={() =>
                 handleDownloadResume(
                   selectedApplicant.applicant.name,
@@ -214,7 +214,7 @@ const ApplicantProfilePreview = ({
                   value={currentStatus}
                   onChange={onChangeStatus}
                   disabled={loading}
-                  className={`w-full border rounded-md sm:rounded-lg p-2 appearance-none ${
+                  className={`w-full border text-sm sm:text-base rounded-md sm:rounded-lg p-2 appearance-none ${
                     darkMode
                       ? "border-gray-700 focus:ring-purple-600 text-gray-400"
                       : "border-gray-300 focus:ring-purple-500 text-gray-700"

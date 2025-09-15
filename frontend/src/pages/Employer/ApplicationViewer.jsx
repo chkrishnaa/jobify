@@ -220,7 +220,7 @@ export default function ApplicationViewer() {
                         </div>
                       </div>
                       <div
-                        className={`p-2 sm:p-6 ${
+                        className={`px-2 py-6 sm:px-6 ${
                           darkMode ? "bg-gray-900" : "bg-white/50"
                         }`}
                       >

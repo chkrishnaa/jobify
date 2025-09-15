@@ -42,7 +42,7 @@ const SelectField = ({
           value={value}
           onChange={onChange}
           disabled={disabled}
-          className={`w-full ${
+          className={`w-full text-sm sm:text-base ${
             Icon ? "pl-10" : "pl-3"
           } pr-10 py-2.5 rounded-lg text-base transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-opacity-20 appearance-none
   ${

@@ -247,7 +247,7 @@ export default function EditProfilePage({
                   }`}
                 >
                   <button
-                    className={`px-3 sm:px-6 py-2 sm:py-3 border ${
+                    className={`px-3 sm:px-6 py-2 sm:py-3 border text-sm sm:text-base ${
                       darkMode
                         ? "border-gray-700 text-gray-300 hover:bg-gray-700"
                         : "border-gray-300 text-gray-700 hover:bg-gray-50"
@@ -258,7 +258,7 @@ export default function EditProfilePage({
                     <span>Cancel</span>
                   </button>
                   <button
-                    className={`px-3 sm:px-6 py-2 sm:py-3 ${
+                    className={`px-3 sm:px-6 py-2 sm:py-3 text-sm sm:text-base ${
                       darkMode
                         ? "bg-purple-700 text-gray-300 hover:bg-purple-800"
                         : "bg-purple-600 text-white hover:bg-purple-700"

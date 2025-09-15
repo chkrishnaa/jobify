@@ -24,9 +24,9 @@ const FilterSection = ({ title, children, isExpanded, onToggle }) => {
           {title}
         </span>
         {isExpanded ? (
-          <ChevronUp className="h-5 w-5 text-blue-600" />
+          <ChevronUp className="h-4 sm:h-5 w-4 sm:w-5 text-blue-600" />
         ) : (
-          <ChevronDown className="h-5 w-5 text-blue-600" />
+          <ChevronDown className="h-4 sm:h-5 w-4 sm:w-5 text-blue-600" />
         )}
       </button>
       {isExpanded && children}

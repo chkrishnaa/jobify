@@ -17,11 +17,11 @@ const Card = ({ title, headerAction, subtitle, className, children }) => {
 
   return (
     <div
-      className={`border ${
+      className={`border-x-0 sm:border ${
         darkMode
           ? "bg-gray-900 border-gray-800 shadow-[0_4px_6px_rgba(255,255,255,0.1)] hover:shadow-[0_6px_10px_rgba(255,255,255,0.15)]"
           : "bg-white border-gray-100 shadow-sm hover:shadow-md"
-      } sm:border-x-0 rounded-none sm:rounded-xl transition-shadow duration-300 ${className}`}
+      } rounded-none sm:rounded-xl transition-shadow duration-300 ${className}`}
     >
       {(title || headerAction) && (
         <div className="flex items-center justify-between p-3 sm:p-6 pb-4">
@@ -48,7 +48,9 @@ const Card = ({ title, headerAction, subtitle, className, children }) => {
           {headerAction}
         </div>
       )}
-      <div className={title ? "px-3 sm:px-6 pb-6" : "p-4 sm:p-6"}>{children}</div>
+      <div className={title ? "px-3 sm:px-6 pb-6" : "p-4 sm:p-6"}>
+        {children}
+      </div>
     </div>
   );
 };
@@ -201,7 +203,7 @@ const EmployerDashboard = () => {
           </div>
 
           {/* Recent Activity */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-8">
             <Card
               title="Recent Job Posts"
               subtitle="Your Latest Job Postings"

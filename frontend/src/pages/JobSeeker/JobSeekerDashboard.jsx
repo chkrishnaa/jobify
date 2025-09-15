@@ -178,9 +178,9 @@ const JobSeekerDashboard = () => {
             </h3>
             <button
               onClick={() => setShowMobileFilters(false)}
-              className={`p-0 sm:p-2 ${
+              className={`p-1 sm:p-2 ${
                 darkMode ? "hover:bg-gray-600" : "hover:bg-gray-100"
-              } rounded-xl transition-colors`}
+              } rounded-lg transition-colors`}
             >
               <X
                 className={`w-5 h-5 ${

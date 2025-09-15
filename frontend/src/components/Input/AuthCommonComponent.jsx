@@ -56,7 +56,7 @@ const AuthCommonConponent = ({
           darkMode
             ? "from-blue-700 to-purple-700 text-gray-300 hover:from-blue-800 hover:to-purple-800"
             : "from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
-        } py-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
+        } text-sm sm:text-base py-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
       >
         {formState.loading ? (
           <>
@@ -76,7 +76,7 @@ const AuthCommonConponent = ({
         <span
           className={`${
             darkMode ? "text-gray-400" : "text-gray-600"
-          } text-sm whitespace-nowrap`}
+          } text-xs sm:text-sm whitespace-nowrap`}
         >
           {dividerLabel}
         </span>
@@ -88,7 +88,7 @@ const AuthCommonConponent = ({
       {/* Social Login */}
       <div className="grid grid-cols-2 gap-3">
         <button
-          className={`border-2 border-blue-600 ${
+          className={`border-2 border-blue-600 text-sm sm:text-base ${
             darkMode ? "hover:bg-blue-300" : "bg-white hover:bg-blue-200"
           } w-full h-full rounded-lg py-2 transition-all duration-300 space-x-2 sm:space-x-5`}
         >
@@ -97,7 +97,7 @@ const AuthCommonConponent = ({
         </button>
 
         <button
-          className={`border-2 border-purple-600 ${
+          className={`border-2 border-purple-600 text-sm sm:text-base ${
             darkMode ? "hover:bg-purple-300" : "bg-white hover:bg-purple-200"
           } w-full h-full rounded-lg py-2 transition-all duration-300 space-x-2 sm:space-x-5`}
         >
@@ -111,12 +111,12 @@ const AuthCommonConponent = ({
         <div className="flex items-center gap-2">
           <input
             type="checkbox"
-            className="h-4 w-4 rounded-full border border-gray-400 bg-transparent 
+            className="h-3 sm:h-4 w-3 sm:w-4 rounded-full border border-gray-400 bg-transparent 
              checked:bg-blue-500 checked:border-blue-500 
              focus:ring-2 focus:ring-blue-400 transition-colors"
           />
           <span
-            className={`text-sm ${
+            className={`text-xs sm:text-sm ${
               darkMode ? "text-gray-400" : "text-gray-600"
             } font-semibold`}
           >
@@ -139,7 +139,7 @@ const AuthCommonConponent = ({
       )}
 
       {/* Bottom Link */}
-      <div className="text-center font-semibold">
+      <div className="text-center font-semibold text-sm sm:text-base">
         <p className={`${darkMode ? "text-gray-400" : "text-gray-600"}`}>
           {bottomText}{" "}
           <a

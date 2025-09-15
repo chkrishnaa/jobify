@@ -33,7 +33,7 @@ const SearchHeader = ({ filters, handleFilterChange }) => {
         <div className="flex flex-col lg:flex-row gap-3 lg:gap-4">
           <div className="flex-1 relative">
             <Search
-              className={`absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 ${
+              className={`absolute left-4 top-1/2 transform -translate-y-1/2 h-4 sm:h-5 w-4 sm:w-5 ${
                 darkMode ? "text-gray-500" : "text-gray-400"
               } z-[1]`}
             ></Search>
@@ -43,7 +43,7 @@ const SearchHeader = ({ filters, handleFilterChange }) => {
                 darkMode
                   ? "border-gray-700 bg-gray-900 placeholder:text-gray-500"
                   : "border-gray-200 bg-white/50 placeholder:text-gray-400"
-              }  rounded-lg sm:rounded-2xl outline-0 text-basebackdrop-blur-sm`}
+              }  rounded-lg sm:rounded-2xl outline-0 text-sm sm:text-base backdrop-blur-sm`}
               placeholder="Job title, company, or keywords ..."
               value={filters.keyword}
               onChange={(e) => handleFilterChange("keyword", e.target.value)}
@@ -52,7 +52,7 @@ const SearchHeader = ({ filters, handleFilterChange }) => {
 
           <div className="relative min-w-0 lg:min-w-[200px]">
             <MapPin
-              className={`absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 ${
+              className={`absolute left-4 top-1/2 transform -translate-y-1/2 h-4 sm:h-5 w-4 sm:w-5 ${
                 darkMode ? "text-gray-500" : "text-gray-400"
               } z-[1]`}
             ></MapPin>
@@ -62,7 +62,7 @@ const SearchHeader = ({ filters, handleFilterChange }) => {
                 darkMode
                   ? "border-gray-700 bg-gray-900 placeholder:text-gray-500"
                   : "border-gray-200 bg-white/50 placeholder:text-gray-400"
-              }  rounded-lg sm:rounded-2xl outline-0 text-basebackdrop-blur-sm`}
+              }  rounded-lg sm:rounded-2xl outline-0 text-sm sm:text-base backdrop-blur-sm`}
               placeholder="Location"
               value={filters.location}
               onChange={(e) => handleFilterChange("location", e.target.value)}
@@ -74,7 +74,7 @@ const SearchHeader = ({ filters, handleFilterChange }) => {
               darkMode
                 ? "from-blue-500 to-blue-700 text-gray-300 hover:from-blue-700 hover:to-blue-900"
                 : "from-blue-400 to-blue-600 text-white hover:from-blue-600 hover:to-blue-800"
-            } px-6 lg:px-10 py-3 lg:py-2.5 rounded-lg sm:rounded-xl transition-all duration-300 font-semibold text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5`}
+            } px-6 lg:px-10 py-3 lg:py-2.5 rounded-lg sm:rounded-xl transition-all duration-300 font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5`}
           >
             Search Jobs
           </button>

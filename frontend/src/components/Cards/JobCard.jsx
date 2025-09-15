@@ -101,7 +101,7 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
         )}
       </div>
 
-      <div className="mb-5">
+      <div className="mb-3 sm:mb-5">
         <div className="flex items-center gap-2 text-xs">
           {/* Job Type Badge */}
           <span
@@ -140,9 +140,9 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
       </div>
 
       <p
-        className={`line-clamp-4 text-justify text-sm ${
+        className={`line-clamp-4 lg:line-clamp-5 text-justify text-sm ${
           darkMode ? "text-gray-400" : "text-gray-700"
-        } mb-6`}
+        } mb-2 sm:mb-4 lg:mb-6`}
       >
         {job?.description}
       </p>
@@ -156,14 +156,14 @@ const JobCard = ({ job, onClick, onToggleSave, onApply, saved, hideApply }) => {
             darkMode ? "text-gray-200" : "text-gray-800"
           }`}
         >
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center"> */}
             <span className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5" />
               {job?.createdAt
                 ? moment(job.createdAt).format("Do MMM, YYYY")
                 : "N/A"}
             </span>
-          </div>
+          {/* </div> */}
         </div>
       </div>
 

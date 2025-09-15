@@ -258,11 +258,11 @@ export default function ManageJobs() {
           </div>
 
           <div
-            className={`border shadow-none ${
+            className={`border-x-0 sm:border shadow-none ${
               darkMode
                 ? "border-gray-900 bg-gray-900 sm:shadow-[0_4px_12px_rgba(255,255,255,0.4)]"
                 : "border-white/20 bg-white/80 sm:shadow-xl"
-            } backdrop-blur-sm sm:border-x-0 rounded-none sm:rounded-2xl px-2 py-4 sm:p-6 mb-8`}
+            } backdrop-blur-sm  rounded-none sm:rounded-2xl px-2 py-4 sm:p-6 mb-8`}
           >
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 relative">
@@ -283,7 +283,7 @@ export default function ManageJobs() {
                     darkMode
                       ? "border-gray-700  focus:ring-purple-600 bg-gray-800/50 placeholder-gray-300"
                       : "border-gray-200  focus:ring-purple-500 bg-gray-50/50 placeholder-gray-400"
-                  } rounded-lg  outline-0 transition-all duration-300`}
+                  } rounded-lg outline-0 transition-all duration-300`}
                 />
               </div>
 
@@ -295,7 +295,7 @@ export default function ManageJobs() {
                     darkMode
                       ? "border-gray-700  focus:ring-purple-600 bg-gray-800/50 text-gray-100"
                       : "border-gray-200  focus:ring-purple-500 bg-gray-50/50"
-                  } rounded-lg  outline-0 transition-all duration-300`}
+                  } rounded-lg outline-0 transition-all duration-300`}
                 >
                   <option value="All" className="">
                     All Status

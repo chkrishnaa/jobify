@@ -23,7 +23,7 @@ const SalaryRangeSlider = ({ filters, handleFilterChange }) => {
             placeholder="0"
             min="0"
             step="1000"
-            className={`w-full px-3 py-2 rounded-md shadow-sm focus:ring focus:ring-opacity-50 border
+            className={`w-full text-sm sm:text-base px-3 py-2 rounded-md shadow-sm focus:ring focus:ring-opacity-50 border
   ${
     darkMode
       ? "bg-gray-900 text-gray-200 border-gray-700 focus:border-purple-600 focus:ring-purple-500"
@@ -53,7 +53,7 @@ const SalaryRangeSlider = ({ filters, handleFilterChange }) => {
             placeholder="No Limit"
             min="0"
             step="1000"
-            className={`w-full px-3 py-2 rounded-md shadow-sm focus:ring focus:ring-opacity-50
+            className={`w-full text-sm sm:text-base px-3 py-2 rounded-md shadow-sm focus:ring focus:ring-opacity-50
   ${
     darkMode
       ? "bg-gray-900 text-gray-200 border border-gray-700 focus:border-purple-600 focus:ring-purple-500"
