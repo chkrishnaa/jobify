@@ -83,7 +83,8 @@ exports.getEmployerAnalytics = async (req, res) => {
     const recentJobs = await Job.find({ company: companyId })
       .sort({ createdAt: -1 })
       .limit(5)
-      .select("title location type createdAt isClosed");
+      .select("title location type createdAt isClosed company")
+      .populate("company", "name companyName companyLogo");
 
     const recentApplications = await Application.find({ job: { $in: jobIds } })
       .sort({ createdAt: -1 })

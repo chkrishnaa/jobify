@@ -23,6 +23,8 @@ const userSchema = mongoose.Schema(
     },
     avatar: String,
     resume: String,
+    userDesc: String,
+    userSkills: [String],
     companyName: String,
     companyDescription: String,
     companyLogo: String,

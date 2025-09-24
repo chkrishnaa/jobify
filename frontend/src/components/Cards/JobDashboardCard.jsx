@@ -3,7 +3,7 @@ import { Briefcase } from "lucide-react";
 import moment from "moment";
 import { useTheme } from "../../context/ThemeContext";
 
-const JobDashboardCard = ({ job, avatar }) => {
+const JobDashboardCard = ({ job, avatar, onClick }) => {
   const { darkMode } = useTheme();
   return (
     <div
@@ -11,13 +11,14 @@ const JobDashboardCard = ({ job, avatar }) => {
         darkMode
           ? "border-gray-700 hover:border-gray-600 shadow-[0_2px_6px_rgba(255,255,255,0.08)] hover:shadow-[0_4px_8px_rgba(255,255,255,0.12)]"
           : "border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md"
-      } transition-colors`}
+      } transition-colors cursor-pointer`}
+      onClick={onClick}
     >
       <div className="flex items-center space-x-2 sm:space-x-4">
-        {avatar ? (
+        {job?.company?.companyLogo || avatar ? (
           <img
-            src={avatar}
-            alt="Avatar"
+            src={job?.company?.companyLogo || avatar}
+            alt="Company Logo"
             className="h-8 w-8 sm:h-10 sm:w-10 object-cover rounded-md sm:rounded-xl"
           />
         ) : (

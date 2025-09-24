@@ -40,6 +40,36 @@ export default function JobPostingForm() {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Load existing job details when editing
+  useEffect(() => {
+    const loadJob = async () => {
+      if (!jobId) return;
+      try {
+        setIsLoading(true);
+        const { data } = await axiosInstance.get(
+          API_PATHS.JOBS.GET_JOB_BY_ID(jobId)
+        );
+        setFormData({
+          jobTitle: data.title || "",
+          location: data.location || "",
+          category: data.category || "",
+          jobType: data.type || "",
+          description: data.description || "",
+          requirements: data.requirements || "",
+          salaryMin: data.salaryMin?.toString?.() || "",
+          salaryMax: data.salaryMax?.toString?.() || "",
+        });
+      } catch (error) {
+        console.error("Failed to load job details", error);
+        toast.error("Failed to load job details.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadJob();
+  }, [jobId]);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -177,7 +207,7 @@ export default function JobPostingForm() {
                     : "from-gray-900 to-gray-100"
                 } bg-clip-text text-transparent`}
               >
-                Post a New Job
+                {jobId ? "Edit Job" : "Post a New Job"}
               </h2>
               <button
                 onClick={() => setIsPreview(true)}
@@ -206,10 +236,17 @@ export default function JobPostingForm() {
                   darkMode ? "text-gray-400" : "text-gray-600"
                 } mt-1`}
               >
-                Fill out the form below to create your job posting.
+                {jobId
+                  ? "Update the fields below and save your changes."
+                  : "Fill out the form below to create your job posting."}
               </p>
             </div>
             <div className="space-y-3 sm:space-y-6">
+              {isLoading && (
+                <div className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
+                  Loading job details...
+                </div>
+              )}
               <InputField
                 label="Job Title"
                 id="jobTitle"
@@ -219,6 +256,7 @@ export default function JobPostingForm() {
                 error={errors.jobTitle}
                 required
                 icon={Briefcase}
+                disabled={isLoading}
               />
 
               <div className="space-y-4">
@@ -235,6 +273,7 @@ export default function JobPostingForm() {
                       error={errors.location}
                       required
                       icon={MapPin}
+                      disabled={isLoading}
                     />
                   </div>
                 </div>
@@ -253,6 +292,7 @@ export default function JobPostingForm() {
                   error={errors.category}
                   required
                   icon={Users}
+                  disabled={isLoading}
                 />
 
                 <SelectField
@@ -265,6 +305,7 @@ export default function JobPostingForm() {
                   error={errors.jobType}
                   required
                   icon={Briefcase}
+                  disabled={isLoading}
                 />
               </div>
 
@@ -279,6 +320,7 @@ export default function JobPostingForm() {
                 error={errors.description}
                 helperText="Include key responsibilities, data-to-day tasks, and what makes this role exciting."
                 required
+                disabled={isLoading}
               />
 
               <TextAreaField
@@ -292,6 +334,7 @@ export default function JobPostingForm() {
                 error={errors.requirements}
                 helperText="Include required skiill, experience level, education, and any preferred qualification."
                 required
+                disabled={isLoading}
               />
 
               <div className="space-y-2">
@@ -330,6 +373,7 @@ export default function JobPostingForm() {
       ? "bg-gray-900 border-gray-700 text-gray-200 placeholder-gray-400"
       : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
   }`}
+                      disabled={isLoading}
                     />
                   </div>
                   <div className="relative">
@@ -351,6 +395,7 @@ export default function JobPostingForm() {
       ? "bg-gray-900 border-gray-700 text-gray-200 placeholder-gray-400"
       : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
   }`}
+                      disabled={isLoading}
                     />
                   </div>
                 </div>
@@ -380,7 +425,7 @@ ${
                         : "focus:ring-purple-500 disabled:bg-gray-400"
                     } disabled:cursor-not-allowed outline-none transition-colors duration-300`}
                   onClick={handleSubmit}
-                  disabled={isSubmitting || !isFormValid()}
+                  disabled={isLoading || isSubmitting || !isFormValid()}
                 >
                   {isSubmitting ? (
                     <>
@@ -389,12 +434,12 @@ ${
                           darkMode ? "border-gray-700" : "border-white"
                         } mr-2`}
                       ></div>
-                      Publishing Job ...
+                      {jobId ? "Updating Job ..." : "Publishing Job ..."}
                     </>
                   ) : (
                     <>
                       <Send className="h-4 sm:h-5 w-4 sm:w-5 mr-2" />
-                      Publish Job
+                      {jobId ? "Update Job" : "Publish Job"}
                     </>
                   )}
                 </button>

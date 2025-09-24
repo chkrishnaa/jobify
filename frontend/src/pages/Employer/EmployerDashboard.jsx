@@ -11,6 +11,7 @@ import ApplicantDashboardCard from "../../components/Cards/ApplicantDashboardCar
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
 import NoResults from "../../components/Utility/NoResults";
+import JobDetailsModal from "../../components/Modals/JobDetailsModal";
 
 const Card = ({ title, headerAction, subtitle, className, children }) => {
   const { darkMode } = useTheme();
@@ -137,6 +138,7 @@ const EmployerDashboard = () => {
   const navigate = useNavigate();
   const [dashboardData, setDashboardData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedJobId, setSelectedJobId] = useState(null);
 
   // store 3 unique colors for the StatCards
   const [statColors, setStatColors] = useState([]);
@@ -231,6 +233,7 @@ const EmployerDashboard = () => {
                         key={index}
                         job={job}
                         avatar={user?.avatar || ""}
+                        onClick={() => setSelectedJobId(job._id)}
                       />
                     ))
                 ) : (
@@ -242,6 +245,13 @@ const EmployerDashboard = () => {
                 )}
               </div>
             </Card>
+
+            {selectedJobId && (
+              <JobDetailsModal
+                jobId={selectedJobId}
+                onClose={() => setSelectedJobId(null)}
+              />
+            )}
 
             <Card
               title="Recent Applicants"

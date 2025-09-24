@@ -6,6 +6,8 @@ exports.updateProfile = async (req, res) => {
       name,
       avatar,
       resume,
+      userDesc,
+      userSkills,
       companyName,
       companyDescription,
       companyLogo,
@@ -27,6 +29,15 @@ exports.updateProfile = async (req, res) => {
 
     user.resume = resume || user.resume;
 
+    if (req.body.hasOwnProperty("userDesc")) {
+      user.userDesc = userDesc;
+    }
+
+    if (req.body.hasOwnProperty("userSkills")) {
+      user.userSkills = userSkills;
+    }
+
+
     if (user.role === "employer") {
       user.companyName = companyName || user.companyName;
       user.companyDescription = companyDescription || user.companyDescription;
@@ -40,6 +51,8 @@ exports.updateProfile = async (req, res) => {
       name: user.name,
       avatar: user.avatar || "",
       role: user.role,
+      userDesc: user.userDesc || "",
+      userSkills: user.userSkills || [],
       companyName: user.companyName,
       companyDescription: user.companyDescription,
       companyLogo: user.companyLogo,
