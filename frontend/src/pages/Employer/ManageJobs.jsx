@@ -18,6 +18,7 @@ import DashboardLayout from "../../components/layout/DashboardLayout";
 import { useTheme } from "../../context/ThemeContext";
 import NoResults from "../../components/Utility/NoResults";
 import Pagination from "../../components/Utility/Pagination";
+import JobDetailsModal from "../../components/Modals/JobDetailsModal";
 
 export default function ManageJobs() {
   const { darkMode } = useTheme();
@@ -33,6 +34,7 @@ export default function ManageJobs() {
   const itemsPerPage = 5;
 
   const [jobs, setJobs] = useState([]);
+  const [selectedJobId, setSelectedJobId] = useState(null);
 
   const filteredAndSortedJobs = useMemo(() => {
     let filtered = jobs.filter((job) => {
@@ -411,11 +413,12 @@ export default function ManageJobs() {
                         : paginatedJobs.map((job) => (
                             <tr
                               key={job.id}
-                              className={`border-b ${
+                              className={`border-b cursor-pointer ${
                                 darkMode
                                   ? "border-gray-800 hover:bg-purple-950"
                                   : "border-gray-100/60 hover:bg-purple-200"
                               } transition-all duration-300`}
+                              onClick={() => setSelectedJobId(job.id)}
                             >
                               <td className="px-6 py-5 whitespace-nowrap">
                                 <div>
@@ -562,6 +565,13 @@ export default function ManageJobs() {
           </div>
         </div>
       </div>
+
+      {selectedJobId && (
+        <JobDetailsModal
+          jobId={selectedJobId}
+          onClose={() => setSelectedJobId(null)}
+        />
+      )}
     </DashboardLayout>
   );
 }

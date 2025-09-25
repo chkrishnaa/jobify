@@ -173,7 +173,7 @@ const EmployerDashboard = () => {
       ) : (
         <div className="max-w-7xl mx-auto space-y-2 sm:space-y-8">
           {/* Dashboard Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-3 sm:p-0">
             <StatCard
               title="Active Jobs"
               value={dashboardData?.counts?.totalActiveJobs || 0}
@@ -329,7 +329,9 @@ const EmployerDashboard = () => {
                   } transition-all duration-200 text-left`}
                   onClick={() => navigate(action.path)}
                 >
-                  <div className={`p-2 rounded-md sm:rounded-lg ${action.color}`}>
+                  <div
+                    className={`p-2 rounded-md sm:rounded-lg ${action.color}`}
+                  >
                     <action.icon className="h-5 w-5" />
                   </div>
                   <span

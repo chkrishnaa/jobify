@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { MapPin, X } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { Edit3, MapPin, X } from "lucide-react";
+import { useReactToPrint } from "react-to-print";
 import { useTheme } from "../../context/ThemeContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
@@ -7,13 +8,21 @@ import JobInfo from "../Utility/JobInfo";
 import JobCardHeader from "../Utility/JobCardHeader";
 import moment from "moment";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const JobDetailsModal = ({ jobId, onClose }) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { darkMode } = useTheme();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const printRef = useRef(null);
+  const handlePrint = useReactToPrint({
+    contentRef: printRef,
+    documentTitle: job ? `${job.title}-Job` : "Job-Details",
+    removeAfterPrint: true,
+  });
 
   useEffect(() => {
     const load = async () => {
@@ -36,23 +45,26 @@ const JobDetailsModal = ({ jobId, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose}></div>
+      <div className="absolute inset-0 bg-black/50 print-backdrop" onClick={onClose}></div>
 
       <div
         className={`relative z-10 w-[90%] max-w-2xl rounded-md ${
           darkMode ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"
-        } p-4 max-h-[90vh] overflow-y-auto print-area`}
+        } p-4 max-h-[90vh] overflow-y-auto print-area print-padding-5`}
+        ref={printRef}
       >
         <button
-          className={`absolute top-3 right-3 p-2 rounded ${
-            darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"
-          }`}
+          className={`absolute top-3 right-3 p-2 no-print rounded-xl ${
+                  darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"
+                } transition-colors duration-300`}
           onClick={onClose}
         >
-          <X className={darkMode ? "text-gray-200" : "text-gray-800"} />
+          <X className={`h-5 w-5 ${
+                      darkMode ? "text-gray-200" : "text-gray-600"
+                    }`} />
         </button>
 
-        <div className="mt-10">
+         <div className="mt-10 print-padding-5">
           {loading && <div>Loading...</div>}
           {error && <div>{error}</div>}
           {!loading && !error && job && (
@@ -60,7 +72,7 @@ const JobDetailsModal = ({ jobId, onClose }) => {
               <div
                 className={`${
                   darkMode ? "bg-gray-800" : "bg-gray-100"
-                } p-4 rounded-lg`}
+                } p-4 rounded-lg sm:rounded-xl mb-5 print-header avoid-break`}
               >
                 <JobCardHeader
                   category={job.category}
@@ -119,26 +131,50 @@ const JobDetailsModal = ({ jobId, onClose }) => {
                 </JobCardHeader>
               </div>
 
-              <JobInfo
+              <div className="print-section print:mt-[5mm]">
+                <JobInfo
                 salaryMin={job.salaryMin}
                 salaryMax={job.salaryMax}
                 description={job.description}
                 requirements={job.requirements}
-              />
+                />
+              </div>
             </div>
           )}
         </div>
 
-        <button
+      <div className="flex justify-between">
+           <button
+          className={`bg-gradient-to-r text-sm no-print ${
+            darkMode
+              ? "from-green-400 to-green-600 text-green-50 hover:text-white hover:from-green-500 hover:to-green-700"
+              : "from-green-50 to-green-100 text-green-700 hover:text-white hover:from-green-400 hover:to-green-600"
+          } px-6 py-2.5 rounded-xl transition-all duration-300 font-semibold transform hover:-translate-y-0.5 flex items-center space-x-2`}
+           onClick={() => navigate("/post-job", { state: { jobId } })}
+        >
+          <Edit3 className="h-4 w-4"/>
+          <span>Edit</span>
+        </button>
+
+                 <button
           className={`bg-gradient-to-r text-sm no-print ${
             darkMode
               ? "from-green-400 to-green-600 text-green-50 hover:text-white hover:from-green-500 hover:to-green-700"
               : "from-green-50 to-green-100 text-green-700 hover:text-white hover:from-green-400 hover:to-green-600"
           } px-6 py-2.5 rounded-xl transition-all duration-300 font-semibold transform hover:-translate-y-0.5`}
-          onClick={() => window.print()}
+           onClick={handlePrint}
         >
           Download PDF
         </button>
+</div>
+
+              <div className="hidden print:block print-area">
+        <div className="flex justify-between px-3 text-sm">
+          <p>JobiFy - Find Your Dream Job</p>
+          <p>{`Job ID: ${job?._id}`}</p>
+        </div>
+      </div>
+     
       </div>
     </div>
   );

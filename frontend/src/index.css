@@ -34,6 +34,8 @@
     padding: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
+    max-height: none !important; /* allow multi-page */
+    overflow: visible !important; /* allow content to flow */
     box-shadow: none !important;
   }
 
@@ -76,9 +78,12 @@
     print-color-adjust: exact;
   }
 
-  .print-section {
-    page-break-before: always;
-  }
+  /* Let browser paginate naturally */
+  .print-section { page-break-before: auto !important; break-before: auto !important; }
+
+  /* Utility: add fixed padding for blocks when printing */
+  .print-padding-x { padding: 0 5mm !important; }
+  .print-padding-5 { padding: 5mm !important; }
   
 }
 

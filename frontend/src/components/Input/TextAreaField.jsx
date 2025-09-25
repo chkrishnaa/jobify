@@ -14,7 +14,7 @@ const TextAreaField = ({
   required = false,
   disabled = false,
   rows = 10,
-  maxWords = 500,
+  maxWords = 1000,
   ...props
 }) => {
   const { darkMode } = useTheme();
