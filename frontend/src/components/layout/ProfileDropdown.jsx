@@ -16,6 +16,11 @@ const ProfileDropdown = ({
   const { darkMode } = useTheme();
   const navigate = useNavigate();
 
+  const roleLabel =
+    userRole === "jobseeker"
+      ? "Job Seeker"
+      : "Employer";
+
   return (
     <div className="relative">
       <button
@@ -60,7 +65,7 @@ const ProfileDropdown = ({
               darkMode ? "text-gray-300" : "text-gray-500"
             }`}
           >
-            Employer
+            {roleLabel}
           </p>
         </div>
 
@@ -116,7 +121,7 @@ const ProfileDropdown = ({
             } transition-colors`}
             onClick={() =>
               navigate(
-                userRole === "jobseeker" ? "/profile" : "/company-profile"
+                userRole === "jobseeker" ? "/profile" : "/company-profile",
               )
             }
           >
@@ -147,7 +152,10 @@ const ProfileDropdown = ({
               >
                 {darkMode ? "Light Mode" : "Dark Mode"}
               </p>
-              <div onClick={(e) => e.stopPropagation()} className="transform scale-75">
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="transform scale-75"
+              >
                 <ToggleMode />
               </div>
             </div>

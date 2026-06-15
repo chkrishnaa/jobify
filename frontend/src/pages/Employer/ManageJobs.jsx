@@ -24,6 +24,7 @@ export default function ManageJobs() {
   const { darkMode } = useTheme();
   const navigate = useNavigate();
   const tableContainerRef = useRef(null);
+  const itemsPerPageArr = [5, 10, 15, 20, 25];
 
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
@@ -31,7 +32,16 @@ export default function ManageJobs() {
   const [sortField, setSortField] = useState("title");
   const [sortDirection, setSortDirection] = useState("asc");
   const [isLoading, setIsLoading] = useState(false);
-  const itemsPerPage = 5;
+  
+  const [itemsPerPage, setItemsPerPage] = useState(() => {
+    const saved = localStorage.getItem("itemsPerPage");
+    return saved ? Number(saved) : 5;
+  });
+
+  // Save to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("itemsPerPage", itemsPerPage);
+  }, [itemsPerPage]);
 
   const [jobs, setJobs] = useState([]);
   const [selectedJobId, setSelectedJobId] = useState(null);
@@ -227,7 +237,7 @@ export default function ManageJobs() {
 
   return (
     <DashboardLayout activeMenu="manage-jobs">
-      <div className="min-h-screen py-10 sm:py-20">
+      <div className="min-h-screen py-10">
         <div className="w-full max-w-full mx-auto">
           <div className="mb-4 px-2 sm:px-0">
             <div className="flex flex-row items-center justify-between gap-x-5 mb-4">
@@ -266,16 +276,16 @@ export default function ManageJobs() {
                 : "border-white/20 bg-white/80 sm:shadow-xl"
             } backdrop-blur-sm  rounded-none sm:rounded-2xl px-2 py-4 sm:p-6 mb-8`}
           >
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1 relative">
+            <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-stretch">
+              {/* Search input */}
+              <div className="flex-1 relative w-full">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Search
                     className={`h-4 w-4 ${
                       darkMode ? "text-gray-300" : "text-gray-400"
                     }`}
-                  ></Search>
+                  />
                 </div>
-
                 <input
                   type="text"
                   placeholder="Search jobs ..."
@@ -283,34 +293,49 @@ export default function ManageJobs() {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className={`block w-full pl-10 pr-4 py-2 text-sm border focus:ring-2 ${
                     darkMode
-                      ? "border-gray-700  focus:ring-purple-600 bg-gray-800/50 placeholder-gray-300"
-                      : "border-gray-200  focus:ring-purple-500 bg-gray-50/50 placeholder-gray-400"
+                      ? "border-gray-700 focus:ring-purple-600 bg-gray-800/50 placeholder-gray-300 text-gray-50"
+                      : "border-gray-200 focus:ring-purple-500 bg-gray-50/50 placeholder-gray-400 text-gray-950"
                   } rounded-lg outline-0 transition-all duration-300`}
                 />
               </div>
 
-              <div className="relative inline-block w-full sm:w-1/4 mb-3">
-                <select
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                  className={`block w-full pl-10 pr-4 py-2 text-sm border focus:ring-2 appearance-none ${
-                    darkMode
-                      ? "border-gray-700  focus:ring-purple-600 bg-gray-800/50 text-gray-100"
-                      : "border-gray-200  focus:ring-purple-500 bg-gray-50/50"
-                  } rounded-lg outline-0 transition-all duration-300`}
-                >
-                  <option value="All" className="">
-                    All Status
-                  </option>
-                  <option value="Active" className="">
-                    Active
-                  </option>
-                  <option value="Closed" className="">
-                    Closed
-                  </option>
-                </select>
+              {/* Dropdown */}
+              <div className="flex w-full sm:w-1/2 justify-between gap-2 sm:gap-4">
+                <div className="relative w-[50%]">
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className={`block w-full pl-10 pr-4 py-2 text-sm border focus:ring-2 appearance-none ${
+                      darkMode
+                        ? "border-gray-700 focus:ring-purple-600 bg-gray-800/50 text-gray-100"
+                        : "border-gray-200 focus:ring-purple-500 bg-gray-50/50"
+                    } rounded-lg outline-0 transition-all duration-300`}
+                  >
+                    <option value="All">All Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Closed">Closed</option>
+                  </select>
+                  <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                </div>
 
-                <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                <div className="relative w-[50%]">
+                  <select
+                    value={itemsPerPage}
+                    onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                    className={`block w-full pl-10 pr-4 py-2 text-sm border focus:ring-2 appearance-none ${
+                      darkMode
+                        ? "border-gray-700 focus:ring-purple-600 bg-gray-800/50 text-gray-100"
+                        : "border-gray-200 focus:ring-purple-500 bg-gray-50/50"
+                    } rounded-lg outline-0 transition-all duration-300`}
+                  >
+                    {itemsPerPageArr.map((num, i) => (
+                      <option key={i} value={num}>
+                        {num} Jobs per page
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                </div>
               </div>
             </div>
 

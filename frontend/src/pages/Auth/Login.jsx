@@ -61,6 +61,7 @@ const Login = () => {
   const validateForm = () => {
     const errors = {
       email: validateEmail(formData.email),
+      
       password: validatePassword(formData.password),
     };
     Object.keys(errors).forEach((key) => {

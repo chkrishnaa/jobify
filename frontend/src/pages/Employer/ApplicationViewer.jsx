@@ -224,7 +224,7 @@ export default function ApplicationViewer() {
                           darkMode ? "bg-gray-900" : "bg-white/50"
                         }`}
                       >
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-4">
                           {applications.map((application) => (
                             <div
                               className={`relative flex flex-col p-2 sm:p-4 border ${

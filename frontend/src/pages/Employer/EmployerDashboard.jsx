@@ -173,7 +173,7 @@ const EmployerDashboard = () => {
       ) : (
         <div className="max-w-7xl mx-auto space-y-2 sm:space-y-8">
           {/* Dashboard Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-3 sm:p-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-3 pt-5 sm:p-0">
             <StatCard
               title="Active Jobs"
               value={dashboardData?.counts?.totalActiveJobs || 0}
